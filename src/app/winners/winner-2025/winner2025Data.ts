@@ -9,7 +9,7 @@ export type Winner2025Section = {
   entries: Winner2025Entry[];
 };
 
-export const winner2025Image = '/assets/logo/logo.png';
+export const winner2025Image = '/assets/logo/Anil-Porter.jpg';
 
 const technologyIconEntries: Winner2025Entry[] = [
   { name: 'Anil Porter', category: 'AI Icon', company: 'ITQ Technologies' },

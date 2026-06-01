@@ -31,8 +31,8 @@ export default function Winner2025Page() {
 
                 <div className="winner-profile-body">
                   <h3>{winner.name}</h3>
-                  <p className="winner-profile-category">{winner.category}</p>
-                  <p className="winner-profile-company">{winner.company}</p>
+                  <p className="winner-profile-category">Category : {winner.category}</p>
+                  <p className="winner-profile-company">Company : {winner.company}</p>
                 </div>
               </article>
             ))}
