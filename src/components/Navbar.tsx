@@ -7,15 +7,15 @@ import { useEffect, useRef, useState } from 'react';
 
 const winnerLinks = [
   { label: 'Winner 2025', href: '/winners/winner-2025' },
-  { label: 'Winner 2024', href: '/winners/winner-2' },
-  { label: 'Winner 2023', href: '/winners/winner-3' },
-  { label: 'Winner 2022', href: '/winners/winner-4' },
+  { label: 'Winner 2024', href: '/winners/winner-2024' },
+  { label: 'Winner 2023', href: '/winners/winner-2023' },
+  { label: 'Winner 2022', href: '/winners/winner-2022' },
   { label: 'Winner 2021', href: '/winners/winner-5' },
   { label: 'Winner 2020', href: '/winners/winner-6' },
   { label: 'Winner 2019', href: '/winners/winner-7' },
-  { label: 'Winner 2018', href: '/winners/winner-8' },
-  { label: 'Winner 2017', href: '/winners/winner-9' },
-  { label: 'Winner 2016', href: '/winners/winner-10' },
+  { label: 'Winner 2018', href: '/winners/winner-2018' },
+  { label: 'Winner 2017', href: '/winners/winner-2017' },
+  { label: 'Winner 2016', href: '/winners/winner-2016' },
 ];
 
 const speakerLinks = [

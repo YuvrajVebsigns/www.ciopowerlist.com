@@ -36,23 +36,23 @@ export default function ExpertiseSection() {
 
   const bottomCards = [
     {
-      image: '/assets/aboutus/Award-logo1.png',
+      image: '/assets/aboutus/a1.png',
       title: 'Over 130+ CIOs will be recognised',
     },
     {
-      image: '/assets/aboutus/builb-logo.png',
+      image: '/assets/aboutus/a2.png',
       title: 'Technology at Work No Jury - Algorithm based evaluation to pick final winners',
     },
     {
-      image: '/assets/aboutus/dedicated-logo.png',
+      image: '/assets/aboutus/a3.png',
       title: 'Winners chosen basis Technology & Business Influence',
     },
     {
-      image: '/assets/aboutus/Award-logo.png',
+      image: '/assets/aboutus/a4.png',
       title: 'Symposium and Recognition Program',
     },
     {
-      image: '/assets/aboutus/Award-logo-dark1.png',
+      image: '/assets/aboutus/a5.png',
       title: 'Opportunity to - Learn | Engage | Celebrate',
     },
   ];
