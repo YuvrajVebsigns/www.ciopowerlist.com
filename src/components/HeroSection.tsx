@@ -16,11 +16,13 @@ export default function HeroSection() {
       <div className="hero-wrapper">
         <div className="hero-content">
           <div className="hero-badge">
-            <span className="hero-badge-icon">❋</span>
-            <span className="hero-badge-text">ARCHITECTING THE FUTURE</span>
+            <span className="hero-badge-icon">✦</span>
+            <span className="hero-badge-text">
+              CELEBRATING TECHNOLOGY LEADERSHIP - CIO POWERLIST 2026
+            </span>
           </div>
 
-          <h1 className="hero-title">Innovating measurable ways to connect with prospects.</h1>
+          <h1 className="hero-title">Unlocking Growth Through Technology Leadership</h1>
 
           <div className="hero-bottom">
             <div className="hero-arrow">
@@ -28,8 +30,8 @@ export default function HeroSection() {
             </div>
 
             <p className="hero-description">
-              Represents growth, expansion, and modern business solution present growth, present
-              growth, expansion.
+              Recognizing the leaders who leverage technology to accelerate growth, enhance customer
+              experiences, and build future-ready enterprises.
             </p>
           </div>
 

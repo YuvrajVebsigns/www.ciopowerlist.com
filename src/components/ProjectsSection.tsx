@@ -333,12 +333,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
-import { useState } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function ProjectsSection() {
-  const [activeVideo, setActiveVideo] = useState<number | null>(null);
-
   const customEvents = [
     {
       category: 'Custom Events',
@@ -352,18 +349,18 @@ export default function ProjectsSection() {
     },
   ];
 
-  const videos = [
-    {
-      category: 'Videos',
-      title: 'Interactive Learning Platform',
-      videoUrl: 'https://www.youtube.com/embed/o4LM01aE1PQ',
-    },
-    {
-      category: 'Videos',
-      title: 'Environmental Impact Dashboard',
-      videoUrl: 'https://www.youtube.com/embed/aQbU67vShTo',
-    },
-  ];
+  // const videos = [
+  //   {
+  //     category: 'Videos',
+  //     title: 'Interactive Learning Platform',
+  //     videoUrl: 'https://www.youtube.com/embed/o4LM01aE1PQ',
+  //   },
+  //   {
+  //     category: 'Videos',
+  //     title: 'Environmental Impact Dashboard',
+  //     videoUrl: 'https://www.youtube.com/embed/aQbU67vShTo',
+  //   },
+  // ];
 
   const customLeftRef = useScrollAnimation<HTMLDivElement>({
     animationClass: 'animate-fade-in-left',
@@ -372,18 +369,6 @@ export default function ProjectsSection() {
   });
 
   const customRightRef = useScrollAnimation<HTMLDivElement>({
-    animationClass: 'animate-fade-in-right',
-    initialTransform: 'translateX(40px)',
-    threshold: 0.12,
-  });
-
-  const videoLeftRef = useScrollAnimation<HTMLDivElement>({
-    animationClass: 'animate-fade-in-left',
-    initialTransform: 'translateX(-40px)',
-    threshold: 0.12,
-  });
-
-  const videoRightRef = useScrollAnimation<HTMLDivElement>({
     animationClass: 'animate-fade-in-right',
     initialTransform: 'translateX(40px)',
     threshold: 0.12,
@@ -434,62 +419,6 @@ export default function ProjectsSection() {
               </Link>
             );
           })}
-        </div>
-
-        <div className="project-top-bar">
-          <h6 className="project-subtitle">⬢ Video Showcase</h6>
-
-          <Link href="/videos" className="talk-btn">
-            <span>More Videos</span>
-            <div className="talk-btn-icon">
-              <ArrowUpRight size={18} />
-            </div>
-          </Link>
-        </div>
-
-        <div className="project-grid">
-          {videos.map((item, index) => (
-            <div
-              key={index}
-              className="project-card"
-              ref={index === 0 ? videoLeftRef : videoRightRef}
-            >
-              <div className="project-video-wrap" style={{ position: 'relative' }}>
-                <iframe
-                  key={activeVideo === index ? `play-${index}` : `pause-${index}`}
-                  src={
-                    activeVideo === index
-                      ? `${item.videoUrl}?autoplay=1&rel=0`
-                      : `${item.videoUrl}?rel=0`
-                  }
-                  title={item.title}
-                  loading="lazy"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-
-                {activeVideo !== index && (
-                  <div
-                    onClick={() => setActiveVideo(index)}
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      cursor: 'pointer',
-                      zIndex: 5,
-                    }}
-                  />
-                )}
-              </div>
-
-              <div className="project-overlay">
-                <span className="project-category">{item.category}</span>
-
-                <div className="project-content">
-                  <h3>{item.title}</h3>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </section>

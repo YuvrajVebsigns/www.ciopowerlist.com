@@ -24,7 +24,7 @@ export default function KeyClient() {
           <div className="clients-label">
             <span className="clients-label-icon">⬢</span>
 
-            <span className="clients-label-text">Key Clients</span>
+            <span className="clients-label-text">Our Partners</span>
           </div>
 
           {/* <h2 className="clients-title">
@@ -36,7 +36,7 @@ export default function KeyClient() {
 
         {/* Slider */}
 
-        <div className="clients-slider">
+        <div className="">
           <div className="clients-track">
             {[...logos, ...logos].map((logo, index) => (
               <div key={index} className="client-card">

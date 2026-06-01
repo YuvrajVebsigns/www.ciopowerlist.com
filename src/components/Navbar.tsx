@@ -5,31 +5,85 @@ import Image from 'next/image';
 import { Menu, X, ChevronDown, ArrowUpRight } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
+const winnerLinks = [
+  { label: 'Winner 2025', href: '/winners/winner-2025' },
+  { label: 'Winner 2024', href: '/winners/winner-2' },
+  { label: 'Winner 2023', href: '/winners/winner-3' },
+  { label: 'Winner 2022', href: '/winners/winner-4' },
+  { label: 'Winner 2021', href: '/winners/winner-5' },
+  { label: 'Winner 2020', href: '/winners/winner-6' },
+  { label: 'Winner 2019', href: '/winners/winner-7' },
+  { label: 'Winner 2018', href: '/winners/winner-8' },
+  { label: 'Winner 2017', href: '/winners/winner-9' },
+  { label: 'Winner 2016', href: '/winners/winner-10' },
+];
+
+const speakerLinks = [
+  { label: 'Speaker 2025', href: '/speakers/speaker-2025' },
+  { label: 'Speaker 2024', href: '/speakers/speaker-2024' },
+  { label: 'Speaker 2023', href: '/speakers/speaker-2023' },
+  { label: 'Speaker 2022', href: '/speakers/speaker-2019' },
+  { label: 'Speaker 2021', href: '/speakers/speaker-2020' },
+  { label: 'Speaker 2020', href: '/speakers/speaker-2021' },
+  { label: 'Speaker 2019', href: '/speakers/speaker-2022' },
+  { label: 'Speaker 2018', href: '/speakers/speaker-2023' },
+  { label: 'Speaker 2017', href: '/speakers/speaker-2024' },
+  { label: 'Speaker 2016', href: '/speakers/speaker-2025' },
+];
+
 export default function Navbar() {
   const [isHidden, setIsHidden] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const servicesCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [winnersOpen, setWinnersOpen] = useState(false);
+  const [speakersOpen, setSpeakersOpen] = useState(false);
+  const winnersCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const speakersCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const openServices = () => {
-    if (servicesCloseTimer.current) {
-      clearTimeout(servicesCloseTimer.current);
-      servicesCloseTimer.current = null;
+  const openWinners = () => {
+    if (winnersCloseTimer.current) {
+      clearTimeout(winnersCloseTimer.current);
+      winnersCloseTimer.current = null;
     }
 
-    setServicesOpen(true);
+    setWinnersOpen(true);
   };
 
-  const closeServices = () => {
-    if (servicesCloseTimer.current) {
-      clearTimeout(servicesCloseTimer.current);
+  const closeWinners = () => {
+    if (winnersCloseTimer.current) {
+      clearTimeout(winnersCloseTimer.current);
     }
 
-    servicesCloseTimer.current = setTimeout(() => {
-      setServicesOpen(false);
-      servicesCloseTimer.current = null;
+    winnersCloseTimer.current = setTimeout(() => {
+      setWinnersOpen(false);
+      winnersCloseTimer.current = null;
     }, 140);
+  };
+
+  const openSpeakers = () => {
+    if (speakersCloseTimer.current) {
+      clearTimeout(speakersCloseTimer.current);
+      speakersCloseTimer.current = null;
+    }
+
+    setSpeakersOpen(true);
+  };
+
+  const closeSpeakers = () => {
+    if (speakersCloseTimer.current) {
+      clearTimeout(speakersCloseTimer.current);
+    }
+
+    speakersCloseTimer.current = setTimeout(() => {
+      setSpeakersOpen(false);
+      speakersCloseTimer.current = null;
+    }, 140);
+  };
+
+  const closeAllMenus = () => {
+    setMobileOpen(false);
+    setWinnersOpen(false);
+    setSpeakersOpen(false);
   };
 
   useEffect(() => {
@@ -51,8 +105,12 @@ export default function Navbar() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
 
-      if (servicesCloseTimer.current) {
-        clearTimeout(servicesCloseTimer.current);
+      if (winnersCloseTimer.current) {
+        clearTimeout(winnersCloseTimer.current);
+      }
+
+      if (speakersCloseTimer.current) {
+        clearTimeout(speakersCloseTimer.current);
       }
     };
   }, [lastScrollY]);
@@ -145,76 +203,113 @@ export default function Navbar() {
             </div> */}
           {/* </div> */}
 
+          <Link href="/register" className="nav-link" onClick={closeAllMenus}>
+            Registration
+          </Link>
+          <Link href="/nominate" className="nav-link" onClick={closeAllMenus}>
+            Nominate
+          </Link>
+          {/* <Link href="/partners" className="nav-link" onClick={closeAllMenus}>
+            Partners
+          </Link> */}
+          <Link href="/blog" className="nav-link" onClick={closeAllMenus}>
+            Blog
+          </Link>
           <div
-            className={`nav-dropdown ${servicesOpen ? 'open' : ''}`}
-            onMouseEnter={openServices}
-            onMouseLeave={closeServices}
+            className={`nav-dropdown ${winnersOpen ? 'open' : ''}`}
+            onMouseEnter={openWinners}
+            onMouseLeave={closeWinners}
           >
             <button
               type="button"
               className="nav-link"
-              aria-expanded={servicesOpen}
-              onClick={openServices}
+              aria-expanded={winnersOpen}
+              onClick={openWinners}
             >
-              Services
+              Winners
               <ChevronDown size={16} />
             </button>
-            {/* Mega panel for Services */}
-            <div className="mega-panel" onMouseEnter={openServices} onMouseLeave={closeServices}>
-              <div className="mega-column">
-                {/* <h4>Our Services</h4> */}
-                <ul>
-                  {/* <li>
-                    <Link href="/survey" className="mega-item">
-                      <span className="mega-icon" aria-hidden />
-                      <span>Survey</span>
-                    </Link>
-                  </li> */}
-                  <li>
-                    <Link
-                      href="/videos"
-                      className="mega-item"
-                      onClick={() => setServicesOpen(false)}
-                    >
-                      <span className="mega-icon" aria-hidden />
-                      <span>Video</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/events"
-                      className="mega-item"
-                      onClick={() => setServicesOpen(false)}
-                    >
-                      <span className="mega-icon" aria-hidden />
-                      <span> Events</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/dialoges"
-                      className="mega-item"
-                      onClick={() => setServicesOpen(false)}
-                    >
-                      <span className="mega-icon" aria-hidden />
-                      <span>Dialogues</span>
-                    </Link>
-                  </li>
-                </ul>
+            {winnersOpen && (
+              <div className="mega-panel" onMouseEnter={openWinners} onMouseLeave={closeWinners}>
+                <div className="mega-inner">
+                  <div className="mega-column">
+                    <ul>
+                      {winnerLinks.slice(0, 5).map((winner) => (
+                        <li key={winner.href}>
+                          <Link href={winner.href} className="mega-item" onClick={closeAllMenus}>
+                            <span className="mega-icon" aria-hidden />
+                            <span>{winner.label}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mega-column">
+                    <ul>
+                      {winnerLinks.slice(5).map((winner) => (
+                        <li key={winner.href}>
+                          <Link href={winner.href} className="mega-item" onClick={closeAllMenus}>
+                            <span className="mega-icon" aria-hidden />
+                            <span>{winner.label}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
-          <Link href="/blog" className="nav-link" onClick={() => setMobileOpen(false)}>
-            Blog
-          </Link>
-          <Link href="/register" className="nav-link" onClick={() => setMobileOpen(false)}>
-            Registration
-          </Link>
-          <Link href="/nominate" className="nav-link" onClick={() => setMobileOpen(false)}>
-            Nominate
-          </Link>
-          <Link href="/#contact-section" className="nav-link" onClick={() => setMobileOpen(false)}>
+          <div
+            className={`nav-dropdown ${speakersOpen ? 'open' : ''}`}
+            onMouseEnter={openSpeakers}
+            onMouseLeave={closeSpeakers}
+          >
+            <button
+              type="button"
+              className="nav-link"
+              aria-expanded={speakersOpen}
+              onClick={openSpeakers}
+            >
+              Speakers
+              <ChevronDown size={16} />
+            </button>
+            {speakersOpen && (
+              <div className="mega-panel" onMouseEnter={openSpeakers} onMouseLeave={closeSpeakers}>
+                <div className="mega-inner">
+                  <div className="mega-column">
+                    <ul>
+                      {speakerLinks.slice(0, 5).map((speaker) => (
+                        <li key={speaker.href}>
+                          <Link href={speaker.href} className="mega-item" onClick={closeAllMenus}>
+                            <span className="mega-icon" aria-hidden />
+                            <span>{speaker.label}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mega-column">
+                    <ul>
+                      {speakerLinks.slice(5).map((speaker) => (
+                        <li key={speaker.href}>
+                          <Link href={speaker.href} className="mega-item" onClick={closeAllMenus}>
+                            <span className="mega-icon" aria-hidden />
+                            <span>{speaker.label}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <Link href="/#contact-section" className="nav-link" onClick={closeAllMenus}>
             Contact
           </Link>
         </nav>
