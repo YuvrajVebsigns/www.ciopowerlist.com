@@ -11548,3 +11548,378 @@ s .dialogues-badge-mark {
   border: 2px;
   box-shadow: 0 21px 44px rgba(164, 0, 0, 0.16);
 } */
+
+.blogs-heading {
+  width: 100%;
+  margin: 0 auto 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.blogs-subtitle {
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  line-height: 1;
+}
+
+.blogs-subtitle-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  display: block;
+  object-fit: contain;
+}
+
+.blogs-subtitle-text {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  color: #111111;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.blogs-title {
+  margin: 0;
+  padding: 0;
+  color: #111111;
+  font-size: clamp(42px, 5vw, 70px);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.blogs-title span {
+  color: #a30b0b;
+}
+
+/* Tablet */
+
+@media (max-width: 768px) {
+  .blogs-heading {
+    margin-bottom: 34px;
+    gap: 7px;
+  }
+
+  .blogs-subtitle-text {
+    font-size: 15px;
+  }
+
+  .blogs-subtitle-icon {
+    width: 16px;
+    height: 16px;
+    flex-basis: 16px;
+  }
+
+  .blogs-title {
+    font-size: clamp(38px, 10vw, 54px);
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 480px) {
+  .blogs-heading {
+    margin-bottom: 28px;
+    gap: 6px;
+  }
+
+  .blogs-subtitle {
+    gap: 6px;
+  }
+
+  .blogs-subtitle-text {
+    font-size: 13px;
+    letter-spacing: 0.3px;
+  }
+
+  .blogs-subtitle-icon {
+    width: 14px;
+    height: 14px;
+    flex-basis: 14px;
+  }
+
+  .blogs-title {
+    font-size: 38px;
+  }
+}
+
+/* =========================================================
+   DYNAMIC EVENT SPONSORS
+========================================================= */
+
+.dynamic-sponsors-section {
+  width: 100%;
+  margin-top: 56px;
+  padding: 52px 32px;
+  box-sizing: border-box;
+
+  background: #fff7f7;
+  border: 1px solid rgba(157, 0, 0, 0.08);
+  border-radius: 28px;
+}
+
+.dynamic-sponsors-heading {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto 36px;
+  text-align: center;
+}
+
+.dynamic-sponsors-kicker {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 7px 14px;
+
+  color: #980000;
+  background: rgba(157, 0, 0, 0.08);
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.dynamic-sponsors-heading h2 {
+  margin: 0 0 12px;
+
+  color: #171717;
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.15;
+}
+
+.dynamic-sponsors-heading p {
+  margin: 0;
+
+  color: #686868;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.dynamic-sponsors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+}
+
+.dynamic-sponsor-card {
+  position: relative;
+  min-width: 0;
+  min-height: 320px;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+
+  background: #ffffff;
+  border: 1px solid rgba(157, 0, 0, 0.1);
+  border-radius: 20px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.dynamic-sponsor-card:hover {
+  transform: translateY(-5px);
+
+  border-color: rgba(157, 0, 0, 0.25);
+
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.1);
+}
+
+.dynamic-sponsor-badges {
+  width: 100%;
+  min-height: 25px;
+  margin-bottom: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.dynamic-sponsor-tier,
+.dynamic-sponsor-type {
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.dynamic-sponsor-tier {
+  color: #980000;
+  background: #f8e4e4;
+}
+
+.dynamic-sponsor-type {
+  color: #333333;
+  background: #eeeeee;
+}
+
+.dynamic-sponsor-logo-wrap {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 18px;
+  padding: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  background: #ffffff;
+  border-radius: 14px;
+}
+
+.dynamic-sponsor-logo {
+  width: 100%;
+  max-width: 190px;
+  height: 82px;
+
+  display: block;
+  object-fit: contain;
+  object-position: center;
+}
+
+.dynamic-sponsor-card h3 {
+  margin: 0 0 8px;
+
+  color: #171717;
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.dynamic-sponsor-person {
+  margin: 0 0 4px;
+
+  color: #333333;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.dynamic-sponsor-designation {
+  margin: 0 0 12px;
+
+  color: #980000;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dynamic-sponsor-description {
+  margin: 0 0 16px;
+
+  color: #686868;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.dynamic-sponsor-link {
+  margin-top: auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  color: #980000;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.event-description-content {
+  margin-top: 42px;
+}
+
+.event-extra-sections {
+  margin-top: 36px;
+}
+
+.event-extra-section {
+  margin-top: 24px;
+}
+
+.event-extra-section p {
+  margin: 0 0 12px;
+  line-height: 1.8;
+}
+
+.event-actions {
+  margin-top: 36px;
+
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+@media (max-width: 768px) {
+  .dynamic-sponsors-section {
+    margin-top: 40px;
+    padding: 38px 18px;
+    border-radius: 20px;
+  }
+
+  .dynamic-sponsors-heading {
+    margin-bottom: 28px;
+  }
+
+  .dynamic-sponsors-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .dynamic-sponsor-card {
+    min-height: 290px;
+    padding: 18px 14px;
+  }
+
+  .dynamic-sponsor-logo-wrap {
+    height: 88px;
+  }
+
+  .dynamic-sponsor-logo {
+    height: 68px;
+  }
+}
+
+@media (max-width: 520px) {
+  .dynamic-sponsors-section {
+    padding: 32px 14px;
+  }
+
+  .dynamic-sponsors-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dynamic-sponsor-card {
+    min-height: auto;
+  }
+
+  .event-actions {
+    flex-direction: column;
+  }
+}

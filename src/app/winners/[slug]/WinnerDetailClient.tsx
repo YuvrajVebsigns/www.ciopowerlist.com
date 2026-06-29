@@ -1,41 +1,166 @@
 // 'use client';
 
 // import { useEffect, useState } from 'react';
-// import { fetchWebsitePageBySlug, WebsitePage } from '@/services/pages.service';
+// import { fetchWebsitePageBySlug, type WebsitePage } from '@/services/pages.service';
 
 // type WinnerDetailClientProps = {
 //   slug: string;
 //   kicker?: string;
 // };
 
+// type TestimonialSection = {
+//   title: string;
+//   testimonials: unknown[];
+// };
+
+// type WinnerCardProps = {
+//   testimonial: unknown;
+//   sectionTitle: string;
+//   index: number;
+// };
+
+// const FALLBACK_WINNER_IMAGE = '/assets/team/1.jpg';
+
+// function isRecord(value: unknown): value is Record<string, unknown> {
+//   return typeof value === 'object' && value !== null;
+// }
+
+// function getString(value: unknown): string {
+//   return typeof value === 'string' ? value.trim() : '';
+// }
+
+// /**
+//  * String image URL aur media object dono handle karta hai.
+//  */
+// function getWinnerImageUrl(value: unknown): string {
+//   if (typeof value === 'string') {
+//     return value.trim();
+//   }
+
+//   if (!isRecord(value)) {
+//     return '';
+//   }
+
+//   const urlVariants = isRecord(value.urlVariants) ? value.urlVariants : null;
+
+//   return (
+//     getString(value.url) ||
+//     getString(value.original) ||
+//     getString(value.large) ||
+//     getString(value.medium) ||
+//     getString(value.small) ||
+//     getString(value.thumbnail) ||
+//     getString(urlVariants?.large) ||
+//     getString(urlVariants?.medium) ||
+//     getString(urlVariants?.small) ||
+//     getString(urlVariants?.thumbnail)
+//   );
+// }
+
+// function WinnerCard({ testimonial, sectionTitle, index }: WinnerCardProps) {
+//   const entry = isRecord(testimonial) ? testimonial : {};
+
+//   const author =
+//     getString(entry.author) || getString(entry.name) || getString(entry.fullName) || 'Winner Name';
+
+//   const role =
+//     getString(entry.role) ||
+//     getString(entry.designation) ||
+//     getString(entry.position) ||
+//     getString(entry.company) ||
+//     'Winner';
+
+//   const quote = getString(entry.quote) || getString(entry.description) || getString(entry.message);
+
+//   const apiImage =
+//     getWinnerImageUrl(entry.avatar) ||
+//     getWinnerImageUrl(entry.image) ||
+//     getWinnerImageUrl(entry.photo) ||
+//     getWinnerImageUrl(entry.profileImage) ||
+//     getWinnerImageUrl(entry.profilePhoto) ||
+//     FALLBACK_WINNER_IMAGE;
+
+//   const [imageSrc, setImageSrc] = useState(apiImage);
+
+//   useEffect(() => {
+//     setImageSrc(apiImage);
+//   }, [apiImage]);
+
+//   function handleImageError() {
+//     if (imageSrc !== FALLBACK_WINNER_IMAGE) {
+//       setImageSrc(FALLBACK_WINNER_IMAGE);
+//     }
+//   }
+
+//   return (
+//     <article
+//       className="winner-profile-card winner-profile-card--red"
+//       data-section={sectionTitle}
+//       data-index={index}
+//     >
+//       <div className="winner-profile-media">
+//         <img
+//           src={imageSrc}
+//           alt={author}
+//           className="winner-profile-image"
+//           loading="lazy"
+//           onError={handleImageError}
+//         />
+//       </div>
+
+//       <div className="winner-profile-body">
+//         <h3>{author}</h3>
+
+//         <p className="winner-profile-category">{role}</p>
+
+//         {quote ? <p className="winner-profile-company">&quot;{quote}&quot;</p> : null}
+//       </div>
+//     </article>
+//   );
+// }
+
 // export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientProps) {
 //   const [page, setPage] = useState<WebsitePage | null>(null);
+
 //   const [isLoading, setIsLoading] = useState(true);
+
 //   const [error, setError] = useState<string | null>(null);
 
 //   useEffect(() => {
 //     let isMounted = true;
 
 //     async function loadPage() {
-//       setIsLoading(true);
-//       setError(null);
-
 //       try {
+//         setIsLoading(true);
+//         setError(null);
+
 //         const response = await fetchWebsitePageBySlug(slug);
-//         if (!isMounted) return;
+
+//         if (!isMounted) {
+//           return;
+//         }
 
 //         if (response?.success && response.data) {
 //           setPage(response.data);
 //           return;
 //         }
 
+//         setPage(null);
 //         setError(response?.message ?? 'Unable to load winner page.');
 //       } catch (err: unknown) {
+//         if (!isMounted) {
+//           return;
+//         }
+
+//         setPage(null);
+
 //         setError(
 //           err instanceof Error ? err.message : 'Unable to load winner page. Please try again.',
 //         );
 //       } finally {
-//         if (isMounted) setIsLoading(false);
+//         if (isMounted) {
+//           setIsLoading(false);
+//         }
 //       }
 //     }
 
@@ -51,6 +176,7 @@
 //       <main className="winners-detail-page">
 //         <section className="winners-detail-card">
 //           <p className="winners-kicker">Loading winner...</p>
+
 //           <p>Fetching page data for {slug}.</p>
 //         </section>
 //       </main>
@@ -62,6 +188,7 @@
 //       <main className="winners-detail-page">
 //         <section className="winners-detail-card">
 //           <p className="winners-kicker">Unable to load winner</p>
+
 //           <p>{error}</p>
 //         </section>
 //       </main>
@@ -73,6 +200,7 @@
 //       <main className="winners-detail-page">
 //         <section className="winners-detail-card">
 //           <p className="winners-kicker">Winner not found</p>
+
 //           <p>No winner page was returned for the slug {slug}.</p>
 //         </section>
 //       </main>
@@ -80,22 +208,23 @@
 //   }
 
 //   const pageSections = Array.isArray(page.sections) ? page.sections : [];
+
 //   const pageBlocks = Array.isArray(page.content?.blocks) ? page.content.blocks : [];
 
-//   const getSectionItems = (section: unknown) => {
+//   function getSectionItems(section: unknown): unknown[] {
 //     if (Array.isArray(section)) {
-//       return section as unknown[];
+//       return section;
 //     }
 
-//     if (typeof section !== 'object' || section === null) {
+//     if (!isRecord(section)) {
 //       return [];
 //     }
 
-//     const sectionRecord = section as Record<string, unknown>;
-//     const data = sectionRecord.data as Record<string, unknown> | undefined;
+//     const data = isRecord(section.data) ? section.data : null;
+
 //     const candidates: unknown[] = [];
 
-//     if (data && typeof data === 'object') {
+//     if (data) {
 //       candidates.push(
 //         data.testimonials,
 //         data.items,
@@ -108,108 +237,173 @@
 //     }
 
 //     candidates.push(
-//       sectionRecord.testimonials,
-//       sectionRecord.items,
-//       sectionRecord.members,
-//       sectionRecord.winners,
-//       sectionRecord.rows,
-//       sectionRecord.blocks,
-//       sectionRecord.values,
+//       section.testimonials,
+//       section.items,
+//       section.members,
+//       section.winners,
+//       section.rows,
+//       section.blocks,
+//       section.values,
 //     );
 
 //     for (const candidate of candidates) {
 //       if (Array.isArray(candidate)) {
-//         return candidate as unknown[];
+//         return candidate;
 //       }
 //     }
 
 //     return [];
-//   };
+//   }
 
-//   const buildSections = (items: unknown[]) =>
-//     items
+//   function buildSections(items: unknown[]): TestimonialSection[] {
+//     return items
 //       .map((section) => {
-//         const sectionRecord = section as Record<string, unknown>;
-//         const sectionData = sectionRecord.data as Record<string, unknown> | undefined;
+//         if (!isRecord(section)) {
+//           return {
+//             title: page.title ?? 'Winner Profiles',
+//             testimonials: [],
+//           };
+//         }
+
+//         const sectionData = isRecord(section.data) ? section.data : null;
+
 //         const testimonials = getSectionItems(section);
 
+//         const title =
+//           getString(sectionData?.sectionTitle) ||
+//           getString(sectionData?.title) ||
+//           getString(section.title) ||
+//           getString(section.type) ||
+//           page.title ||
+//           'Winner Profiles';
+
 //         return {
-//           title:
-//             typeof sectionData?.sectionTitle === 'string'
-//               ? sectionData.sectionTitle
-//               : typeof sectionData?.title === 'string'
-//                 ? sectionData.title
-//                 : typeof sectionRecord.title === 'string'
-//                   ? sectionRecord.title
-//                   : typeof sectionRecord.type === 'string'
-//                     ? sectionRecord.type
-//                     : (page.title ?? 'Winner Profiles'),
+//           title,
 //           testimonials,
 //         };
 //       })
 //       .filter((section) => section.testimonials.length > 0);
+//   }
 
 //   let testimonialSections = buildSections(pageSections);
+
 //   if (testimonialSections.length === 0 && pageBlocks.length > 0) {
 //     testimonialSections = buildSections(pageBlocks);
 //   }
+
+//   const allTestimonials = testimonialSections.flatMap((section) => section.testimonials);
+
+//   const technologyIcons = allTestimonials.filter((item) => {
+//     if (!isRecord(item)) {
+//       return false;
+//     }
+
+//     const category = String(
+//       item.category ?? item.type ?? item.group ?? item.awardCategory ?? '',
+//     ).toLowerCase();
+
+//     return category.includes('technology');
+//   });
+
+//   const businessIcons = allTestimonials.filter((item) => {
+//     if (!isRecord(item)) {
+//       return false;
+//     }
+
+//     const category = String(
+//       item.category ?? item.type ?? item.group ?? item.awardCategory ?? '',
+//     ).toLowerCase();
+
+//     return category.includes('business');
+//   });
+
+//   const showIconSections = technologyIcons.length > 0 || businessIcons.length > 0;
 
 //   return (
 //     <main className="winners-detail-page">
 //       <section className="winners-detail-card">
 //         <p className="winners-kicker">{kicker ?? 'Winners'}</p>
+
 //         <h1>{page.title}</h1>
+
 //         <p>
 //           Showcasing exceptional leaders who are driving digital transformation, business growth,
 //           and innovation across industries.
 //         </p>
+
 //         {page.shortDescription ? (
 //           <p className="winners-detail-summary">{page.shortDescription}</p>
 //         ) : null}
 //       </section>
 
-//       {testimonialSections && testimonialSections.length > 0 ? (
+//       {showIconSections ? (
+//         <>
+//           {technologyIcons.length > 0 ? (
+//             <section className="winner-section-block">
+//               <div className="winner-section-header winner-section-header--centered">
+//                 <p className="winner-section-kicker">Winner Profiles</p>
+
+//                 <h2>TECHNOLOGY ICONS</h2>
+
+//                 <span>{technologyIcons.length} Members</span>
+//               </div>
+
+//               <div className="winner-section-grid">
+//                 {technologyIcons.map((testimonial, index) => (
+//                   <WinnerCard
+//                     key={`technology-${index}`}
+//                     testimonial={testimonial}
+//                     sectionTitle="TECHNOLOGY ICONS"
+//                     index={index}
+//                   />
+//                 ))}
+//               </div>
+//             </section>
+//           ) : null}
+
+//           {businessIcons.length > 0 ? (
+//             <section className="winner-section-block">
+//               <div className="winner-section-header winner-section-header--centered">
+//                 <p className="winner-section-kicker">Winner Profiles</p>
+
+//                 <h2>BUSINESS ICONS</h2>
+
+//                 <span>{businessIcons.length} Members</span>
+//               </div>
+
+//               <div className="winner-section-grid">
+//                 {businessIcons.map((testimonial, index) => (
+//                   <WinnerCard
+//                     key={`business-${index}`}
+//                     testimonial={testimonial}
+//                     sectionTitle="BUSINESS ICONS"
+//                     index={index}
+//                   />
+//                 ))}
+//               </div>
+//             </section>
+//           ) : null}
+//         </>
+//       ) : testimonialSections.length > 0 ? (
 //         testimonialSections.map((section, sectionIndex) => (
-//           <section key={sectionIndex} className="winner-section-block">
+//           <section key={`${section.title}-${sectionIndex}`} className="winner-section-block">
 //             <div className="winner-section-header winner-section-header--centered">
 //               <p className="winner-section-kicker">Winner Profiles</p>
+
 //               <h2>{section.title || 'Winner Profiles'}</h2>
+
 //               <span>{section.testimonials.length} Members</span>
 //             </div>
 
 //             <div className="winner-section-grid">
-//               {section.testimonials.map((testimonial, index) => {
-//                 const entry = testimonial as Record<string, unknown>;
-//                 return (
-//                   <article
-//                     key={`${section.title}-${index}`}
-//                     className="winner-profile-card winner-profile-card--red"
-//                   >
-//                     <div className="winner-profile-media">
-//                       <img
-//                         src={
-//                           typeof entry.avatar === 'string' && entry.avatar
-//                             ? entry.avatar
-//                             : '/assets/default-winner.png'
-//                         }
-//                         alt={typeof entry.author === 'string' ? entry.author : 'Winner'}
-//                         className="winner-profile-image"
-//                       />
-//                     </div>
-
-//                     <div className="winner-profile-body">
-//                       <h3>{typeof entry.author === 'string' ? entry.author : 'Winner Name'}</h3>
-//                       <p className="winner-profile-category">
-//                         {/* Company: */}
-//                         {typeof entry.role === 'string' ? entry.role.trim() : 'Winner'}
-//                       </p>
-//                       {typeof entry.quote === 'string' && entry.quote ? (
-//                         <p className="winner-profile-company">&quot;{entry.quote}&quot;</p>
-//                       ) : null}
-//                     </div>
-//                   </article>
-//                 );
-//               })}
+//               {section.testimonials.map((testimonial, index) => (
+//                 <WinnerCard
+//                   key={`${section.title}-${index}`}
+//                   testimonial={testimonial}
+//                   sectionTitle={section.title}
+//                   index={index}
+//                 />
+//               ))}
 //             </div>
 //           </section>
 //         ))
@@ -225,7 +419,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchWebsitePageBySlug, WebsitePage } from '@/services/pages.service';
+import { fetchWebsitePageBySlug, type WebsitePage } from '@/services/pages.service';
 
 type WinnerDetailClientProps = {
   slug: string;
@@ -237,44 +431,107 @@ type TestimonialSection = {
   testimonials: unknown[];
 };
 
-function WinnerCard({
-  testimonial,
-  sectionTitle,
-  index,
-}: {
+type WinnerCardProps = {
   testimonial: unknown;
   sectionTitle: string;
   index: number;
-}) {
-  const entry = testimonial as Record<string, unknown>;
+};
+
+const FALLBACK_WINNER_IMAGE = '/assets/team/1.jpg';
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function getString(value: unknown): string {
+  return typeof value === 'string' ? value.trim() : '';
+}
+
+/**
+ * Normal URL aur API media object dono handle karega.
+ */
+function getWinnerImageUrl(value: unknown): string {
+  if (typeof value === 'string') {
+    return value.trim();
+  }
+
+  if (!isRecord(value)) {
+    return '';
+  }
+
+  const urlVariants = isRecord(value.urlVariants) ? value.urlVariants : null;
+
+  return (
+    getString(value.url) ||
+    getString(value.original) ||
+    getString(value.large) ||
+    getString(value.medium) ||
+    getString(value.small) ||
+    getString(value.thumbnail) ||
+    getString(urlVariants?.large) ||
+    getString(urlVariants?.medium) ||
+    getString(urlVariants?.small) ||
+    getString(urlVariants?.thumbnail)
+  );
+}
+
+function WinnerCard({ testimonial, sectionTitle, index }: WinnerCardProps) {
+  const entry = isRecord(testimonial) ? testimonial : {};
+
+  const author =
+    getString(entry.author) || getString(entry.name) || getString(entry.fullName) || 'Winner Name';
+
+  const role =
+    getString(entry.role) ||
+    getString(entry.designation) ||
+    getString(entry.position) ||
+    getString(entry.company) ||
+    'Winner';
+
+  const quote = getString(entry.quote) || getString(entry.description) || getString(entry.message);
+
+  const apiImage =
+    getWinnerImageUrl(entry.avatar) ||
+    getWinnerImageUrl(entry.image) ||
+    getWinnerImageUrl(entry.photo) ||
+    getWinnerImageUrl(entry.profileImage) ||
+    getWinnerImageUrl(entry.profilePhoto) ||
+    FALLBACK_WINNER_IMAGE;
+
+  const [imageSrc, setImageSrc] = useState(apiImage);
+
+  useEffect(() => {
+    setImageSrc(apiImage);
+  }, [apiImage]);
+
+  function handleImageError() {
+    if (imageSrc !== FALLBACK_WINNER_IMAGE) {
+      setImageSrc(FALLBACK_WINNER_IMAGE);
+    }
+  }
 
   return (
     <article
-      key={`${sectionTitle}-${index}`}
       className="winner-profile-card winner-profile-card--red"
+      data-section={sectionTitle}
+      data-index={index}
     >
       <div className="winner-profile-media">
         <img
-          src={
-            typeof entry.avatar === 'string' && entry.avatar
-              ? entry.avatar
-              : '/assets/default-winner.png'
-          }
-          alt={typeof entry.author === 'string' ? entry.author : 'Winner'}
+          src={imageSrc}
+          alt={author}
           className="winner-profile-image"
+          loading="lazy"
+          onError={handleImageError}
         />
       </div>
 
       <div className="winner-profile-body">
-        <h3>{typeof entry.author === 'string' ? entry.author : 'Winner Name'}</h3>
+        <h3>{author}</h3>
 
-        <p className="winner-profile-category">
-          {typeof entry.role === 'string' ? entry.role.trim() : 'Winner'}
-        </p>
+        <p className="winner-profile-category">{role}</p>
 
-        {typeof entry.quote === 'string' && entry.quote ? (
-          <p className="winner-profile-company">&quot;{entry.quote}&quot;</p>
-        ) : null}
+        {quote ? <p className="winner-profile-company">&quot;{quote}&quot;</p> : null}
       </div>
     </article>
   );
@@ -282,32 +539,47 @@ function WinnerCard({
 
 export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientProps) {
   const [page, setPage] = useState<WebsitePage | null>(null);
+
   const [isLoading, setIsLoading] = useState(true);
+
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
 
     async function loadPage() {
-      setIsLoading(true);
-      setError(null);
-
       try {
+        setIsLoading(true);
+        setError(null);
+
         const response = await fetchWebsitePageBySlug(slug);
-        if (!isMounted) return;
+
+        if (!isMounted) {
+          return;
+        }
 
         if (response?.success && response.data) {
           setPage(response.data);
           return;
         }
 
+        setPage(null);
+
         setError(response?.message ?? 'Unable to load winner page.');
       } catch (err: unknown) {
+        if (!isMounted) {
+          return;
+        }
+
+        setPage(null);
+
         setError(
           err instanceof Error ? err.message : 'Unable to load winner page. Please try again.',
         );
       } finally {
-        if (isMounted) setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     }
 
@@ -323,6 +595,7 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
       <main className="winners-detail-page">
         <section className="winners-detail-card">
           <p className="winners-kicker">Loading winner...</p>
+
           <p>Fetching page data for {slug}.</p>
         </section>
       </main>
@@ -334,6 +607,7 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
       <main className="winners-detail-page">
         <section className="winners-detail-card">
           <p className="winners-kicker">Unable to load winner</p>
+
           <p>{error}</p>
         </section>
       </main>
@@ -345,29 +619,40 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
       <main className="winners-detail-page">
         <section className="winners-detail-card">
           <p className="winners-kicker">Winner not found</p>
+
           <p>No winner page was returned for the slug {slug}.</p>
         </section>
       </main>
     );
   }
 
-  const pageSections = Array.isArray(page.sections) ? page.sections : [];
-  const pageBlocks = Array.isArray(page.content?.blocks) ? page.content.blocks : [];
+  /*
+   * page null check ke baad primitive/local values
+   * banaye gaye hain. Nested functions mein ab
+   * nullable page state access nahi hogi.
+   */
+  const pageTitle = page.title?.trim() || 'Winner Profiles';
 
-  const getSectionItems = (section: unknown) => {
+  const pageShortDescription = page.shortDescription?.trim() || '';
+
+  const pageSections: unknown[] = Array.isArray(page.sections) ? page.sections : [];
+
+  const pageBlocks: unknown[] = Array.isArray(page.content?.blocks) ? page.content.blocks : [];
+
+  function getSectionItems(section: unknown): unknown[] {
     if (Array.isArray(section)) {
-      return section as unknown[];
+      return section;
     }
 
-    if (typeof section !== 'object' || section === null) {
+    if (!isRecord(section)) {
       return [];
     }
 
-    const sectionRecord = section as Record<string, unknown>;
-    const data = sectionRecord.data as Record<string, unknown> | undefined;
+    const data = isRecord(section.data) ? section.data : null;
+
     const candidates: unknown[] = [];
 
-    if (data && typeof data === 'object') {
+    if (data) {
       candidates.push(
         data.testimonials,
         data.items,
@@ -380,46 +665,52 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
     }
 
     candidates.push(
-      sectionRecord.testimonials,
-      sectionRecord.items,
-      sectionRecord.members,
-      sectionRecord.winners,
-      sectionRecord.rows,
-      sectionRecord.blocks,
-      sectionRecord.values,
+      section.testimonials,
+      section.items,
+      section.members,
+      section.winners,
+      section.rows,
+      section.blocks,
+      section.values,
     );
 
     for (const candidate of candidates) {
       if (Array.isArray(candidate)) {
-        return candidate as unknown[];
+        return candidate;
       }
     }
 
     return [];
-  };
+  }
 
-  const buildSections = (items: unknown[]): TestimonialSection[] =>
-    items
-      .map((section) => {
-        const sectionRecord = section as Record<string, unknown>;
-        const sectionData = sectionRecord.data as Record<string, unknown> | undefined;
+  function buildSections(items: unknown[]): TestimonialSection[] {
+    return items
+      .map((section): TestimonialSection => {
+        if (!isRecord(section)) {
+          return {
+            title: pageTitle,
+            testimonials: [],
+          };
+        }
+
+        const sectionData = isRecord(section.data) ? section.data : null;
+
         const testimonials = getSectionItems(section);
 
+        const title =
+          getString(sectionData?.sectionTitle) ||
+          getString(sectionData?.title) ||
+          getString(section.title) ||
+          getString(section.type) ||
+          pageTitle;
+
         return {
-          title:
-            typeof sectionData?.sectionTitle === 'string'
-              ? sectionData.sectionTitle
-              : typeof sectionData?.title === 'string'
-                ? sectionData.title
-                : typeof sectionRecord.title === 'string'
-                  ? sectionRecord.title
-                  : typeof sectionRecord.type === 'string'
-                    ? sectionRecord.type
-                    : (page.title ?? 'Winner Profiles'),
+          title,
           testimonials,
         };
       })
       .filter((section) => section.testimonials.length > 0);
+  }
 
   let testimonialSections = buildSections(pageSections);
 
@@ -430,18 +721,24 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
   const allTestimonials = testimonialSections.flatMap((section) => section.testimonials);
 
   const technologyIcons = allTestimonials.filter((item) => {
-    const entry = item as Record<string, unknown>;
+    if (!isRecord(item)) {
+      return false;
+    }
+
     const category = String(
-      entry.category ?? entry.type ?? entry.group ?? entry.awardCategory ?? '',
+      item.category ?? item.type ?? item.group ?? item.awardCategory ?? '',
     ).toLowerCase();
 
     return category.includes('technology');
   });
 
   const businessIcons = allTestimonials.filter((item) => {
-    const entry = item as Record<string, unknown>;
+    if (!isRecord(item)) {
+      return false;
+    }
+
     const category = String(
-      entry.category ?? entry.type ?? entry.group ?? entry.awardCategory ?? '',
+      item.category ?? item.type ?? item.group ?? item.awardCategory ?? '',
     ).toLowerCase();
 
     return category.includes('business');
@@ -453,14 +750,16 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
     <main className="winners-detail-page">
       <section className="winners-detail-card">
         <p className="winners-kicker">{kicker ?? 'Winners'}</p>
-        <h1>{page.title}</h1>
+
+        <h1>{pageTitle}</h1>
+
         <p>
           Showcasing exceptional leaders who are driving digital transformation, business growth,
           and innovation across industries.
         </p>
 
-        {page.shortDescription ? (
-          <p className="winners-detail-summary">{page.shortDescription}</p>
+        {pageShortDescription ? (
+          <p className="winners-detail-summary">{pageShortDescription}</p>
         ) : null}
       </section>
 
@@ -470,7 +769,9 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
             <section className="winner-section-block">
               <div className="winner-section-header winner-section-header--centered">
                 <p className="winner-section-kicker">Winner Profiles</p>
+
                 <h2>TECHNOLOGY ICONS</h2>
+
                 <span>{technologyIcons.length} Members</span>
               </div>
 
@@ -491,7 +792,9 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
             <section className="winner-section-block">
               <div className="winner-section-header winner-section-header--centered">
                 <p className="winner-section-kicker">Winner Profiles</p>
+
                 <h2>BUSINESS ICONS</h2>
+
                 <span>{businessIcons.length} Members</span>
               </div>
 
@@ -510,28 +813,13 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
         </>
       ) : testimonialSections.length > 0 ? (
         testimonialSections.map((section, sectionIndex) => (
-          <section key={sectionIndex} className="winner-section-block">
+          <section key={`${section.title}-${sectionIndex}`} className="winner-section-block">
             <div className="winner-section-header winner-section-header--centered">
               <p className="winner-section-kicker">Winner Profiles</p>
+
               <h2>{section.title || 'Winner Profiles'}</h2>
-              <span>{section.testimonials.length} Members</span>
-              <h4>TECHNOLOGY ICONS</h4>
-            </div>
 
-            <div className="winner-section-grid">
-              {section.testimonials.map((testimonial, index) => (
-                <WinnerCard
-                  key={`${section.title}-${index}`}
-                  testimonial={testimonial}
-                  sectionTitle={section.title}
-                  index={index}
-                />
-              ))}
-            </div>
-
-            <div className="winner-section-header winner-section-header--centered">
               <span>{section.testimonials.length} Members</span>
-              <h4>BUSINESS ICONS</h4>
             </div>
 
             <div className="winner-section-grid">
