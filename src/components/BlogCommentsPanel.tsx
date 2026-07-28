@@ -340,7 +340,21 @@ export default function BlogCommentsPanel({ blogId }: BlogCommentsPanelProps) {
             onChange={(e) => setContent(e.target.value)}
           />
 
-          <button type="submit" disabled={isSubmitting}>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            style={{
+              background: '#8E0101',
+              color: '#ffffff',
+              border: 'none',
+              borderRadius: '999px',
+              padding: '9px 16px',
+              cursor: 'pointer',
+              fontSize: '13px',
+              fontWeight: 600,
+              whiteSpace: 'nowrap',
+            }}
+          >
             {isSubmitting ? 'Submitting...' : 'Submit Comment'}
           </button>
         </form>

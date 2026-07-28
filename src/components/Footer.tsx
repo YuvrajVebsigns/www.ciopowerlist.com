@@ -18,16 +18,16 @@ export default function Footer() {
                 <Image
                   src="/assets/logo/logo2.png"
                   alt="CORE Media"
-                  width={100}
-                  height={50}
+                  width={180}
+                  height={90}
                   priority
                 />
               </Link>
 
-              <p className="footer-description">
+              {/* <p className="footer-description">
                 Developing personalized customer journeys to increase customer satisfaction,
                 engagement, and long-term loyalty for business growth.
-              </p>
+              </p> */}
             </div>
 
             {/* COLUMN 2 */}
@@ -40,7 +40,7 @@ export default function Footer() {
                 </li>
 
                 <li>
-                  <Link href="/nominate">Nominate</Link>
+                  <Link href="/nominate">Nomination</Link>
                 </li>
               </ul>
             </div>
@@ -51,7 +51,7 @@ export default function Footer() {
 
               <ul className="footer-links">
                 <li>
-                  <Link href="/blog">Blog</Link>
+                  <Link href="/blog">Blogs</Link>
                 </li>
 
                 <li>
@@ -72,7 +72,7 @@ export default function Footer() {
                 </button>
               </form>
               <br />
-              <h4>Our Office</h4>
+              <h4 className="footer-description1">Office Address</h4>
               <p className="footer-description">
                 Units Nos. 3037 – A1 Wing, 3rd Floor, Oberoi Garden Estate, Near Chandivali Studio,
                 Andheri (East), Mumbai – 400072, INDIA
@@ -106,36 +106,47 @@ export default function Footer() {
               <span className="footer-contact-text">+91 7506035537</span>
             </a>
 
-            <a href="mailto:info@coremedia.com" className="footer-contact-item">
-              <span className="footer-contact-icon">
+            <div className="footer-contact-item">
+              {/* <span className="footer-contact-icon">
                 <Mail size={15} />
-              </span>
+              </span> */}
 
-              <span className="footer-contact-text">contact@core-mediagroup.com</span>
-            </a>
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@core-mediagroup.com&su=Enquiry"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-contact-item"
+              >
+                <span className="footer-contact-icon">
+                  <Mail size={15} />
+                </span>
+
+                <span className="footer-contact-text">contact@core-mediagroup.com</span>
+              </a>
+            </div>
           </div>
 
           {/* SOCIAL */}
           <div className="footer-socials">
-            <a href="https://www.facebook.com/" aria-label="Facebook">
+            <a href="https://www.facebook.com/coremediaindia/" aria-label="Facebook">
               <FaFacebookF />
             </a>
 
-            <a href="https://www.instagram.com/" aria-label="Instagram">
+            <a href="https://www.instagram.com/core_media_/" aria-label="Instagram">
               <FaInstagram />
             </a>
 
-            <a href="https://x.com/" aria-label="Twitter">
+            <a href="https://x.com/CIOChoice" aria-label="Twitter">
               <FaXTwitter />
             </a>
 
-            <a href="https://www.linkedin.com/" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/core-mediagroup/" aria-label="LinkedIn">
               <FaLinkedinIn />
             </a>
           </div>
 
           {/* COPYRIGHT */}
-          <div className="footer-copy">Copyright © 2026 CIO Powerlist. </div>
+          <div className="footer-copy">Copyright © 2026 CORE Media. All Rights Reserved.</div>
         </div>
       </div>
     </footer>

@@ -416,9 +416,9 @@ function getEventType(event: WebsiteEvent): string {
   return getString(event.type) || getString(event.category) || 'Event';
 }
 
-function getEventExcerpt(event: WebsiteEvent): string {
-  return getString(event.excerpt) || getString(event.summary);
-}
+// function getEventExcerpt(event: WebsiteEvent): string {
+//   return getString(event.excerpt) || getString(event.summary);
+// }
 
 function formatEventDate(value: unknown): string {
   const rawDate = getString(value);
@@ -485,7 +485,7 @@ function AnimatedEventCard({ event, index }: AnimatedEventCardProps) {
   const slug = getEventSlug(event);
   const image = getEventImage(event);
   const eventType = getEventType(event);
-  const excerpt = getEventExcerpt(event);
+  // const excerpt = getEventExcerpt(event);
 
   const eventDate = formatEventDate(event.startDate ?? event.startsAt ?? event.date);
 
@@ -512,7 +512,7 @@ function AnimatedEventCard({ event, index }: AnimatedEventCardProps) {
           <div className="project-content">
             <h3>{title}</h3>
 
-            {excerpt ? <p>{excerpt}</p> : null}
+            {/* {excerpt ? <p>{excerpt}</p> : null} */}
           </div>
         </div>
       </div>

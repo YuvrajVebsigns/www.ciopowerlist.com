@@ -154,6 +154,14 @@ export default function Navbar() {
             Home
           </Link>
 
+          <Link
+            href="/aboutus"
+            className={`nav-link ${pathname?.startsWith('/aboutus') ? 'active' : ''}`}
+            onClick={closeAllMenus}
+          >
+            About Us
+          </Link>
+
           <div
             className={`nav-dropdown ${partnersOpen ? 'open' : ''}`}
             onMouseEnter={openPartners}
@@ -270,8 +278,31 @@ export default function Navbar() {
             className={`nav-link ${pathname === '/nominate' ? 'active' : ''}`}
             onClick={closeAllMenus}
           >
-            Nominate
+            Nomination
           </Link>
+
+          <button
+            type="button"
+            className={`nav-link ${
+              pathname === '/' && activeHash === '#cio-process-section' ? 'active' : ''
+            }`}
+            onClick={() => {
+              closeAllMenus();
+
+              if (pathname !== '/') {
+                window.location.href = '/#cio-process-section';
+                return;
+              }
+
+              setTimeout(() => {
+                document
+                  .getElementById('cio-process-section')
+                  ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }, 100);
+            }}
+          >
+            Process
+          </button>
 
           <div
             className={`nav-dropdown ${speakersOpen ? 'open' : ''}`}
@@ -328,7 +359,7 @@ export default function Navbar() {
               </div>
             )}
           </div>
-          <Link
+          {/* <Link
             href="/#contact-section"
             scroll={true}
             className={`nav-link ${
@@ -337,7 +368,7 @@ export default function Navbar() {
             onClick={closeAllMenus}
           >
             Contact
-          </Link>
+          </Link> */}
         </nav>
 
         <div className="navbar-actions">

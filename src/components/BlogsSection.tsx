@@ -490,20 +490,21 @@ export default function BlogsSection() {
     <section className="blogs-section">
       <div className="blogs-container">
         <div className="blogs-heading">
-          <span className="blogs-subtitle">
+          <div className="aboutus-label">
             <Image
               src="/assets/icon.png"
-              alt="Key Clients"
+              alt="CIO Power List"
               width={20}
               height={20}
-              className="expertise-label-icon"
+              className="aboutus-label-icon"
             />
-            <span className="blogs-subtitle-text">INSIGHTS & IDEAS</span>
-          </span>
 
-          <h2 className="blogs-title">
+            <span className="aboutus-label-text">BLOGS</span>
+          </div>
+
+          {/* <h2 className="blogs-title">
             Our <span>Blogs</span>
-          </h2>
+          </h2> */}
         </div>
 
         <div className="blogs-grid">
