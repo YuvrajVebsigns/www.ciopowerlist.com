@@ -1148,19 +1148,14 @@ main {
   backdrop-filter: blur(10px);
   border-radius: 0 0 23px 23px;
   transition:
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
     background 0.3s ease,
     box-shadow 0.3s ease;
 }
 
-.navbar-hide {
-  transform: translate3d(0, -110%, 0);
-}
-
+.navbar-hide,
 .navbar-show {
-  transform: translate3d(0, 0, 0);
+  transform: none;
 }
-
 .navbar.scrolled {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }

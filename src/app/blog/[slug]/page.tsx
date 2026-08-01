@@ -322,6 +322,7 @@ export default function BlogDetailsPage() {
             <div className="blog-content-blocks">
               {contentBlocks.map((block, index) => renderBlock(block, index))}
             </div>
+            <br />
 
             <div className="blog-detail-actions">
               <AnimatedBlock
@@ -329,15 +330,18 @@ export default function BlogDetailsPage() {
                 animationClass="animate-fade-in"
                 initialTransform="translateY(18px)"
               >
-                <Link href="/blog" className="backbutton">
-                  <div className="backbutton-icon">
+                <Link href="/blog" className="talk-btn">
+                  {/* <div className="backbutton-icon">
                     <ArrowUpLeft size={18} />
-                  </div>
+                  </div> */}
 
                   <span>Back to Blog</span>
+                  <div className="talk-btn-icon">
+                    <ArrowUpRight size={18} />
+                  </div>
                 </Link>
               </AnimatedBlock>
-
+              <br />
               <AnimatedBlock
                 className="blog-back-link"
                 animationClass="animate-fade-in"
