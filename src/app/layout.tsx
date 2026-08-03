@@ -7,6 +7,7 @@ import Navbar from '@/components/Navbar';
 import ScrollProgress from '@/components/ScrollProgress';
 import ScrollAnimator from '@/components/ScrollAnimator';
 import Footer from '@/components/Footer';
+import CookieConsent from '@/components/CookieConsent';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -35,6 +36,7 @@ export default function RootLayout({
         <ScrollAnimator />
         <QueryProvider>{children}</QueryProvider>
         <Footer />
+        <CookieConsent />
       </body>
     </html>
   );

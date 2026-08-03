@@ -28,6 +28,7 @@ export const API_ENDPOINTS = {
       BASE: '/api/v1/website/sponsors',
       BY_ID: (id: string) => `/api/v1/website/sponsors/${encodeURIComponent(id)}`,
     },
+    ANALYTICS_TRACK: '/api/v1/website/analytics/track',
   },
   USERS: {
     BASE: '/users',

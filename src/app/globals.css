@@ -259,6 +259,544 @@ body {
 }
 
 /* =========================================
+   COOKIE CONSENT BANNER
+========================================= */
+
+.cookie-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999;
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.cookie-banner__content {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  padding: 28px 64px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+/* LEFT CONTENT */
+
+.cookie-banner__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.cookie-banner__message,
+.cookie-banner__description {
+  margin: 0;
+  color: #292929;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.cookie-banner__description {
+  margin-top: 10px;
+}
+
+.cookie-banner__description strong {
+  font-weight: 700;
+}
+
+.cookie-banner__policy-cta {
+  margin-left: 8px;
+  color: #b00000;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* BUTTONS */
+
+.cookie-banner__actions {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 14px;
+}
+
+.cookie-button {
+  height: 58px;
+  padding: 0 30px;
+
+  border-radius: 32px;
+
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  white-space: nowrap;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.cookie-button:hover {
+  transform: translateY(-1px);
+}
+
+/* ACCEPT ALL */
+
+.cookie-button--primary {
+  border: 1px solid #b00000;
+  background: #b00000;
+  color: #ffffff;
+}
+
+.cookie-button--primary:hover {
+  background: #970000;
+}
+
+/* ESSENTIAL ONLY */
+
+.cookie-button--outline {
+  border: 1px solid #b00000;
+  background: #ffffff;
+  color: #b00000;
+}
+
+.cookie-button--outline:hover {
+  background: #fff5f5;
+}
+
+/* CUSTOMIZE */
+
+.cookie-button--ghost {
+  border: 1px solid #222222;
+  background: #ffffff;
+  color: #b00000;
+
+  text-decoration: none;
+}
+
+.cookie-button--ghost:hover {
+  background: #fff5f5;
+}
+
+.cookie-button__icon {
+  margin-right: 8px;
+  font-size: 15px;
+}
+
+/* =========================================
+   COOKIE PREFERENCES PAGE
+========================================= */
+
+.cookie-page-shell {
+  min-height: 100vh;
+
+  padding: 30px 34px 50px;
+
+  background: #ffffff;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.cookie-page-card {
+  width: 100%;
+  max-width: 1600px;
+
+  padding: 28px 26px 25px;
+
+  background: #ffffff;
+
+  border: 1px solid #e3e7ec;
+  border-radius: 26px;
+
+  box-sizing: border-box;
+}
+
+/* HEADER */
+
+.cookie-card-header {
+  padding: 0 0 28px 0;
+}
+
+.cookie-card-badge {
+  margin-bottom: 22px;
+
+  color: #b00000;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+
+.cookie-card-header h1 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 28px;
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+/* =========================================
+   COOKIE SECTIONS
+========================================= */
+
+.cookie-card-section {
+  width: 100%;
+
+  margin-top: 18px;
+
+  padding: 42px 34px;
+
+  background: #f6f8fa;
+
+  border: 1px solid #e0e5ea;
+  border-radius: 28px;
+
+  box-sizing: border-box;
+}
+
+.cookie-card-heading {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 40px;
+}
+
+.cookie-card-info {
+  flex: 1;
+}
+
+.cookie-card-info h2 {
+  margin: 0 0 12px;
+
+  color: #111827;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.cookie-card-info p {
+  margin: 0;
+
+  color: #63748d;
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   ALWAYS ACTIVE
+========================================= */
+
+.cookie-chip {
+  flex-shrink: 0;
+
+  padding: 14px 22px;
+
+  border-radius: 30px;
+
+  background: #e3e9f2;
+
+  color: #39475a;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+/* =========================================
+   ANALYTICS TOGGLE
+========================================= */
+
+.cookie-toggle {
+  width: 58px;
+  height: 58px;
+
+  padding: 0;
+
+  flex-shrink: 0;
+
+  border: 1px solid rgba(142, 1, 1, 0.16);
+  border-radius: 50%;
+
+  background: #f8fafc;
+  color: #8e0101;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease,
+    border-color 160ms ease;
+}
+
+.cookie-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.cookie-toggle.active {
+  background: #8e0101;
+  color: #ffffff;
+  border-color: #8e0101;
+}
+
+.cookie-toggle.inactive {
+  background: #ffffff;
+  color: #8e0101;
+  border-color: #e3e5ea;
+}
+
+.cookie-toggle-check,
+.cookie-toggle-mark {
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.cookie-toggle-mark {
+  color: #8e0101;
+}
+
+/* =========================================
+   SUCCESS MESSAGE
+========================================= */
+
+.cookie-feedback {
+  margin-top: 18px;
+  padding: 14px 18px;
+
+  border-radius: 12px;
+
+  background: #f1f8f2;
+
+  color: #237333;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* =========================================
+   BOTTOM ACTIONS
+========================================= */
+
+.cookie-card-actions {
+  margin-top: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 20px;
+}
+
+.cookie-preferences-cancel {
+  padding: 15px 24px;
+
+  color: #111827;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.cookie-save-button {
+  min-width: 195px;
+  height: 56px;
+
+  padding: 0 28px;
+
+  border: none;
+  border-radius: 18px;
+
+  background: #111827;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: transform 0.2s ease;
+}
+
+.cookie-save-button:hover {
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+  .cookie-banner__content {
+    padding: 24px 30px;
+
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  .cookie-banner__actions {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .cookie-card-heading {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 700px) {
+  .cookie-banner__content {
+    padding: 22px 20px;
+  }
+
+  .cookie-banner__message,
+  .cookie-banner__description {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .cookie-banner__actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .cookie-button {
+    width: 100%;
+  }
+
+  .cookie-page-shell {
+    padding: 20px 15px 35px;
+  }
+
+  .cookie-page-card {
+    padding: 24px 18px;
+    border-radius: 20px;
+  }
+
+  .cookie-card-section {
+    padding: 28px 22px;
+    border-radius: 20px;
+  }
+
+  .cookie-card-heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cookie-chip {
+    align-self: flex-start;
+  }
+
+  .cookie-card-actions {
+    justify-content: space-between;
+  }
+
+  .cookie-save-button {
+    min-width: auto;
+  }
+}
+
+/* =========================================
+   Mobile
+========================================= */
+
+@media (max-width: 768px) {
+  .cookie-banner {
+    padding: 22px 20px;
+  }
+
+  .cookie-banner__content {
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 20px;
+  }
+
+  .cookie-banner__text {
+    width: 100%;
+  }
+
+  .cookie-banner__text p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .cookie-banner__policy-cta {
+    display: block;
+    margin-left: 0;
+    margin-top: 4px;
+  }
+
+  .cookie-banner__actions {
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: flex-start;
+
+    gap: 10px;
+  }
+
+  .cookie-button {
+    min-height: 46px;
+
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
+
+/* =========================================
+   Small Mobile
+========================================= */
+
+@media (max-width: 480px) {
+  .cookie-banner__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cookie-button {
+    width: 100%;
+  }
+}
+
+/* =========================================
    WINNERS PAGES
 ========================================= */
 
