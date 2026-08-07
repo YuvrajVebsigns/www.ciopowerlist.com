@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 const winnerLinks = [
+  { label: 'Winner 2026', href: '/winners/winner-2026' },
   { label: 'Winner 2025', href: '/winners/winner-2025' },
   { label: 'Winner 2024', href: '/winners/winner-2024' },
   { label: 'Winner 2023', href: '/winners/winner-2023' },
@@ -17,6 +18,7 @@ const winnerLinks = [
   { label: 'Winner 2018', href: '/winners/winner-2018' },
   { label: 'Winner 2017', href: '/winners/winner-2017' },
   { label: 'Winner 2016', href: '/winners/winner-2016' },
+  { label: 'Winner 2015', href: '/winners/winner-2015' },
 ];
 
 const speakerLinks = [

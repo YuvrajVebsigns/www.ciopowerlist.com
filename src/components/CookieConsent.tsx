@@ -145,6 +145,7 @@
 import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { trackCookieConsent } from '@/services/analytics.service';
+import Link from 'next/link';
 
 const COOKIE_NAME = 'cm_cookie_preferences';
 
@@ -250,10 +251,19 @@ export default function CookieConsent() {
             understand site performance.
           </p>
 
-          <p className="cookie-banner__description">
+          {/* <p className="cookie-banner__description">
             Click <strong>Accept all</strong> to agree to cookies that help us deliver better
             content and a smoother browsing experience.
             <span className="cookie-banner__policy-cta">View our Cookie Policy</span>
+             to update or disable preferences anytime.
+          </p> */}
+
+          <p className="cookie-banner__description">
+            Click <strong>Accept all</strong> to agree to cookies that help us deliver better
+            content and a smoother browsing experience.
+            <Link href="/cookie-policy" className="cookie-banner__policy-cta">
+              View our Cookie Policy
+            </Link>{' '}
             to update or disable preferences anytime.
           </p>
         </div>

@@ -147,10 +147,10 @@ export default function FoundersMessage() {
           </div>
 
           {/* AUTHOR */}
-          {/* <div className="founder-author">
+          <div className="founder-author">
             <h3>Anoop Mathur</h3>
             <span>Founder, CORE MEDIA</span>
-          </div> */}
+          </div>
 
           {/* BUTTON */}
           <Link href="/#contact-section" className="founder-btn">
