@@ -9,6 +9,8 @@ export const API_ENDPOINTS = {
   },
   WEBSITE: {
     CONTACTS: '/api/v1/website/contacts',
+    SUBSCRIBES: '/api/v1/website/subscribes',
+
     PAGES: {
       BASE: '/api/v1/website/pages',
       BY_SLUG: (slug: string) => `/api/v1/website/pages/${encodeURIComponent(slug)}`,

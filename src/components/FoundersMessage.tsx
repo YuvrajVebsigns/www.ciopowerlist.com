@@ -124,12 +124,12 @@ export default function FoundersMessage() {
 
           {/* DESCRIPTION */}
           <p className="founder-description">
-            At CORE Media, our purpose has always been to create meaningful platforms that bring
-            together technology leaders, enterprises, innovators, and solution providers to exchange
-            ideas, build trusted relationships, and unlock new business opportunities. As the B2B
-            technology landscape continues to evolve, we remain committed to creating experiences
-            that inspire collaboration, encourage innovation, and deliver measurable value for every
-            stakeholder.
+            Enterprises today are not short on technology. They are short on direction.
+          </p>
+          <p className="founder-description">
+            AI is accelerating smart decisions, markets are shifting overnight, cyber risks are
+            multiplying, and regulatory lines keep moving. In the middle of this velocity stands the
+            CIO,no longer just enabling the business but navigating it.
           </p>
 
           {/* QUOTE */}

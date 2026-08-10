@@ -4955,9 +4955,9 @@ main {
 }
 
 .cio-whypartner-left h3 {
-  font-size: 32px;
+  font-size: 26px;
   line-height: 1.2;
-  font-weight: 600;
+  font-weight: 540;
   margin-bottom: 24px;
 }
 
@@ -11173,8 +11173,8 @@ s .dialogues-badge-mark {
 .social-media-content::after {
   content: 'CIO';
   position: absolute;
-  right: -20px;
-  bottom: -35px;
+  right: -5px;
+  bottom: 25px;
   font-size: 170px;
   line-height: 1;
   font-weight: 900;
@@ -11222,7 +11222,7 @@ s .dialogues-badge-mark {
   border-radius: 24px;
   background: linear-gradient(135deg, #8e0101 0%);
   color: #ffffff;
-  font-size: clamp(22px, 3vw, 24px);
+  font-size: clamp(22px, 3vw, 20px);
   line-height: 1.55;
   font-weight: 400;
   box-shadow: 0 18px 40px rgba(142, 1, 1, 0.2);

@@ -45,38 +45,35 @@ export default function FoundersMessage() {
 
           {/* DESCRIPTION */}
           <p className="founder-description">
-            At CORE Media, our purpose has always been to create meaningful platforms that bring
-            together technology leaders, enterprises, innovators, and solution providers to exchange
-            ideas, build trusted relationships, and unlock new business opportunities. As the B2B
-            technology landscape continues to evolve, we remain committed to creating experiences
-            that inspire collaboration, encourage innovation, and deliver measurable value for every
-            stakeholder.
+            Enterprises today are not short on technology. They are short on direction.
           </p>
           <p className="founder-description">
             {' '}
-            Our flagship platform, CIO CHOICE, reflects this commitment. As one of India&apos;s most
-            respected technology recognition platforms, it empowers the country&apos;s CIO community
-            to recognize the ICT brands they trust the most. Alongside our portfolio of executive
-            forums, leadership summits, awards, and digital engagement platforms, we continue to
-            build communities that foster knowledge sharing, celebrate excellence, and strengthen
-            the technology ecosystem.
+            AI is accelerating smart decisions, markets are shifting overnight, cyber risks are
+            multiplying, and regulatory lines keep moving. In the middle of this velocity stands the
+            CIO,no longer just enabling the business but navigating it.
           </p>
           <p className="founder-description">
-            Everything we do is driven by a customer-first mindset. From bespoke events and
-            Account-Based Marketing (ABM) programs to executive roundtables and digital content
-            solutions, our focus is on helping brands reach the right decision-makers with
-            relevance, authenticity, and impact. We believe that every engagement should create
-            lasting relationships, meaningful conversations, and measurable business outcomes.
+            I am thrilled to unveil the forthcoming 12th edition of THE CIO Power List 2026, the one
+            of a kind prestigious platform dedicated to recognizing the most influential CIOs and
+            Digital Leaders in our nation. Scheduled for June 18th and 19th in Mumbai, the theme for
+            the event is “CIOs: The Enterprise Navigators — Setting Direction. Managing Risk.
+            Unlocking Growth”.
           </p>
           <p className="founder-description">
-            As we look ahead, our vision remains clear—to continue building trusted platforms that
-            connect people, ideas, and opportunities. We don&apos;t simply organize events or create
-            campaigns; we create environments where partnerships flourish, innovation is recognized,
-            and businesses are empowered to grow.
+            CIOs and Digital Leaders chart the course through unprecedented opportunity and equally
+            unprecedented risk. They translate ambition into architecture, strategy into systems,
+            and disruption into advantage. Every major business decision today—growth, resilience,
+            trust, sustainability, runs through technology leadership.
           </p>
           <p className="founder-description">
-            Thank you for being part of our journey. We look forward to shaping the future of
-            technology engagement together.
+            This year, CIOs and Digital Leaders will come together at CIO Power List 2026 to
+            exchange real-world insights, hard-earned lessons, and forward-looking strategies on how
+            to lead when maps are outdated and the terrain keeps changing. This is where technology
+            leadership meets business stewardship.
+          </p>
+          <p className="founder-description">
+            The future will be won not by those who move fastest, but by those who navigate best.
           </p>
 
           {/* QUOTE */}

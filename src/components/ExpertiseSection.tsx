@@ -95,11 +95,11 @@ export default function AboutUsSection() {
             <span className="aboutus-label-text">ABOUT THE INITIATIVE</span>
           </div>
 
-          <h2 className="aboutus-title">
+          {/* <h2 className="aboutus-title">
             About Us &
             <br />
             <span>Driving the Future of Enterprise Technology</span>
-          </h2>
+          </h2> */}
 
           {/* <p className="aboutus-intro">
             CIO Power List celebrates visionary CIOs and ICT leaders driving innovation, transformation, business growth across India.

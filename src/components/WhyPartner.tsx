@@ -45,17 +45,17 @@ export default function CIOPowerListWhyPartner() {
               className="aboutus-label-icon"
             />
 
-            <span className="aboutus-label-text">PARTNERSHIP OPPORTUNITY</span>
+            <span className="aboutus-label-text">Why Partner?</span>
           </div>
 
-          <h2>
+          {/* <h2>
             Why <span>Partner?</span>
           </h2>
 
           <p>
             CIO Power List brings together the top IT leaders in the country under one roof for an
             engaging program.
-          </p>
+          </p> */}
         </div>
 
         <div className="cio-whypartner-content">

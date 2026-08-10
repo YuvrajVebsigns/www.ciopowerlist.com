@@ -7,40 +7,61 @@ export default function AboutUsPage() {
 
   return (
     <>
-      <section className="social-media-section" style={{ padding: '40px 24px' }}>
+      <section className="social-media-section">
         <div className="social-media-container">
-          <div className="social-media-row">
-            <div className="social-media-content">
-              <h2>About CIO Choice</h2>
+          <div className="social-media-content">
+            <div className="social-media-text">
+              <h2>About CIO POWERLIST</h2>
 
               <p className="social-media-highlight">
-                <strong>“CIO CHOICE”</strong> is a B2B platform uniquely positioned to recognize and
-                honor products, services and solutions on the back of stated preferences of CIOs and
-                ICT decision makers.
+                <strong>CIO Power List 2026</strong> brings together India’s most influential CIOs
+                and Digital Leaders to recognize their leadership, innovation, and impact on
+                business and technology transformation.
               </p>
 
               <p>
-                CIO Choice platform fosters collaboration between CIOs and ICT vendors, facilitating
-                the exchange of best practices among the leaders of the worlds premiere technology
-                driven enterprises. CIO Choice Honor Title from Centre of Recognition & Excellence
-                is a thoughtful initiative where preferred vendors are recommended and recognized
-                <strong> By the CIOs, For the CIOs.</strong>
+                The 12th edition of <strong>CIO Power List</strong> is scheduled for
+                <strong> June 18 & 19, 2026</strong> in Mumbai, with the theme
+                <strong>
+                  {' '}
+                  “CIOs: The Enterprise Navigators — Setting Direction. Managing Risk. Unlocking
+                  Growth”
+                </strong>
+                .
               </p>
 
               <p>
-                It is a proven industry approach and first-of-its-kind in the ICT industry—one based
-                on trust and cooperation between high performance ICT Business Leaders, CIOs &
-                Customer Centric Vendors so they can continue to adapt and drive innovation across
-                the enterprise. Dedicated to providing actionable value to each of the functional
-                disciplines across the executive suite, it is driven by relevant content and
-                engagements created by and for the CIOs.
+                CIOs and Digital Leaders today play a critical role in navigating business growth,
+                managing risk, driving innovation, and transforming technology into a strategic
+                advantage. CIO Power List provides a prestigious platform to recognize these leaders
+                and celebrate their contribution to the technology and business ecosystem.
               </p>
 
               <p>
-                Working to provide an accessible connect through regional, national, global, and
-                virtual platforms, the CIO Choice B2B platform provides the first neutral space in
-                which CIOs & Customer Centric Vendors can safely explore ways to support each other
-                in driving role-based deliverables.
+                The winners are selected through a unique
+                <strong> 360-degree, algorithm-based evaluation</strong> that considers multiple
+                parameters across technology and business influence. The evaluation includes media
+                presence, awards and achievements, industry associations, social media engagement,
+                peer CIO sentiment, vendor nominations, and key achievements shared by the CIOs.
+              </p>
+
+              <p>
+                With <strong>130+ CIOs being recognised</strong>, CIO Power List combines a
+                symposium and recognition program, creating an engaging environment to{' '}
+                <strong>Learn, Engage, and Celebrate</strong> with India’s leading technology
+                decision-makers.
+              </p>
+
+              <p>
+                The platform also brings together <strong>300+ CIOs and ICT decision-makers</strong>{' '}
+                from diverse industry verticals, providing technology brands with opportunities to
+                build visibility, connect with influential leaders, generate business opportunities,
+                strengthen relationships, and discover emerging industry trends.
+              </p>
+
+              <p>
+                CIO Power List is a celebration of the technology leaders who are shaping the future
+                of business through innovation, strategic thinking, and transformative leadership.
               </p>
 
               <div className="social-media-back">

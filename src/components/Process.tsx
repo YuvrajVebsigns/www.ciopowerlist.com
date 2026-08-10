@@ -43,9 +43,9 @@ export default function CIOPowerListProcess() {
             <span className="aboutus-label-text">SELECTION METHODOLOGY</span>
           </div>
 
-          <h2 className="aboutus-title">
+          {/* <h2 className="aboutus-title">
             The <span>CIO Power List</span> Evaluation Process
-          </h2>
+          </h2> */}
 
           {/* <p>
             A transparent, data-driven framework that evaluates technology leaders through multiple
@@ -59,15 +59,15 @@ export default function CIOPowerListProcess() {
             <span className="cio-process-label">Process</span>
 
             <h2>
-              How the <span>Process Works.</span>
+              Technology at <span>Works.</span>
             </h2>
 
             <p>
-              The CIO Power List is a prestigious recognition platform that celebrates India’s most
-              influential and forward-thinking Chief Information Officers.
+              The CIO Power List is a prestigious platform recognising India’s most influential and
+              forward-thinking Chief Information Officers.
               <br />
-              It honours technology leaders who have demonstrated exceptional vision, innovation,
-              and leadership in driving business transformation through technology.
+              It honours technology leaders for their vision, innovation, leadership, and impact in
+              driving business transformation through technology.
             </p>
 
             <div className="cio-process-note">
@@ -77,8 +77,8 @@ export default function CIOPowerListProcess() {
                 <h3>360-Degree Selection Process</h3>
 
                 <p>
-                  The selection process is based on a comprehensive evaluation framework that
-                  examines multiple business and technology parameters.
+                  An algorithm-driven evaluation uses CIO data collected from multiple channels,
+                  assessing key business and technology parameters.
                 </p>
               </div>
             </div>
