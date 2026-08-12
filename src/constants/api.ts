@@ -10,6 +10,10 @@ export const API_ENDPOINTS = {
   WEBSITE: {
     CONTACTS: '/api/v1/website/contacts',
     SUBSCRIBES: '/api/v1/website/subscribes',
+    NOMINATION_STATUS: '/api/v1/website/nominations/status',
+    NOMINATION_CATEGORIES: '/api/v1/website/nominations/categories',
+
+    NOMINATION_SUB_CATEGORIES: '/api/v1/website/nominations/sub-categories',
 
     PAGES: {
       BASE: '/api/v1/website/pages',

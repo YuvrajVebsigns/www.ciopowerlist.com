@@ -15,6 +15,14 @@ export type NominationSubmissionInput = {
   nominees: NomineeInput[];
 };
 
+export type WebsiteNominationCategory = {
+  id: string;
+  name: string;
+  slug?: string;
+  isActive?: boolean;
+  sortOrder?: number;
+};
+
 /** Matches backend SubmitNominationDto (Postman). */
 export type SubmitNominationApiBody = {
   nominatorName: string;
