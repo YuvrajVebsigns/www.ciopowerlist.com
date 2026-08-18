@@ -289,15 +289,25 @@ export default function ContactSection() {
   const turnstileSiteKey = process.env.NEXT_PUBLIC_SITEKEY?.trim() || '';
 
   /* =========================================================
+     FORM COMPLETION CHECK
+     
+     CAPTCHA "I'm human" button will only become enabled
+     after all required fields contain a value.
+  ========================================================= */
+
+  const isFormComplete =
+    fullName.trim().length > 0 &&
+    email.trim().length > 0 &&
+    phone.trim().length > 0 &&
+    service.trim().length > 0 &&
+    message.trim().length > 0;
+
+  /* =========================================================
      LOAD CLOUDFLARE TURNSTILE
   ========================================================= */
 
   useEffect(() => {
     if (!turnstileSiteKey) {
-      // console.error('Cloudflare Turnstile site key is missing.');
-
-      // console.error('Please add NEXT_PUBLIC_SITEKEY to .env.local');
-
       setCaptchaStatus('error');
 
       setPopupMessage('CAPTCHA configuration is missing. Please try again later.');
@@ -313,8 +323,6 @@ export default function ContactSection() {
       }
 
       if (!window.turnstile) {
-        // console.error('Cloudflare Turnstile API is not available.');
-
         setCaptchaStatus('error');
 
         setPopupMessage('Unable to load CAPTCHA verification. Please try again later.');
@@ -323,15 +331,13 @@ export default function ContactSection() {
       }
 
       if (!turnstileContainerRef.current) {
-        // console.error('Turnstile container is not available.');
-
         setCaptchaStatus('error');
 
         return;
       }
 
       /*
-       * Prevent duplicate widgets.
+       * Prevent duplicate Turnstile widgets.
        */
       if (turnstileWidgetIdRef.current) {
         return;
@@ -350,23 +356,20 @@ export default function ContactSection() {
           size: 'invisible',
 
           /*
-           * Verification will execute
-           * only when we call execute().
+           * Verification starts only when execute()
+           * is called.
            */
           execution: 'execute',
 
           theme: 'light',
 
           /*
-           * Cloudflare successfully verified
-           * the visitor.
+           * Cloudflare verification successful.
            */
           callback: (token: string) => {
             if (cancelled) {
               return;
             }
-
-            // console.log('Cloudflare Turnstile verification successful.');
 
             setCaptchaToken(token);
 
@@ -375,14 +378,7 @@ export default function ContactSection() {
             setIsRefreshingCaptcha(false);
 
             /*
-             * Remove old popup messages when
-             * CAPTCHA verification starts successfully.
-             *
-             * IMPORTANT:
-             * This does not affect the popup after
-             * successful form submission because
-             * the CAPTCHA callback is not called again
-             * during reset.
+             * Clear old CAPTCHA-related messages.
              */
             setPopupMessage(null);
           },
@@ -394,8 +390,6 @@ export default function ContactSection() {
             if (cancelled) {
               return;
             }
-
-            // console.warn('Cloudflare Turnstile token expired.');
 
             setCaptchaToken('');
 
@@ -413,8 +407,6 @@ export default function ContactSection() {
             if (cancelled) {
               return;
             }
-
-            // console.error('Cloudflare Turnstile error:', errorCode);
 
             setCaptchaToken('');
 
@@ -439,8 +431,6 @@ export default function ContactSection() {
               return;
             }
 
-            // console.warn('Cloudflare Turnstile verification timed out.');
-
             setCaptchaToken('');
 
             setCaptchaStatus('ready');
@@ -464,11 +454,7 @@ export default function ContactSection() {
         turnstileWidgetIdRef.current = widgetId;
 
         setCaptchaStatus('ready');
-
-        // console.log('Invisible Cloudflare Turnstile initialized.');
-      } catch (error) {
-        // console.error('Failed to render Cloudflare Turnstile:', error);
-
+      } catch {
         setCaptchaStatus('error');
 
         setPopupMessage('Unable to load CAPTCHA. Please try again later.');
@@ -476,7 +462,7 @@ export default function ContactSection() {
     };
 
     /*
-     * Check if Turnstile script already exists.
+     * Check whether Turnstile script already exists.
      */
     const existingScript = document.querySelector('script[data-cloudflare-turnstile="true"]');
 
@@ -502,6 +488,7 @@ export default function ContactSection() {
     script.src = TURNSTILE_SCRIPT_SRC;
 
     script.async = true;
+
     script.defer = true;
 
     script.setAttribute('data-cloudflare-turnstile', 'true');
@@ -512,8 +499,6 @@ export default function ContactSection() {
       if (cancelled) {
         return;
       }
-
-      // console.error('Unable to load Cloudflare Turnstile script.');
 
       setCaptchaStatus('error');
 
@@ -538,8 +523,8 @@ export default function ContactSection() {
       if (window.turnstile && turnstileWidgetIdRef.current) {
         try {
           window.turnstile.remove(turnstileWidgetIdRef.current);
-        } catch (error) {
-          // console.error('Failed to remove Cloudflare Turnstile widget:', error);
+        } catch {
+          // Ignore cleanup error.
         }
       }
 
@@ -567,13 +552,32 @@ export default function ContactSection() {
 
   /* =========================================================
      START CLOUDFLARE VERIFICATION
+
+     CAPTCHA can ONLY start after the entire form
+     has been completed.
   ========================================================= */
 
   function startCaptchaVerification() {
+    /*
+     * Prevent verification while submitting.
+     */
     if (isSubmitting) {
       return;
     }
 
+    /*
+     * Do not allow CAPTCHA before all form fields
+     * have been completed.
+     */
+    if (!isFormComplete) {
+      setPopupMessage('Please complete all required fields before CAPTCHA verification.');
+
+      return;
+    }
+
+    /*
+     * Make sure Turnstile is loaded.
+     */
     if (!window.turnstile) {
       setCaptchaStatus('error');
 
@@ -582,6 +586,9 @@ export default function ContactSection() {
       return;
     }
 
+    /*
+     * Make sure the widget exists.
+     */
     if (!turnstileWidgetIdRef.current) {
       setCaptchaStatus('error');
 
@@ -591,7 +598,7 @@ export default function ContactSection() {
     }
 
     /*
-     * If already verified, don't execute again.
+     * Do not execute again if already verified.
      */
     if (captchaToken) {
       return;
@@ -605,9 +612,7 @@ export default function ContactSection() {
       setPopupMessage(null);
 
       window.turnstile.execute(turnstileWidgetIdRef.current);
-    } catch (error) {
-      // console.error('Failed to execute Cloudflare Turnstile:', error);
-
+    } catch {
       setCaptchaStatus('error');
 
       setPopupMessage('Unable to start CAPTCHA verification. Please try again.');
@@ -618,15 +623,19 @@ export default function ContactSection() {
      REFRESH / RESET TURNSTILE
 
      IMPORTANT:
-     DO NOT CLEAR popupMessage HERE.
+     This function intentionally does NOT clear popupMessage.
 
-     This allows the success/error message from
-     form submission to remain visible.
+     This means:
+
+     setPopupMessage('Thank you!');
+     resetTurnstile();
+
+     will keep the success message visible.
   ========================================================= */
 
   function resetTurnstile() {
     /*
-     * Remove current Cloudflare token.
+     * Remove current token.
      */
     setCaptchaToken('');
 
@@ -636,46 +645,37 @@ export default function ContactSection() {
     setCaptchaStatus('loading');
 
     /*
-     * Show refreshing state.
+     * Show refresh state.
      */
     setIsRefreshingCaptcha(true);
 
     /*
      * IMPORTANT:
-     * Do NOT use setPopupMessage(null) here.
-     *
-     * Otherwise this sequence:
-     *
-     * setPopupMessage('Thank you...');
-     * resetTurnstile();
-     *
-     * would immediately remove the success message.
+     * Do NOT call setPopupMessage(null) here.
      */
 
     if (window.turnstile && turnstileWidgetIdRef.current) {
       try {
-        /*
-         * Reset Cloudflare widget.
-         */
         window.turnstile.reset(turnstileWidgetIdRef.current);
 
         /*
-         * Reset custom UI.
+         * Give Turnstile a moment to reset.
          */
         window.setTimeout(() => {
           setCaptchaStatus('ready');
+
           setIsRefreshingCaptcha(false);
         }, 250);
-      } catch (error) {
-        // console.error('Failed to reset Cloudflare Turnstile:', error);
-
+      } catch {
         setCaptchaStatus('error');
+
         setIsRefreshingCaptcha(false);
 
         setPopupMessage('Unable to refresh CAPTCHA. Please try again.');
       }
     } else {
       setCaptchaStatus('error');
+
       setIsRefreshingCaptcha(false);
 
       setPopupMessage('CAPTCHA is not available. Please refresh the page.');
@@ -748,12 +748,13 @@ export default function ContactSection() {
     ======================================================= */
 
     setIsSubmitting(true);
+
     setPopupMessage(null);
 
     try {
       /*
-       * Send contact form data and the REAL
-       * Cloudflare Turnstile token.
+       * Send contact form data together with
+       * the real Cloudflare Turnstile token.
        */
       await submitWebsiteContact({
         fullName: trimmedName,
@@ -775,29 +776,36 @@ export default function ContactSection() {
       ===================================================== */
 
       setFullName('');
+
       setEmail('');
+
       setPhone('');
+
       setService('');
+
       setMessage('');
 
       /* =====================================================
          RESET CAPTCHA
 
-         This will NOT remove popupMessage anymore.
+         resetTurnstile() intentionally does not clear
+         popupMessage, so the success message remains.
       ===================================================== */
 
       resetTurnstile();
     } catch (error) {
-      // console.error('Contact form submission failed:', error);
-
+      /*
+       * Show API/backend error.
+       */
       setPopupMessage(error instanceof Error ? error.message : 'Failed to send your message.');
 
       /*
        * Turnstile tokens are single-use.
        *
-       * Generate a fresh token after failed submission.
+       * Always create a fresh token after a failed
+       * submission.
        *
-       * resetTurnstile() no longer clears the error message.
+       * resetTurnstile() does not clear the error message.
        */
       resetTurnstile();
     } finally {
@@ -879,7 +887,7 @@ export default function ContactSection() {
           <form className="contact-form" onSubmit={handleSubmit}>
             {/* =================================================
                 INPUT GRID
-            ================================================= */}
+            ================================================== */}
 
             <div className="contact-grid">
               {/* FULL NAME */}
@@ -1012,11 +1020,15 @@ export default function ContactSection() {
                         ? 'Cloudflare is checking your request.'
                         : captchaStatus === 'error'
                           ? 'Please try again.'
-                          : 'Click to complete the security check.'}
+                          : !isFormComplete
+                            ? 'Complete all fields above first.'
+                            : 'Click to complete the security check.'}
                   </small>
                 </div>
 
-                {/* ACTION */}
+                {/* =================================================
+                    I'M HUMAN BUTTON
+                ================================================== */}
 
                 {captchaStatus !== 'verified' && (
                   <button
@@ -1024,10 +1036,16 @@ export default function ContactSection() {
                     className="captcha-verify-button"
                     onClick={startCaptchaVerification}
                     disabled={
+                      !isFormComplete ||
                       captchaStatus === 'loading' ||
                       captchaStatus === 'verifying' ||
                       isRefreshingCaptcha ||
                       isSubmitting
+                    }
+                    title={
+                      !isFormComplete
+                        ? 'Complete all required fields first'
+                        : 'Verify you are human'
                     }
                   >
                     {captchaStatus === 'loading'
@@ -1038,7 +1056,9 @@ export default function ContactSection() {
                   </button>
                 )}
 
-                {/* REFRESH */}
+                {/* =================================================
+                    REFRESH BUTTON
+                ================================================== */}
 
                 {captchaStatus === 'verified' && (
                   <button
@@ -1053,7 +1073,9 @@ export default function ContactSection() {
                 )}
               </div>
 
-              {/* INVISIBLE TURNSTILE */}
+              {/* =================================================
+                  INVISIBLE TURNSTILE
+              ================================================== */}
 
               <div ref={turnstileContainerRef} className="turnstile-invisible" aria-hidden="true" />
             </div>
@@ -1062,7 +1084,11 @@ export default function ContactSection() {
                 SUBMIT BUTTON
             ================================================== */}
 
-            <button type="submit" className="contact-btn" disabled={isSubmitting || !captchaToken}>
+            <button
+              type="submit"
+              className="contact-btn"
+              disabled={isSubmitting || !isFormComplete || !captchaToken}
+            >
               <span>{isSubmitting ? 'Sending...' : 'Submit'}</span>
 
               <span className="contact-btn-icon">
