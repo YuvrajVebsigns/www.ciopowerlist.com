@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const BACKEND_API_BASE = (process.env.NEXT_PUBLIC_API_URL || 'https://ciopowerlist.com').replace(
-  /\/$/,
-  '',
-);
+// const BACKEND_API_BASE = (process.env.NEXT_PUBLIC_API_URL || 'https://ciopowerlist.com').replace(
+//   /\/$/,
+//   '',
+// );
+
+const BACKEND_API_BASE = (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/$/, '');
 
 function buildUpstreamUrl(request: NextRequest) {
   const requestUrl = new URL(request.url);
@@ -35,10 +37,14 @@ async function proxyRequest(request: NextRequest) {
   }
 
   const response = await fetch(upstreamUrl, init);
+  const responseHeaders = new Headers(response.headers);
+  responseHeaders.delete('content-encoding');
+  responseHeaders.delete('content-length');
+  responseHeaders.delete('transfer-encoding');
 
   return new NextResponse(response.body, {
     status: response.status,
-    headers: response.headers,
+    headers: responseHeaders,
   });
 }
 

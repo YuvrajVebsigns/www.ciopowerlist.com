@@ -4277,7 +4277,7 @@ main {
 }
 
 .project-image {
-  object-fit: cover;
+  /* object-fit: cover; */
   transition: transform 0.55s ease;
 }
 
@@ -12379,179 +12379,369 @@ s .dialogues-badge-mark {
   line-height: 1.75;
 }
 
+/* =========================================================
+   WINNER SECTION
+========================================================= */
+
 .winner-section-block {
   width: 100%;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 0 auto 60px;
 }
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
 
 .winner-section-header {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 18px;
-  margin-bottom: 24px;
+  gap: 20px;
+  margin-bottom: 28px;
+  padding: 0 4px;
 }
 
 .winner-section-kicker {
-  margin-top: 10px;
-  padding: 6px 14px;
+  margin: 0 0 8px;
   color: #a40000;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
 .winner-section-header h2 {
   margin: 0;
-  font-size: clamp(28px, 3vw, 44px);
-  line-height: 1.08;
-  color: #1e1a1a;
+  color: #191919;
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
 }
 
 .winner-section-header span {
-  padding: 9px 16px;
-  border-radius: 24px;
-  background: #8e0101;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 540;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 17px;
+  border: 1px solid rgba(142, 1, 1, 0.15);
+  border-radius: 50px;
+  background: linear-gradient(135deg, #8e0101, #b30000);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
   white-space: nowrap;
-  box-shadow: 0 10px 24px rgba(164, 0, 0, 0.25);
+  box-shadow: 0 8px 20px rgba(142, 1, 1, 0.2);
 }
+
+/* =========================================================
+   FOUR CARDS IN ONE ROW
+========================================================= */
 
 .winner-section-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
 }
+
+/* =========================================================
+   WINNER CARD
+========================================================= */
 
 .winner-profile-card {
   position: relative;
+  min-width: 0;
   overflow: hidden;
-  border-radius: 28px;
+
+  border: 1px solid rgba(142, 1, 1, 0.13);
+  border-radius: 22px;
+
   background: #ffffff;
-  border: 1px solid rgba(164, 0, 0, 0.1);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
+
+  box-shadow:
+    0 10px 30px rgba(40, 10, 10, 0.07),
+    0 2px 6px rgba(0, 0, 0, 0.03);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* Elegant red top line */
+.winner-profile-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 4px;
+
+  background: linear-gradient(90deg, #8e0101, #d00000, #8e0101);
+
+  z-index: 5;
+}
+
+/* Small decorative corner */
+.winner-profile-card::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 0;
+
+  width: 65px;
+  height: 65px;
+
+  background: radial-gradient(circle at top right, rgba(164, 0, 0, 0.13), transparent 70%);
+
+  pointer-events: none;
 }
 
 .winner-profile-card:hover {
-  transform: translateY(-8px);
-  border-color: #8e0101;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.14);
+  transform: translateY(-7px);
+
+  border-color: rgba(142, 1, 1, 0.3);
+
+  box-shadow:
+    0 22px 45px rgba(80, 0, 0, 0.14),
+    0 5px 12px rgba(0, 0, 0, 0.05);
 }
+
+/* =========================================================
+   IMAGE AREA
+========================================================= */
 
 .winner-profile-media {
   position: relative;
-  aspect-ratio: 4 / 3.2;
-  background: linear-gradient(135deg, #ffff, #f4e1e1);
+  width: 100%;
+
+  /* Makes all four cards equal */
+  aspect-ratio: 1 / 0.88;
+
   overflow: hidden;
+
+  background: radial-gradient(circle at 50% 35%, #ffffff 0%, #faf4f4 52%, #f0dfdf 100%);
 }
 
+/* Soft bottom fade */
+.winner-profile-media::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 55px;
+
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.65), transparent);
+
+  pointer-events: none;
+}
+
+/* Image */
 .winner-profile-image {
   display: block;
+
   width: 100%;
   height: 100%;
+
   object-fit: cover;
-  transition: transform 0.45s ease;
+  object-position: center;
+
+  transition:
+    transform 0.5s ease,
+    filter 0.5s ease;
 }
 
 .winner-profile-card:hover .winner-profile-image {
-  transform: scale(1.08);
+  transform: scale(1.06);
+  filter: brightness(1.03);
 }
+
+/* =========================================================
+   ATTRACTIVE WINNER CARD BODY
+========================================================= */
 
 .winner-profile-body {
   position: relative;
   padding: 20px 20px 22px;
+  background: linear-gradient(180deg, #ffffff 0%, #fffafa 100%);
 }
 
+/* Premium red accent at top */
 .winner-profile-body::before {
   content: '';
   position: absolute;
   top: 0;
   left: 20px;
-  width: 56px;
+
+  width: 48px;
   height: 4px;
-  border-radius: 999px;
-  background: #ffffff;
+
+  border-radius: 0 0 8px 8px;
+
+  background: linear-gradient(90deg, #8e0101, #d00000);
 }
+
+/* =========================================================
+   WINNER NAME
+========================================================= */
 
 .winner-profile-body h3 {
-  margin: 8px 0 10px;
-  font-size: 20px;
-  color: #1f1f1f;
+  margin: 5px 0 11px;
+
+  color: #171717;
+
+  font-size: 22px;
+  font-weight: 750;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
 }
 
-.winner-profile-category,
-.winner-profile-company {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.6;
-}
+/* =========================================================
+   CATEGORY BADGE
+========================================================= */
 
 .winner-profile-category {
-  margin-bottom: 8px;
-  color: #1f1f1f;
-  font-weight: 540;
+  display: inline-flex;
+  align-items: center;
+
+  width: fit-content;
+  max-width: 100%;
+
+  margin: 0 0 13px;
+  padding: 5px 11px;
+
+  border: 1px solid rgba(164, 0, 0, 0.16);
+  border-radius: 50px;
+
+  background: linear-gradient(135deg, #fff3f3, #fae7e7);
+
+  color: #a40000;
+
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.2;
+
+  letter-spacing: 0.02em;
+
+  box-shadow: 0 3px 8px rgba(164, 0, 0, 0.07);
 }
+
+/* Small dot before category */
+.winner-profile-category::before {
+  content: '';
+
+  width: 5px;
+  height: 5px;
+
+  margin-right: 6px;
+
+  border-radius: 50%;
+
+  background: #a40000;
+
+  box-shadow: 0 0 0 3px rgba(164, 0, 0, 0.08);
+}
+
+/* =========================================================
+   COMPANY / QUOTE
+========================================================= */
 
 .winner-profile-company {
-  color: #4a4a4a;
-}
+  position: relative;
 
-.winners-detail-list {
-  margin-top: 32px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-}
+  display: block;
 
-.winners-detail-item {
-  padding: 22px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(164, 0, 0, 0.1);
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.06);
-}
-
-.winners-detail-item dt {
-  margin-bottom: 8px;
-  color: #a40000;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.winners-detail-item dd {
   margin: 0;
-  color: #333;
-  line-height: 1.65;
+
+  padding: 9px 12px 9px 15px;
+
+  border-radius: 9px;
+
+  background: #faf6f6;
+
+  color: #454545;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  line-height: 1.5;
+
+  border: 1px solid rgba(142, 1, 1, 0.06);
 }
+
+/* Left red accent */
+.winner-profile-company::before {
+  content: '';
+
+  position: absolute;
+
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+
+  width: 3px;
+
+  border-radius: 0 5px 5px 0;
+
+  background: linear-gradient(180deg, #8e0101, #c90000);
+}
+
+/* =========================================================
+   CARD HOVER
+========================================================= */
+
+.winner-profile-card {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.winner-profile-card:hover .winner-profile-body h3 {
+  color: #8e0101;
+  transition: color 0.3s ease;
+}
+
+.winner-profile-card:hover .winner-profile-category {
+  background: #8e0101;
+  color: #ffffff;
+  border-color: #8e0101;
+  box-shadow: 0 5px 12px rgba(142, 1, 1, 0.2);
+}
+
+.winner-profile-card:hover .winner-profile-category::before {
+  background: #ffffff;
+  box-shadow: none;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media (max-width: 768px) {
-  .winners-page,
-  .winners-detail-page {
-    padding: 105px 16px 60px;
+  .winner-profile-body {
+    padding: 17px 16px 19px;
   }
 
-  .winners-grid,
-  .winners-detail-list {
-    grid-template-columns: 1fr;
+  .winner-profile-body h3 {
+    font-size: 17px;
   }
 
-  .winner-section-header {
-    align-items: flex-start;
-    flex-direction: column;
+  .winner-profile-category {
+    font-size: 10px;
+    padding: 5px 9px;
   }
 
-  .winner-section-grid {
-    grid-template-columns: 1fr;
+  .winner-profile-company {
+    font-size: 11px;
+    padding: 8px 10px 8px 13px;
   }
 }
-
 /* =========================================
    PARTNERS PAGE
 ========================================= */
@@ -12793,11 +12983,12 @@ s .dialogues-badge-mark {
 
 .winner-section-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 768px) {
   .winner-section-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }

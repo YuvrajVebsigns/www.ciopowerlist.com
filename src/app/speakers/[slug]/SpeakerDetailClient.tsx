@@ -515,7 +515,8 @@ function SpeakerCard({ speaker, sectionTitle, index }: SpeakerCardProps) {
           {role ? `Company: ${role}` : 'Company info unavailable'}
         </p>
 
-        {quote ? <p className="winner-profile-company">&quot;{quote}&quot;</p> : null}
+        {/* {quote ? <p className="winner-profile-company">&quot;{quote}&quot;</p> : null} */}
+        {quote ? <p className="winner-profile-company">{quote}</p> : null}
       </div>
     </article>
   );
