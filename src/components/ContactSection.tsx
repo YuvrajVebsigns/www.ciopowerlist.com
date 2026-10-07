@@ -1017,7 +1017,7 @@ export default function ContactSection() {
                     {captchaStatus === 'verified'
                       ? 'You can now submit the form.'
                       : captchaStatus === 'verifying'
-                        ? 'Cloudflare is checking your request.'
+                        ? 'Checking your request.'
                         : captchaStatus === 'error'
                           ? 'Please try again.'
                           : !isFormComplete

@@ -204,11 +204,11 @@ export default function Navbar() {
           </div>
 
           <Link
-            href="/blog"
-            className={`nav-link ${pathname === '/blog' ? 'active' : ''}`}
+            href="/yearbook/2026"
+            className={`nav-link ${pathname === '/yearbook' ? 'active' : ''}`}
             onClick={closeAllMenus}
           >
-            Blog
+            Winner Book
           </Link>
 
           <div

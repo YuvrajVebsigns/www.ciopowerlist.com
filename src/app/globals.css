@@ -2522,28 +2522,36 @@ main {
     width: calc(100% - 20px);
     margin: 92px auto 0;
     border-radius: 10px;
+    overflow: hidden;
   }
 
   .hero-image-only {
     min-height: 350px;
-    height: 350px;
+    height: auto;
     border-radius: 10px;
   }
 
   .hero-image {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    max-height: 350px;
+    object-fit: contain;
+    object-position: center;
+    display: block;
   }
 }
 
 @media (max-width: 480px) {
   .hero-image-only {
-    min-height: 280px;
-    height: 280px;
+    min-height: 70px;
+    height: auto;
+  }
+
+  .hero-image {
+    max-height: 280px;
+    object-fit: contain;
   }
 }
-
 /* =========================================================
    FOUNDER MESSAGE SECTION
 ========================================================= */
@@ -6602,6 +6610,7 @@ main {
   .custom-captcha {
     gap: 8px;
     padding: 8px;
+    width: 260px;
   }
 
   .captcha-check {
@@ -13579,5 +13588,1169 @@ s .dialogues-badge-mark {
 
   .privacy-policy-block:not(:last-child) {
     padding-bottom: 14px;
+  }
+}
+
+/* =========================================================
+   YEAR BOOK PAGE
+========================================================= */
+
+.year-book-page {
+  min-height: 100vh;
+  padding: 90px 16px 10px;
+  background: #e5dede;
+}
+
+.year-book-reader {
+  width: min(100%, 1280px);
+  margin: 0 auto;
+}
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.year-book-heading {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto 14px;
+  color: #970808;
+  font-size: clamp(1.6rem, 3vw, 2.15rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.15;
+  text-align: center;
+  animation: year-book-heading-in 600ms ease-out both;
+}
+
+.year-book-heading::after {
+  display: block;
+  width: 46%;
+  height: 3px;
+  margin: 10px auto 0;
+  border-radius: 999px;
+  background: #c7962c;
+  content: '';
+  transition: width 220ms ease;
+}
+
+.year-book-heading:hover::after {
+  width: 72%;
+}
+
+/* =========================================================
+   BOOK STAGE
+========================================================= */
+
+.year-book-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 4vw, 60px);
+}
+
+/* =========================================================
+   BOOK CONTAINER
+========================================================= */
+
+.year-book-book {
+  position: relative;
+  width: min(82vw, 820px);
+  aspect-ratio: 1.45;
+  perspective: 2200px;
+  transform: translateZ(0) scale(1);
+  transform-style: preserve-3d;
+  transition:
+    transform 180ms ease,
+    filter 180ms ease;
+}
+
+.year-book-book.is-cover {
+  width: min(82vw, 820px);
+  aspect-ratio: 1.45;
+}
+
+/* =========================================================
+   PAGE SHEET
+========================================================= */
+
+.year-book-page-sheet {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  background: #fff;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, box-shadow;
+}
+
+.year-book-book > .year-book-page-sheet {
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* =========================================================
+   NEXT / PREVIOUS SPREAD
+========================================================= */
+
+.year-book-next-spread {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.year-book-next-spread .year-book-page-sheet {
+  left: 0;
+  right: 50%;
+  border-radius: 6px 0 0 6px;
+}
+
+.year-book-next-spread .year-book-page-right {
+  left: 50%;
+  right: 0;
+  border-left: 1px solid rgba(100, 60, 30, 0.14);
+  border-radius: 0 6px 6px 0;
+}
+
+/* =========================================================
+   HIDDEN COVER DURING TURN
+========================================================= */
+
+.year-book-next-spread.is-cover .year-book-page-sheet {
+  left: 25%;
+  right: 25%;
+  border-radius: 5px 10px 10px 5px;
+}
+
+/* =========================================================
+   COVER
+========================================================= */
+
+.year-book-book.is-cover > .year-book-page-left {
+  left: 25%;
+  right: 25%;
+  transform-origin: left center;
+  border-radius: 5px 10px 10px 5px;
+}
+
+/* =========================================================
+   OPEN SPREAD
+========================================================= */
+
+.year-book-book.is-spread .year-book-page-sheet {
+  left: 0;
+  right: 50%;
+  border-radius: 6px 0 0 6px;
+}
+
+.year-book-book.is-spread .year-book-page-right {
+  left: 50%;
+  right: 0;
+  border-left: 1px solid rgba(100, 60, 30, 0.14);
+  border-radius: 0 6px 6px 0;
+}
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.year-book-page-sheet img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  object-position: center;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* =========================================================
+   BOOK POP / LIFT EFFECT
+========================================================= */
+
+.year-book-book.is-turning {
+  z-index: 20;
+  animation: year-book-book-pop 720ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  filter: drop-shadow(0 18px 26px rgba(60, 10, 10, 0.12));
+}
+
+@keyframes year-book-book-pop {
+  0% {
+    transform: translateZ(0) scale(1);
+    filter: drop-shadow(0 10px 18px rgba(60, 10, 10, 0.08));
+  }
+
+  20% {
+    transform: translateZ(45px) scale(1.035);
+    filter: drop-shadow(0 28px 38px rgba(60, 10, 10, 0.22));
+  }
+
+  50% {
+    transform: translateZ(38px) scale(1.03);
+    filter: drop-shadow(0 25px 35px rgba(60, 10, 10, 0.2));
+  }
+
+  75% {
+    transform: translateZ(20px) scale(1.015);
+    filter: drop-shadow(0 18px 28px rgba(60, 10, 10, 0.14));
+  }
+
+  100% {
+    transform: translateZ(0) scale(1);
+    filter: drop-shadow(0 10px 18px rgba(60, 10, 10, 0.08));
+  }
+}
+
+/* =========================================================
+   TURNING STATE
+========================================================= */
+
+.year-book-book.is-turning {
+  pointer-events: none;
+}
+
+.year-book-book.is-turning.next .year-book-page-sheet,
+.year-book-book.is-turning.previous .year-book-page-sheet {
+  animation: none;
+}
+
+/* =========================================================
+   NEXT PAGE TURN
+========================================================= */
+
+.year-book-book.is-turning.next .is-turning-right {
+  z-index: 10;
+  transform-origin: left center;
+  animation: year-book-smooth-next 720ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+/* =========================================================
+   COVER TURN
+========================================================= */
+
+.year-book-book.is-cover.is-turning.next > .year-book-page-sheet {
+  z-index: 10;
+  transform-origin: left center;
+  animation: year-book-smooth-cover 720ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+/* =========================================================
+   PREVIOUS PAGE TURN
+========================================================= */
+
+.year-book-book.is-turning.previous .is-turning-left {
+  z-index: 10;
+  transform-origin: right center;
+  animation: year-book-smooth-previous 720ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+/* =========================================================
+   PAGE SHADOW
+========================================================= */
+
+.year-book-book.is-turning.next .is-turning-right::after,
+.year-book-book.is-cover.is-turning.next > .year-book-page-sheet::after,
+.year-book-book.is-turning.previous .is-turning-left::after {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.18));
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.year-book-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.year-book-page-count {
+  margin: 0;
+  padding: 7px 18px;
+  border-radius: 999px;
+  background: #fff;
+  color: #ac0808;
+  box-shadow: 0 8px 18px rgba(80, 20, 20, 0.1);
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   DOWNLOAD BUTTON
+========================================================= */
+
+.year-book-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 11px 22px;
+  border: 0;
+  border-radius: 8px;
+  background: #8e0101;
+  color: #ffffff;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    outline-color 0.25s ease;
+}
+
+.year-book-download:hover {
+  background: #a40000;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(142, 1, 1, 0.2);
+}
+
+.year-book-download:active {
+  transform: translateY(0);
+}
+
+.year-book-download:focus-visible {
+  outline: 3px solid rgba(142, 1, 1, 0.2);
+  outline-offset: 3px;
+}
+
+.year-book-download:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* =========================================================
+   ARROWS
+========================================================= */
+
+.year-book-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: #ac0808;
+  box-shadow: 0 8px 18px rgba(80, 20, 20, 0.12);
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.year-book-arrow:hover:not(:disabled) {
+  background: #ac0808;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.year-book-arrow:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.year-book-arrow:focus-visible {
+  outline: 3px solid rgba(172, 8, 8, 0.2);
+  outline-offset: 3px;
+}
+
+.year-book-arrow:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+/* =========================================================
+   DOWNLOAD MODAL OVERLAY
+========================================================= */
+
+.year-book-download-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  animation: year-book-overlay-in 180ms ease-out both;
+}
+
+/* =========================================================
+   DOWNLOAD MODAL
+========================================================= */
+
+.year-book-download-modal {
+  position: relative;
+  width: min(460px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding: 34px;
+  box-sizing: border-box;
+  border: 1px solid rgba(142, 1, 1, 0.08);
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.3),
+    0 10px 30px rgba(142, 1, 1, 0.08);
+  animation: year-book-modal-in 250ms ease-out both;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(142, 1, 1, 0.35) transparent;
+}
+
+.year-book-download-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.year-book-download-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.year-book-download-modal::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(142, 1, 1, 0.35);
+}
+
+/* =========================================================
+   MODAL CLOSE BUTTON
+========================================================= */
+
+.year-book-download-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #f7eeee;
+  color: #8e0101;
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+.year-book-download-close:hover:not(:disabled) {
+  background: #8e0101;
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+
+.year-book-download-close:active:not(:disabled) {
+  transform: rotate(90deg) scale(0.95);
+}
+
+.year-book-download-close:focus-visible {
+  outline: 3px solid rgba(142, 1, 1, 0.18);
+  outline-offset: 3px;
+}
+
+.year-book-download-close:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
+
+.year-book-download-header {
+  padding-right: 42px;
+  margin-bottom: 25px;
+}
+
+.year-book-download-header h2 {
+  margin: 0 0 9px;
+  color: #8e0101;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.year-book-download-header p {
+  margin: 0;
+  color: #666666;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   DOWNLOAD FORM
+========================================================= */
+
+.year-book-download-form {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.year-book-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.year-book-form-group label {
+  color: #222222;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.year-book-form-group label span {
+  color: #8e0101;
+}
+
+/* =========================================================
+   INPUTS / SELECTS
+========================================================= */
+
+.year-book-form-group input,
+.year-book-form-group select {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  box-sizing: border-box;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  outline: none;
+  background: #ffffff;
+  color: #222222;
+  font-family: inherit;
+  font-size: 14px;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.year-book-form-group input::placeholder {
+  color: #999999;
+}
+
+.year-book-form-group input:hover:not(:disabled),
+.year-book-form-group select:hover:not(:disabled) {
+  border-color: #c8c8c8;
+}
+
+.year-book-form-group input:focus,
+.year-book-form-group select:focus {
+  border-color: #8e0101;
+  box-shadow: 0 0 0 3px rgba(142, 1, 1, 0.08);
+}
+
+.year-book-form-group input:disabled,
+.year-book-form-group select:disabled {
+  background: #f7f7f7;
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+/* =========================================================
+   PHONE ROW
+========================================================= */
+
+.year-book-phone-row {
+  display: grid;
+  grid-template-columns: 145px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.year-book-phone-row select,
+.year-book-phone-row input {
+  min-width: 0;
+}
+
+/* =========================================================
+   FORM ERROR
+========================================================= */
+
+.year-book-download-error {
+  margin: -2px 0 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(176, 0, 0, 0.1);
+  border-radius: 7px;
+  background: #fff0f0;
+  color: #b00000;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+
+.year-book-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 50px;
+  margin-top: 3px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #8e0101;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 200ms ease,
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    opacity 200ms ease;
+}
+
+.year-book-submit:hover:not(:disabled) {
+  background: #a40000;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(142, 1, 1, 0.22);
+}
+
+.year-book-submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.year-book-submit:focus-visible {
+  outline: 3px solid rgba(142, 1, 1, 0.18);
+  outline-offset: 3px;
+}
+
+.year-book-submit:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   SUBMIT LOADER
+========================================================= */
+
+.year-book-submit-loader {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 16px;
+}
+
+.year-book-submit-loader span {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  animation: year-book-submit-loader 0.8s infinite ease-in-out;
+}
+
+.year-book-submit-loader span:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.year-book-submit-loader span:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+@keyframes year-book-submit-loader {
+  0%,
+  80%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================================================
+   MODAL ANIMATIONS
+========================================================= */
+
+@keyframes year-book-overlay-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes year-book-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================================
+   NEXT KEYFRAMES
+========================================================= */
+
+@keyframes year-book-smooth-next {
+  0% {
+    transform: rotateY(0deg);
+    box-shadow: 0 18px 38px rgba(80, 20, 20, 0.15);
+  }
+
+  20% {
+    transform: rotateY(-32deg);
+    box-shadow: 10px 18px 34px rgba(80, 20, 20, 0.18);
+  }
+
+  40% {
+    transform: rotateY(-72deg);
+    box-shadow: 20px 18px 38px rgba(80, 20, 20, 0.22);
+  }
+
+  60% {
+    transform: rotateY(-115deg);
+    box-shadow: 18px 18px 36px rgba(80, 20, 20, 0.18);
+  }
+
+  80% {
+    transform: rotateY(-150deg);
+    box-shadow: 10px 18px 32px rgba(80, 20, 20, 0.12);
+  }
+
+  100% {
+    transform: rotateY(-180deg);
+    box-shadow: 0 18px 30px rgba(80, 20, 20, 0.06);
+  }
+}
+
+/* =========================================================
+   COVER KEYFRAMES
+========================================================= */
+
+@keyframes year-book-smooth-cover {
+  0% {
+    transform: rotateY(0deg);
+    box-shadow: 0 18px 38px rgba(80, 20, 20, 0.16);
+  }
+
+  20% {
+    transform: rotateY(-30deg);
+    box-shadow: 8px 18px 36px rgba(80, 20, 20, 0.18);
+  }
+
+  40% {
+    transform: rotateY(-70deg);
+    box-shadow: 18px 18px 40px rgba(80, 20, 20, 0.22);
+  }
+
+  60% {
+    transform: rotateY(-112deg);
+    box-shadow: 18px 18px 38px rgba(80, 20, 20, 0.18);
+  }
+
+  80% {
+    transform: rotateY(-150deg);
+    box-shadow: 8px 18px 32px rgba(80, 20, 20, 0.1);
+  }
+
+  100% {
+    transform: rotateY(-180deg);
+    box-shadow: 0 18px 30px rgba(80, 20, 20, 0.05);
+  }
+}
+
+/* =========================================================
+   PREVIOUS KEYFRAMES
+========================================================= */
+
+@keyframes year-book-smooth-previous {
+  0% {
+    transform: rotateY(0deg);
+    box-shadow: 0 18px 38px rgba(80, 20, 20, 0.15);
+  }
+
+  20% {
+    transform: rotateY(32deg);
+    box-shadow: -10px 18px 34px rgba(80, 20, 20, 0.18);
+  }
+
+  40% {
+    transform: rotateY(72deg);
+    box-shadow: -20px 18px 38px rgba(80, 20, 20, 0.22);
+  }
+
+  60% {
+    transform: rotateY(115deg);
+    box-shadow: -18px 18px 36px rgba(80, 20, 20, 0.18);
+  }
+
+  80% {
+    transform: rotateY(150deg);
+    box-shadow: -10px 18px 32px rgba(80, 20, 20, 0.12);
+  }
+
+  100% {
+    transform: rotateY(180deg);
+    box-shadow: 0 18px 30px rgba(80, 20, 20, 0.06);
+  }
+}
+
+/* =========================================================
+   HEADING ANIMATION
+========================================================= */
+
+@keyframes year-book-heading-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .year-book-stage {
+    gap: 16px;
+  }
+
+  .year-book-book {
+    width: min(82vw, 720px);
+    aspect-ratio: 1.4;
+  }
+
+  .year-book-book.is-cover {
+    width: min(82vw, 720px);
+    aspect-ratio: 1.4;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+  .year-book-page {
+    padding: 90px 8px 25px;
+  }
+
+  .year-book-heading {
+    margin-bottom: 18px;
+    font-size: 1.55rem;
+  }
+
+  .year-book-heading::after {
+    width: 42%;
+    height: 2px;
+    margin-top: 8px;
+  }
+
+  .year-book-stage {
+    gap: 6px;
+  }
+
+  .year-book-book {
+    width: min(88vw, 620px);
+    aspect-ratio: 1.35;
+  }
+
+  .year-book-book.is-cover {
+    width: min(88vw, 620px);
+    aspect-ratio: 1.35;
+  }
+
+  .year-book-book.is-cover > .year-book-page-left {
+    left: 25%;
+    right: 25%;
+  }
+
+  .year-book-next-spread.is-cover .year-book-page-sheet {
+    left: 25%;
+    right: 25%;
+  }
+
+  .year-book-arrow {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+  }
+
+  .year-book-controls {
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .year-book-page-count {
+    padding: 6px 14px;
+    font-size: 0.72rem;
+  }
+
+  .year-book-download {
+    min-height: 38px;
+    padding: 10px 17px;
+    font-size: 13px;
+  }
+
+  /* Slightly softer pop on mobile */
+  .year-book-book.is-turning {
+    animation-name: year-book-book-pop-mobile;
+  }
+
+  @keyframes year-book-book-pop-mobile {
+    0% {
+      transform: translateZ(0) scale(1);
+    }
+
+    25% {
+      transform: translateZ(25px) scale(1.025);
+    }
+
+    55% {
+      transform: translateZ(20px) scale(1.02);
+    }
+
+    100% {
+      transform: translateZ(0) scale(1);
+    }
+  }
+
+  /* =====================================================
+     DOWNLOAD MODAL
+  ====================================================== */
+
+  .year-book-download-overlay {
+    align-items: center;
+    padding: 15px;
+  }
+
+  .year-book-download-modal {
+    width: 100%;
+    max-height: calc(100vh - 30px);
+    padding: 28px 20px;
+    border-radius: 14px;
+  }
+
+  .year-book-download-close {
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .year-book-download-header {
+    padding-right: 38px;
+    margin-bottom: 22px;
+  }
+
+  .year-book-download-header h2 {
+    font-size: 21px;
+  }
+
+  .year-book-download-header p {
+    font-size: 13px;
+  }
+
+  .year-book-download-form {
+    gap: 15px;
+  }
+
+  .year-book-form-group input,
+  .year-book-form-group select {
+    height: 46px;
+    font-size: 14px;
+  }
+
+  .year-book-phone-row {
+    grid-template-columns: 125px minmax(0, 1fr);
+  }
+
+  .year-book-submit {
+    min-height: 48px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+  .year-book-page {
+    padding: 85px 5px 20px;
+  }
+
+  .year-book-stage {
+    gap: 4px;
+  }
+
+  .year-book-book {
+    width: min(90vw, 500px);
+    aspect-ratio: 1.3;
+  }
+
+  .year-book-book.is-cover {
+    width: min(90vw, 500px);
+    aspect-ratio: 1.3;
+  }
+
+  .year-book-book.is-cover > .year-book-page-left {
+    left: 24%;
+    right: 24%;
+  }
+
+  .year-book-next-spread.is-cover .year-book-page-sheet {
+    left: 24%;
+    right: 24%;
+  }
+
+  .year-book-arrow {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+
+  .year-book-heading {
+    font-size: 1.4rem;
+  }
+
+  .year-book-controls {
+    gap: 8px;
+  }
+
+  .year-book-download {
+    padding: 9px 14px;
+    font-size: 12px;
+  }
+
+  .year-book-page-count {
+    padding: 6px 11px;
+    font-size: 0.68rem;
+  }
+
+  .year-book-download-modal {
+    padding: 25px 17px;
+  }
+
+  .year-book-phone-row {
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 6px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+  .year-book-phone-row {
+    grid-template-columns: 1fr;
+  }
+
+  .year-book-form-group input,
+  .year-book-form-group select {
+    height: 45px;
+  }
+
+  .year-book-controls {
+    flex-direction: column;
+  }
+
+  .year-book-page-count,
+  .year-book-download {
+    width: auto;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .year-book-heading {
+    animation: none;
+  }
+
+  .year-book-book.is-turning {
+    animation: none;
+    transform: none;
+    filter: none;
+  }
+
+  .year-book-book.is-turning.next .is-turning-right,
+  .year-book-book.is-cover.is-turning.next > .year-book-page-sheet,
+  .year-book-book.is-turning.previous .is-turning-left {
+    animation-duration: 1ms;
+  }
+
+  .year-book-arrow,
+  .year-book-heading::after,
+  .year-book-download,
+  .year-book-download-close,
+  .year-book-submit,
+  .year-book-form-group input,
+  .year-book-form-group select {
+    transition: none;
+  }
+
+  .year-book-download-overlay,
+  .year-book-download-modal {
+    animation: none;
+  }
+
+  .year-book-submit-loader span {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
