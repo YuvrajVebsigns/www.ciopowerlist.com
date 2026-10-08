@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 import ClientErrorBoundary from '@/components/ClientErrorBoundary';
 import EventDetailsAnimated from '@/components/EventDetailsAnimated';
-import EventSponsorsSection from '@/components/EventSponsorsSection';
+// import EventSponsorsSection from '@/components/EventSponsorsSection';
 
 import {
   fetchWebsiteEventByIdOrSlug,
@@ -684,10 +684,10 @@ export default function EventDetailsPage() {
      CONTENT BLOCKS
   ========================================================= */
 
-  const contentBlocks =
-    isRecord(eventDescription) && Array.isArray(eventDescription.blocks)
-      ? eventDescription.blocks
-      : [];
+  // const contentBlocks =
+  //   isRecord(eventDescription) && Array.isArray(eventDescription.blocks)
+  //     ? eventDescription.blocks
+  //     : [];
 
   const sponsors = extractEventSponsors(event);
 
@@ -695,141 +695,141 @@ export default function EventDetailsPage() {
      RENDER CONTENT BLOCK
   ========================================================= */
 
-  function renderBlock(block: unknown, index: number) {
-    if (!isRecord(block)) {
-      return null;
-    }
+  // function renderBlock(block: unknown, index: number) {
+  //   if (!isRecord(block)) {
+  //     return null;
+  //   }
 
-    const key = getString(block.id) || `${String(block.type ?? 'block')}-${index}`;
+  //   const key = getString(block.id) || `${String(block.type ?? 'block')}-${index}`;
 
-    const type = getString(block.type).toLowerCase();
+  //   const type = getString(block.type).toLowerCase();
 
-    const data = isRecord(block.data) ? block.data : null;
+  //   const data = isRecord(block.data) ? block.data : null;
 
-    /* HEADER */
-    if (type === 'header') {
-      const level = typeof data?.level === 'number' ? data.level : 2;
+  //   /* HEADER */
+  //   if (type === 'header') {
+  //     const level = typeof data?.level === 'number' ? data.level : 2;
 
-      const text = getString(data?.text);
+  //     const text = getString(data?.text);
 
-      if (!text) {
-        return null;
-      }
+  //     if (!text) {
+  //       return null;
+  //     }
 
-      return level <= 2 ? <h2 key={key}>{text}</h2> : <h3 key={key}>{text}</h3>;
-    }
+  //     return level <= 2 ? <h2 key={key}>{text}</h2> : <h3 key={key}>{text}</h3>;
+  //   }
 
-    /* PARAGRAPH */
-    if (type === 'paragraph') {
-      const text = getString(data?.text);
+  //   /* PARAGRAPH */
+  //   if (type === 'paragraph') {
+  //     const text = getString(data?.text);
 
-      if (!text) {
-        return null;
-      }
+  //     if (!text) {
+  //       return null;
+  //     }
 
-      return (
-        <p
-          key={key}
-          style={{
-            marginBottom: 18,
-            lineHeight: 1.8,
-          }}
-          dangerouslySetInnerHTML={{
-            __html: text,
-          }}
-        />
-      );
-    }
+  //     return (
+  //       <p
+  //         key={key}
+  //         style={{
+  //           marginBottom: 18,
+  //           lineHeight: 1.8,
+  //         }}
+  //         dangerouslySetInnerHTML={{
+  //           __html: text,
+  //         }}
+  //       />
+  //     );
+  //   }
 
-    /* LIST */
-    if (type === 'list') {
-      const items = Array.isArray(data?.items)
-        ? data.items.filter((item): item is string => typeof item === 'string')
-        : [];
+  //   /* LIST */
+  //   if (type === 'list') {
+  //     const items = Array.isArray(data?.items)
+  //       ? data.items.filter((item): item is string => typeof item === 'string')
+  //       : [];
 
-      if (!items.length) {
-        return null;
-      }
+  //     if (!items.length) {
+  //       return null;
+  //     }
 
-      return (
-        <ul key={key} className="overview-list">
-          {items.map((item, itemIndex) => (
-            <li key={`${item}-${itemIndex}`}>{item}</li>
-          ))}
-        </ul>
-      );
-    }
+  //     return (
+  //       <ul key={key} className="overview-list">
+  //         {items.map((item, itemIndex) => (
+  //           <li key={`${item}-${itemIndex}`}>{item}</li>
+  //         ))}
+  //       </ul>
+  //     );
+  //   }
 
-    /* IMAGE */
-    if (type === 'image') {
-      const file = isRecord(data?.file) ? data.file : null;
+  //   /* IMAGE */
+  //   if (type === 'image') {
+  //     const file = isRecord(data?.file) ? data.file : null;
 
-      const url = getImageUrl(file) || getImageUrl(data?.image);
+  //     const url = getImageUrl(file) || getImageUrl(data?.image);
 
-      if (!url) {
-        return null;
-      }
+  //     if (!url) {
+  //       return null;
+  //     }
 
-      /*
-       * IMPORTANT:
-       * Native <img> intentionally used.
-       * This supports external DigitalOcean
-       * Spaces URLs without next.config.js.
-       */
-      return (
-        <div
-          key={key}
-          style={{
-            margin: '24px 0',
-          }}
-        >
-          <img
-            src={url}
-            alt={getString(data?.caption) || 'Event image'}
-            width={1200}
-            height={675}
-            className="event-content-image"
-          />
-        </div>
-      );
-    }
+  //     /*
+  //      * IMPORTANT:
+  //      * Native <img> intentionally used.
+  //      * This supports external DigitalOcean
+  //      * Spaces URLs without next.config.js.
+  //      */
+  //     return (
+  //       <div
+  //         key={key}
+  //         style={{
+  //           margin: '24px 0',
+  //         }}
+  //       >
+  //         <img
+  //           src={url}
+  //           alt={getString(data?.caption) || 'Event image'}
+  //           width={1200}
+  //           height={675}
+  //           className="event-content-image"
+  //         />
+  //       </div>
+  //     );
+  //   }
 
-    /* QUOTE */
-    if (type === 'quote') {
-      const text = getString(data?.text);
+  //   /* QUOTE */
+  //   if (type === 'quote') {
+  //     const text = getString(data?.text);
 
-      if (!text) {
-        return null;
-      }
+  //     if (!text) {
+  //       return null;
+  //     }
 
-      return (
-        <blockquote
-          key={key}
-          style={{
-            margin: '24px 0',
-            paddingLeft: 18,
-            borderLeft: '3px solid #d11f26',
-          }}
-        >
-          {text}
-        </blockquote>
-      );
-    }
+  //     return (
+  //       <blockquote
+  //         key={key}
+  //         style={{
+  //           margin: '24px 0',
+  //           paddingLeft: 18,
+  //           borderLeft: '3px solid #d11f26',
+  //         }}
+  //       >
+  //         {text}
+  //       </blockquote>
+  //     );
+  //   }
 
-    /* DELIMITER */
-    if (type === 'delimiter') {
-      return (
-        <hr
-          key={key}
-          style={{
-            margin: '24px 0',
-          }}
-        />
-      );
-    }
+  //   /* DELIMITER */
+  //   if (type === 'delimiter') {
+  //     return (
+  //       <hr
+  //         key={key}
+  //         style={{
+  //           margin: '24px 0',
+  //         }}
+  //       />
+  //     );
+  //   }
 
-    return null;
-  }
+  //   return null;
+  // }
 
   /* =========================================================
      PAGE RENDER
@@ -845,21 +845,23 @@ export default function EventDetailsPage() {
               SPONSORS
           ================================================= */}
 
-          {sponsors.length > 0 ? (
+          {/* {sponsors.length > 0 ? (
             <DynamicEventSponsorsSection sponsors={sponsors} />
           ) : (
             <EventSponsorsSection />
-          )}
+          )} */}
+
+          {sponsors.length > 0 ? <DynamicEventSponsorsSection sponsors={sponsors} /> : null}
 
           {/* =================================================
               DESCRIPTION CONTENT
           ================================================= */}
 
-          {contentBlocks.length > 0 ? (
+          {/* {contentBlocks.length > 0 ? (
             <section className="event-description-content">
               {contentBlocks.map((block, index) => renderBlock(block, index))}
             </section>
-          ) : null}
+          ) : null} */}
 
           {/* =================================================
               EXTRA SECTIONS
