@@ -9285,6 +9285,7 @@ main {
 
   .nominate-success-section {
     width: 100%;
+    margin-top: 60px;
     padding: 28px 22px;
     border-radius: 22px;
   }

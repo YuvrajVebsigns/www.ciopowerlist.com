@@ -310,9 +310,9 @@ import {
   type WebsiteBlogItem,
 } from '@/services/blogs.service';
 
-function getBlogCategory(blog: WebsiteBlogItem) {
-  return blog.websites?.[0]?.name || blog.tags?.[0] || 'Blog';
-}
+// function getBlogCategory(blog: WebsiteBlogItem) {
+//   return blog.websites?.[0]?.name || blog.tags?.[0] || 'Blog';
+// }
 
 function getBlogImage(blog: WebsiteBlogItem) {
   return blog.featureImage || blog.seo?.ogImage || '/assets/blogs/blog-1.png';
@@ -531,9 +531,9 @@ export default function BlogsSection() {
                 </div>
 
                 <div className="blog-content">
-                  <div className="blog-meta">
+                  {/* <div className="blog-meta">
                     <span className="blog-category">{getBlogCategory(blog)}</span>
-                  </div>
+                  </div> */}
 
                   <h4 className="blog-heading blog-heading-fixed">{blog.title}</h4>
 

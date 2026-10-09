@@ -145,9 +145,9 @@ function AnimatedBlogCard({ blog, index, variant = 'animate-fade-in' }: Animated
       </div>
 
       <div className="blogpage-content">
-        <div className="blogpage-meta">
+        {/* <div className="blogpage-meta">
           <span className="blogpage-category">{getBlogCategory(blog)}</span>
-        </div>
+        </div> */}
 
         <h4 className="blogpage-heading blogpage-heading-fixed">{blog.title}</h4>
 
