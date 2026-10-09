@@ -1731,6 +1731,10 @@ main {
   gap: 28px;
 }
 
+/* =========================================
+   NAVIGATION DROPDOWN
+========================================= */
+
 .nav-dropdown {
   position: relative;
 }
@@ -1738,23 +1742,26 @@ main {
 .nav-dropdown::after {
   content: '';
   position: absolute;
-  left: 0;
+  left: -10px;
   top: 100%;
-  width: 100%;
-  height: 8px;
+  width: calc(100% + 20px);
+  height: 14px;
 }
 
 .nav-link {
   display: flex;
   align-items: center;
   gap: 5px;
+
   font-size: 16px;
   font-weight: 500;
   color: #1f1f1f;
+
   text-decoration: none;
   background: transparent;
   border: none;
   cursor: pointer;
+
   transition: color 0.2s ease;
 }
 
@@ -1763,41 +1770,67 @@ main {
   color: #8e0101;
 }
 
-/* DROPDOWN */
+/* =========================================
+   COMPACT DROPDOWN PANEL
+========================================= */
 
 .mega-panel {
   position: absolute;
-  top: calc(100% + 6px);
-  left: -60px;
-  width: 200px;
-  max-width: calc(100vw - 40px);
+  top: calc(100% + 10px);
+  left: -20px;
 
-  min-height: 120px;
-  max-height: 320px; /* dropdown height */
+  width: 190px;
+  max-width: calc(100vw - 32px);
+  min-height: auto;
+  max-height: 320px;
 
-  padding: 22px;
-  background: #f7efef;
-  border-radius: 16px;
+  padding: 10px;
+
+  background: #ffffff;
+  border: 1px solid #f0e1e1;
+  border-radius: 14px;
 
   overflow-x: hidden;
-  overflow-y: auto; /* enable scroll */
+  overflow-y: auto;
 
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translate3d(0, -8px, 0);
+
+  transform: translateY(8px);
+
   transition:
-    opacity 0.12s ease,
-    visibility 0.12s ease,
-    transform 0.12s ease;
+    opacity 0.2s ease,
+    visibility 0.2s ease,
+    transform 0.2s ease;
+
   z-index: 1200;
 }
 
-/* Scrollbar */
+/* SHOW DROPDOWN */
+
+.nav-dropdown:hover .mega-panel,
+.nav-dropdown.open .mega-panel,
+.nav-dropdown:focus-within .mega-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* =========================================
+   DROPDOWN SCROLLBAR
+========================================= */
+
+.mega-panel {
+  scrollbar-width: thin;
+  scrollbar-color: #c58a8a transparent;
+}
 
 .mega-panel::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .mega-panel::-webkit-scrollbar-track {
@@ -1805,21 +1838,17 @@ main {
 }
 
 .mega-panel::-webkit-scrollbar-thumb {
-  background: #8e0101;
+  background: #c58a8a;
   border-radius: 20px;
 }
 
 .mega-panel::-webkit-scrollbar-thumb:hover {
-  background: #a40000;
+  background: #8e0101;
 }
 
-.nav-dropdown:hover .mega-panel,
-.nav-dropdown.open .mega-panel {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translate3d(0, 0, 0);
-}
+/* =========================================
+   DROPDOWN LIST
+========================================= */
 
 .mega-column ul {
   margin: 0;
@@ -1828,35 +1857,73 @@ main {
 }
 
 .mega-column ul li {
-  margin-bottom: 6px;
+  margin: 2px 0;
 }
 
 .mega-column ul li:last-child {
   margin-bottom: 0;
 }
 
+/* MENU ITEMS WITH RED DOT */
+
 .mega-column ul li a,
 .mega-item {
-  display: block;
-  padding: 10px 12px;
-  border-radius: 10px;
-  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 9px 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+
+  color: #333333;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
   text-decoration: none;
+
   transition:
     padding-left 0.2s ease,
     background 0.2s ease,
     color 0.2s ease;
 }
 
+/* SMALL RED DOT BEFORE EACH ITEM */
+
+.mega-column ul li a::before,
+.mega-item::before {
+  content: '';
+  display: inline-block;
+
+  width: 5px;
+  height: 5px;
+  min-width: 5px;
+
+  background: #8e0101;
+  border-radius: 50%;
+
+  transition: transform 0.2s ease;
+}
+
+/* HOVER AND ACTIVE STATES */
+
 .mega-column ul li a:hover,
 .mega-item:hover,
 .mega-item.active {
-  padding-left: 18px;
-  background: rgba(164, 0, 0, 0.06);
+  padding-left: 14px;
+  background: #fff2f2;
   color: #8e0101;
 }
 
-/* ACTIONS */
+.mega-column ul li a:hover::before,
+.mega-item:hover::before,
+.mega-item.active::before {
+  transform: scale(1.35);
+}
+
+/* =========================================
+   NAVBAR ACTIONS
+========================================= */
 
 .navbar-actions {
   display: flex;
@@ -1867,19 +1934,35 @@ main {
 .search-btn {
   width: 46px;
   height: 46px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   border: none;
   border-radius: 50%;
+
   background: #f0ebeb;
   color: #1f1f1f;
+
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
 .search-btn:hover {
   background: #e5dddd;
+}
+
+/* REDUCE ANIMATION WHEN REQUESTED */
+
+@media (prefers-reduced-motion: reduce) {
+  .mega-panel,
+  .mega-column ul li a,
+  .mega-item,
+  .mega-column ul li a::before,
+  .mega-item::before {
+    transition: none;
+  }
 }
 
 /* CTA */
@@ -4630,7 +4713,7 @@ main {
 
 .cio-process-section-heading {
   max-width: 900px;
-  margin: 0 auto 55px;
+  margin: 30px auto 10px;
   text-align: center;
 }
 
@@ -13596,7 +13679,7 @@ s .dialogues-badge-mark {
 ========================================================= */
 
 .year-book-page {
-  min-height: 100vh;
+  min-height: 70vh;
   padding: 90px 16px 10px;
   background: #e5dede;
 }
@@ -13613,7 +13696,7 @@ s .dialogues-badge-mark {
 .year-book-heading {
   position: relative;
   width: fit-content;
-  margin: 0 auto 14px;
+  margin: 10px auto 8px;
   color: #970808;
   font-size: clamp(1.6rem, 3vw, 2.15rem);
   font-weight: 800;
@@ -14627,7 +14710,7 @@ s .dialogues-badge-mark {
 
 @media (max-width: 420px) {
   .year-book-page {
-    padding: 85px 5px 20px;
+    padding: 120px 5px 20px;
   }
 
   .year-book-stage {

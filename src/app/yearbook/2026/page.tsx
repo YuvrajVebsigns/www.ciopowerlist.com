@@ -490,15 +490,17 @@ export default function YearBook2026Page() {
                 <label htmlFor="yearbook-first-name">
                   First Name <span>*</span>
                 </label>
-
                 <input
                   id="yearbook-first-name"
                   type="text"
                   value={downloadFirstName}
-                  onChange={(event) => setDownloadFirstName(event.target.value)}
+                  onChange={(event) =>
+                    setDownloadFirstName(event.target.value.replace(/[^A-Za-zÀ-ÿ\s.'-]/g, ''))
+                  }
                   placeholder="Enter your first name"
                   autoComplete="given-name"
                   disabled={isDownloading}
+                  maxLength={50}
                   required
                 />
               </div>
@@ -508,15 +510,17 @@ export default function YearBook2026Page() {
                 <label htmlFor="yearbook-last-name">
                   Last Name <span>*</span>
                 </label>
-
                 <input
                   id="yearbook-last-name"
                   type="text"
                   value={downloadLastName}
-                  onChange={(event) => setDownloadLastName(event.target.value)}
+                  onChange={(event) =>
+                    setDownloadLastName(event.target.value.replace(/[^A-Za-zÀ-ÿ\s.'-]/g, ''))
+                  }
                   placeholder="Enter your last name"
                   autoComplete="family-name"
                   disabled={isDownloading}
+                  maxLength={50}
                   required
                 />
               </div>
@@ -526,15 +530,17 @@ export default function YearBook2026Page() {
                 <label htmlFor="yearbook-company">
                   Company Name <span>*</span>
                 </label>
-
                 <input
                   id="yearbook-company"
                   type="text"
                   value={downloadCompany}
-                  onChange={(event) => setDownloadCompany(event.target.value)}
+                  onChange={(event) =>
+                    setDownloadCompany(event.target.value.replace(/[^A-Za-zÀ-ÿ0-9\s&.,'()/-]/g, ''))
+                  }
                   placeholder="Enter your company name"
                   autoComplete="organization"
                   disabled={isDownloading}
+                  maxLength={100}
                   required
                 />
               </div>
@@ -544,15 +550,19 @@ export default function YearBook2026Page() {
                 <label htmlFor="yearbook-designation">
                   Designation <span>*</span>
                 </label>
-
                 <input
                   id="yearbook-designation"
                   type="text"
                   value={downloadDesignation}
-                  onChange={(event) => setDownloadDesignation(event.target.value)}
+                  onChange={(event) =>
+                    setDownloadDesignation(
+                      event.target.value.replace(/[^A-Za-zÀ-ÿ0-9\s&.,'()/-]/g, ''),
+                    )
+                  }
                   placeholder="Enter your designation"
                   autoComplete="organization-title"
                   disabled={isDownloading}
+                  maxLength={100}
                   required
                 />
               </div>
@@ -570,6 +580,7 @@ export default function YearBook2026Page() {
                     onChange={(event) => setDownloadCountryCode(event.target.value)}
                     disabled={isDownloading}
                     aria-label="Country code"
+                    required
                   >
                     {COUNTRY_CODES.map(({ code, country }) => (
                       <option key={`${code}-${country}`} value={code}>
@@ -582,11 +593,16 @@ export default function YearBook2026Page() {
                     id="yearbook-phone"
                     type="tel"
                     value={downloadPhone}
-                    onChange={(event) => setDownloadPhone(event.target.value)}
+                    onChange={(event) =>
+                      setDownloadPhone(event.target.value.replace(/\D/g, '').slice(0, 15))
+                    }
                     placeholder="Enter mobile number"
-                    autoComplete="tel"
+                    autoComplete="tel-national"
                     disabled={isDownloading}
-                    inputMode="tel"
+                    inputMode="numeric"
+                    pattern="[0-9]{7,15}"
+                    title="Enter 7 to 15 digits without letters or special characters."
+                    maxLength={15}
                     required
                   />
                 </div>
@@ -597,15 +613,17 @@ export default function YearBook2026Page() {
                 <label htmlFor="yearbook-email">
                   Email <span>*</span>
                 </label>
-
                 <input
                   id="yearbook-email"
                   type="email"
                   value={downloadEmail}
-                  onChange={(event) => setDownloadEmail(event.target.value)}
+                  onChange={(event) => setDownloadEmail(event.target.value.trimStart())}
                   placeholder="Enter your email address"
                   autoComplete="email"
                   disabled={isDownloading}
+                  maxLength={254}
+                  pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                  title="Enter a valid email address, for example name@example.com."
                   required
                 />
               </div>
@@ -615,7 +633,6 @@ export default function YearBook2026Page() {
                 <label htmlFor="yearbook-industry">
                   Industry <span>*</span>
                 </label>
-
                 <select
                   id="yearbook-industry"
                   value={downloadIndustry}
@@ -624,7 +641,6 @@ export default function YearBook2026Page() {
                   required
                 >
                   <option value="">Select Industry</option>
-
                   {INDUSTRIES.map((industry) => (
                     <option key={industry} value={industry}>
                       {industry}

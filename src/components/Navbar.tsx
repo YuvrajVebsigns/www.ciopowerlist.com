@@ -283,7 +283,7 @@ export default function Navbar() {
             Nomination
           </Link>
 
-          <button
+          {/* <button
             type="button"
             className={`nav-link ${
               pathname === '/' && activeHash === '#cio-process-section' ? 'active' : ''
@@ -304,8 +304,27 @@ export default function Navbar() {
             }}
           >
             Process
-          </button>
+          </button> */}
 
+          <button
+            type="button"
+            className={`nav-link ${pathname === '/process' ? 'active' : ''}`}
+            onClick={() => {
+              closeAllMenus();
+
+              if (pathname !== '/process') {
+                window.location.href = '/process';
+                return;
+              }
+
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              });
+            }}
+          >
+            Process
+          </button>
           <div
             className={`nav-dropdown ${speakersOpen ? 'open' : ''}`}
             onMouseEnter={openSpeakers}

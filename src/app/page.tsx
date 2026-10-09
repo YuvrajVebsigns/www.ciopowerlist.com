@@ -7,7 +7,7 @@ import CIOPowerListWhyPartner from '@/components/WhyPartner';
 import ContactSection from '@/components/ContactSection';
 import BlogsSection from '@/components/BlogsSection';
 // import DialoguesSection from '@/components/DialoguesSection';
-import CIOPowerListProcess from '@/components/Process';
+// import CIOPowerListProcess from '@/components/Process';
 
 export default function Home() {
   return (
@@ -18,7 +18,7 @@ export default function Home() {
       <ExpertiseSection />
       {/* <TeamSection /> */}
       <KeyClient />
-      <CIOPowerListProcess />
+      {/* <CIOPowerListProcess /> */}
       <CIOPowerListWhyPartner />
       <ProjectsSection />
       {/* <ResearchSection />
