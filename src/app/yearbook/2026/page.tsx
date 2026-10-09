@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { downloadWebsiteReport } from '@/services/reports.service';
 
-const YEAR_BOOK_PAGES = Array.from({ length: 30 }, (_, index) => {
+const YEAR_BOOK_PAGES = Array.from({ length: 152 }, (_, index) => {
   const pageNumber = String(index + 1).padStart(2, '0');
 
   return {
@@ -104,7 +104,7 @@ export default function YearBook2026Page() {
       window.setTimeout(() => {
         setSpreadStart(nextSpreadStart);
         setIsTurning(false);
-      }, 560);
+      }, 720);
     },
     [isTurning],
   );
