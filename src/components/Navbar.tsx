@@ -203,13 +203,13 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* <Link
+          <Link
             href="/yearbook/2026"
             className={`nav-link ${pathname === '/yearbook' ? 'active' : ''}`}
             onClick={closeAllMenus}
           >
             Winner Book
-          </Link> */}
+          </Link>
 
           <div
             className={`nav-dropdown ${winnersOpen ? 'open' : ''}`}
