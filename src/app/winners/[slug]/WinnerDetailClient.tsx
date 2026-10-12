@@ -524,7 +524,7 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
         <section className="winners-detail-card">
           <p className="winners-kicker">Loading winner...</p>
 
-          <p>Fetching Technology Icons and Business Icons data for {slug}.</p>
+          <p>Loading Technology Icons and Business Icons data for {slug}.</p>
         </section>
       </main>
     );

@@ -785,7 +785,7 @@ export default function SpeakerDetailClient({ slug }: SpeakerDetailClientProps) 
           <p className="winners-kicker">Loading speaker...</p>
 
           <p>
-            Fetching Speakers {year} and Partner Speakers {year}.
+            Loading Speakers {year} and Partner Speakers {year}.
           </p>
         </section>
       </main>
