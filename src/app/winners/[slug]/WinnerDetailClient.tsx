@@ -691,6 +691,12 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
           Only shown when both APIs returned no cards.
       ===================================================== */}
 
+      {/* {!showTechnology && !showBusiness ? (
+        <section className="winner-section-block">
+          <p>No winner cards were found for {slug}.</p>
+        </section>
+      ) : null} */}
+
       {!showTechnology && !showBusiness ? (
         <section className="winner-section-block">
           <p>No winner cards were found for {slug}.</p>

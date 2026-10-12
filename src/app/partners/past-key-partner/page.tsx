@@ -87,7 +87,7 @@ export default function PastKeyPartnerPage() {
       <section className="past-partners-section">
         <div className="past-partners-container">
           <div className="past-partners-heading">
-            <span className="past-partners-label1">PAST KEY PARTNERS</span>
+            <span className="partner2026-label11">PAST KEY PARTNERS</span>
 
             <h1 className="past-partners-title">
               Our Trusted <span>Past Key Partners</span>

@@ -5,6 +5,7 @@ import type { Country } from 'react-phone-number-input';
 import CountryCodeSelect, { getDialCodeFromCountry } from '@/components/CountryCodeSelect';
 import { submitAttendeeRegistration } from '@/services/attendees.service';
 import { fetchWebsiteEvents, WebsiteEvent } from '@/services/events.service';
+import Link from 'next/link';
 
 type EventItem = WebsiteEvent;
 
@@ -315,6 +316,15 @@ export default function RegisterPage() {
               </button>
             </div>
           </form>
+        </div>
+        <div className="social-media-back" style={{ display: 'flex', justifyContent: 'center' }}>
+          <Link
+            href="/"
+            className="social-media-back-btn"
+            style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            ← Back
+          </Link>
         </div>
       </div>
     </section>

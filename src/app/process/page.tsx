@@ -28,7 +28,7 @@ const dataSources = [
 
 export default function CIOPowerListProcess() {
   return (
-    <section id="cio-process-section" className="cio-process-section">
+    <section className="cio-process-section">
       <div className="cio-process-container">
         <div className="cio-process-section-heading">
           <div className="aboutus-label">

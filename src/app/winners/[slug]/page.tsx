@@ -1,13 +1,12 @@
 import WinnerDetailClient from './WinnerDetailClient';
 
 type WinnerPageProps = {
-  params: {
-    slug?: string | string[];
-  };
+  params: Promise<{
+    slug: string;
+  }>;
 };
 
-export default function WinnerDetailPage({ params }: WinnerPageProps) {
-  const slug = Array.isArray(params?.slug) ? (params.slug[0] ?? '') : (params?.slug ?? '');
-
+export default async function WinnerDetailPage({ params }: WinnerPageProps) {
+  const { slug } = await params;
   return <WinnerDetailClient slug={slug} />;
 }

@@ -802,14 +802,24 @@ export default function NominatePage() {
      CHECKING STATUS SCREEN
      ========================================================= */
 
+  // if (nominationActive === null) {
+  //   return (
+  //     <main className="nominate-page-container">
+  //       <section className="nominate-success-section">
+  //         <h1>Nomination</h1>
+
+  //         <p>Checking nomination availability...</p>
+  //       </section>
+  //     </main>
+  //   );
+  // }
+
   if (nominationActive === null) {
     return (
-      <main className="nominate-page-container">
-        <section className="nominate-success-section">
-          <h1>Nomination</h1>
-
-          <p>Checking nomination availability...</p>
-        </section>
+      <main className="nominate-loader-container">
+        <div className="nominate-loader" role="status" aria-label="Loading">
+          <span className="nominate-loader-spinner" />
+        </div>
       </main>
     );
   }

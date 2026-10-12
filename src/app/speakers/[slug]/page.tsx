@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import SpeakerDetailClient from './SpeakerDetailClient';
-import { getSpeakerBySlug } from '../speakerData';
 
 type SpeakerPageProps = {
   params: Promise<{
@@ -10,9 +9,8 @@ type SpeakerPageProps = {
 
 export default async function SpeakerDetailPage({ params }: SpeakerPageProps) {
   const { slug } = await params;
-  const speaker = getSpeakerBySlug(slug);
 
-  if (!speaker) {
+  if (!/^speaker-20\d{2}$/.test(slug)) {
     notFound();
   }
 

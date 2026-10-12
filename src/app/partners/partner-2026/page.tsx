@@ -47,6 +47,7 @@ export default function Partner2026Page() {
         <div className="partner2026-container">
           <div className="partner2026-heading">
             <span className="partner2026-label11">PARTNERS 2026</span>
+            <br />
 
             <h1 className="partner2026-title">
               Celebrating Our <span>Valued Partners</span>
