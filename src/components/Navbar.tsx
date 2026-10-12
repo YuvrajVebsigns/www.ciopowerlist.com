@@ -473,11 +473,16 @@ export default function Navbar() {
           const slug = page.slug.trim().toLowerCase();
           const status = page.status?.trim().toLowerCase();
 
-          if ((status && status !== 'published') || page.isPublished === false) {
+          if (
+            (status && status !== 'published') ||
+            page.isPublished === false ||
+            page.isDeleted === true ||
+            page.deletedAt
+          ) {
             continue;
           }
 
-          const winnerMatch = slug.match(/^(?:winner|business-icon)-(20\d{2})$/);
+          const winnerMatch = slug.match(/^winner-(20\d{2})$/);
           if (winnerMatch) {
             const year = Number(winnerMatch[1]);
             winnersByYear.set(year, {

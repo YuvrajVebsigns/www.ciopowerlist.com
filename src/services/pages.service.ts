@@ -109,6 +109,8 @@ export interface WebsitePageListingItem {
   status?: string;
   isPublished?: boolean;
   publishedAt?: string;
+  isDeleted?: boolean;
+  deletedAt?: string | null;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -125,6 +127,9 @@ function normalizeWebsitePageListingItem(value: unknown): WebsitePageListingItem
     status: typeof value.status === 'string' ? value.status : undefined,
     isPublished: typeof value.isPublished === 'boolean' ? value.isPublished : undefined,
     publishedAt: typeof value.publishedAt === 'string' ? value.publishedAt : undefined,
+    isDeleted: typeof value.isDeleted === 'boolean' ? value.isDeleted : undefined,
+    deletedAt:
+      typeof value.deletedAt === 'string' || value.deletedAt === null ? value.deletedAt : undefined,
   };
 }
 
@@ -166,6 +171,7 @@ export async function fetchWebsitePages(): Promise<WebsitePageListingItem[]> {
   const response = await apiFetch<unknown>(`${API_ENDPOINTS.WEBSITE.PAGES.BASE}?${params}`, {
     requireAuth: false,
     method: 'GET',
+    cache: 'no-store',
     headers,
   });
   const pages = findWebsitePages(response);
