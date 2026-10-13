@@ -78,15 +78,23 @@
 //     getString(entry.label) ||
 //     'Winner Name';
 
+//   // const role =
+//   //   getString(entry.role) ||
+//   //   getString(entry.designation) ||
+//   //   getString(entry.position) ||
+//   //   getString(entry.company) ||
+//   //   getString(entry.organization) ||
+//   //   getString(entry.companyName) ||
+//   //   getString(entry.affiliation) ||
+//   //   'Winner';
 //   const role =
-//     getString(entry.role) ||
-//     getString(entry.designation) ||
-//     getString(entry.position) ||
-//     getString(entry.company) ||
-//     getString(entry.organization) ||
-//     getString(entry.companyName) ||
-//     getString(entry.affiliation) ||
-//     'Winner';
+//   getString(entry.role) ||
+//   getString(entry.designation) ||
+//   getString(entry.position) ||
+//   getString(entry.company) ||
+//   getString(entry.organization) ||
+//   getString(entry.companyName) ||
+//   getString(entry.affiliation);
 
 //   const quote =
 //     getString(entry.quote) ||
@@ -137,9 +145,12 @@
 //       <div className="winner-profile-body">
 //         <h3>{author}</h3>
 
-//         <p className="winner-profile-category">{role}</p>
+//         {/* <p className="winner-profile-category">Category: {role}</p> */}
+//         {role ? (
+//   <p className="winner-profile-category">Category: {role}</p>
+// ) : null}
 
-//         {quote ? <p className="winner-profile-company">{quote}</p> : null}
+//         {quote ? <p className="winner-profile-company">Company: {quote}</p> : null}
 //       </div>
 //     </article>
 //   );
@@ -147,20 +158,15 @@
 
 // /* =========================================================
 //    GET YEAR FROM ROUTE SLUG
-// =========================================================
 
-// Examples:
-
-// winner-2026       -> 2026
-// winner-2025       -> 2025
-// winner-2024       -> 2024
-// business-icon-2026 -> 2026
-
+//    winner-2026        -> 2026
+//    winner-2025        -> 2025
+//    winner-2024        -> 2024
+//    business-icon-2026 -> 2026
 // ========================================================= */
 
 // function getWinnerYear(slug: string): string {
 //   const cleanSlug = slug.trim().toLowerCase();
-
 //   const match = cleanSlug.match(/(20\d{2})$/);
 
 //   return match?.[1] || '2026';
@@ -190,7 +196,6 @@
 //    GET SECTION ITEMS
 
 //    Supports all existing API structures.
-
 //    Nothing is removed from API data.
 // ========================================================= */
 
@@ -204,12 +209,10 @@
 //   }
 
 //   const data = isRecord(section.data) ? section.data : null;
-
 //   const candidates: unknown[] = [];
 
-//   /*
-//    * DATA OBJECT
-//    */
+//   /* DATA OBJECT */
+
 //   if (data) {
 //     candidates.push(
 //       data.testimonials,
@@ -227,9 +230,8 @@
 //     );
 //   }
 
-//   /*
-//    * SECTION OBJECT
-//    */
+//   /* SECTION OBJECT */
+
 //   candidates.push(
 //     section.testimonials,
 //     section.items,
@@ -245,9 +247,8 @@
 //     section.results,
 //   );
 
-//   /*
-//    * Return the first available array.
-//    */
+//   /* RETURN THE FIRST AVAILABLE ARRAY */
+
 //   for (const candidate of candidates) {
 //     if (Array.isArray(candidate)) {
 //       return candidate;
@@ -259,8 +260,6 @@
 
 // /* =========================================================
 //    GET SECTION TITLE
-
-//    Safe Record access.
 // ========================================================= */
 
 // function getSectionTitle(section: Record<string, unknown>, fallbackTitle: string): string {
@@ -296,7 +295,6 @@
 //       }
 
 //       const testimonials = getSectionItems(section);
-
 //       const title = getSectionTitle(section, fallbackTitle);
 
 //       return {
@@ -325,21 +323,18 @@
 //     ? winnerPage.content.blocks
 //     : [];
 
-//   /*
-//    * FIRST: sections
-//    */
+//   /* FIRST: SECTIONS */
+
 //   let sections = buildSections(pageSections, fallbackTitle);
 
-//   /*
-//    * SECOND: content.blocks
-//    */
+//   /* SECOND: CONTENT.BLOCKS */
+
 //   if (sections.length === 0 && pageBlocks.length > 0) {
 //     sections = buildSections(pageBlocks, fallbackTitle);
 //   }
 
-//   /*
-//    * THIRD: direct page data
-//    */
+//   /* THIRD: DIRECT PAGE DATA */
+
 //   if (sections.length === 0) {
 //     const directItems = getSectionItems(winnerPage);
 
@@ -373,141 +368,134 @@
 
 //   /* =========================================================
 //      LOAD DATA ACCORDING TO CURRENT ROUTE SLUG
+
+//      winner-2026:
+//        Technology -> winner-2026
+//        Business   -> business-icon-2026
+
+//      winner-2025:
+//        Technology -> winner-2025
+//        Business   -> business-icon-2025
+
+//      Continues automatically for other years.
 //   ========================================================= */
 
 //   useEffect(() => {
 //     let isMounted = true;
 
 //     async function loadWinnerPages() {
-//       try {
-//         setIsLoading(true);
-//         setError(null);
+//       setIsLoading(true);
+//       setError(null);
 
-//         /*
-//          * IMPORTANT:
-//          *
-//          * If current URL is:
-//          *
-//          * winner-2026
-//          *
-//          * API calls become:
-//          *
-//          * winner-2026
-//          * business-icon-2026
-//          *
-//          *
-//          * If current URL is:
-//          *
-//          * winner-2025
-//          *
-//          * API calls become:
-//          *
-//          * winner-2025
-//          * business-icon-2025
-//          *
-//          *
-//          * This continues automatically until 2015.
-//          */
+//       setPage(null);
+//       setTechnologyPage(null);
+//       setBusinessPage(null);
 
-//         const technologySlug = getTechnologySlug(slug);
+//       const technologySlug = getTechnologySlug(slug);
+//       const businessSlug = getBusinessSlug(slug);
 
-//         const businessSlug = getBusinessSlug(slug);
+//       /*
+//        * Fetch each page independently.
+//        *
+//        * If either request fails, the other request can
+//        * still succeed and its data will still be displayed.
+//        */
 
-//         // console.log('Winner detail slug:', slug);
-//         // console.log('Technology API slug:', technologySlug);
-//         // console.log('Business API slug:', businessSlug);
+//       const [technologyResult, businessResult] = await Promise.allSettled([
+//         fetchWebsitePageBySlug(technologySlug),
+//         fetchWebsitePageBySlug(businessSlug),
+//       ]);
 
-//         const responses = await Promise.all([
-//           fetchWebsitePageBySlug(technologySlug),
-//           fetchWebsitePageBySlug(businessSlug),
-//         ]);
-
-//         if (!isMounted) {
-//           return;
-//         }
-
-//         const technologyResponse = responses[0];
-
-//         const businessResponse = responses[1];
-
-//         /* =====================================================
-//            SAVE TECHNOLOGY PAGE
-//         ===================================================== */
-
-//         if (technologyResponse?.success && technologyResponse.data) {
-//           setTechnologyPage(technologyResponse.data);
-//         } else {
-//           setTechnologyPage(null);
-//         }
-
-//         /* =====================================================
-//            SAVE BUSINESS PAGE
-//         ===================================================== */
-
-//         if (businessResponse?.success && businessResponse.data) {
-//           setBusinessPage(businessResponse.data);
-//         } else {
-//           setBusinessPage(null);
-//         }
-
-//         /* =====================================================
-//            PRIMARY PAGE
-//         =====================================================
-
-//            The winner page is used as the main page.
-
-//            For:
-
-//            winner-2026 -> winner-2026
-//            winner-2025 -> winner-2025
-//            winner-2024 -> winner-2024
-
-//            etc.
-//         */
-
-//         if (technologyResponse?.success && technologyResponse.data) {
-//           setPage(technologyResponse.data);
-//         } else if (businessResponse?.success && businessResponse.data) {
-//           setPage(businessResponse.data);
-//         } else {
-//           setPage(null);
-//         }
-
-//         /* =====================================================
-//            ERROR ONLY IF BOTH APIs FAILED
-//         ===================================================== */
-
-//         const technologyLoaded = technologyResponse?.success && !!technologyResponse.data;
-
-//         const businessLoaded = businessResponse?.success && !!businessResponse.data;
-
-//         if (!technologyLoaded && !businessLoaded) {
-//           setError(
-//             technologyResponse?.message ||
-//               businessResponse?.message ||
-//               `Unable to load winner data for ${slug}.`,
-//           );
-//         }
-//       } catch (err: unknown) {
-//         if (!isMounted) {
-//           return;
-//         }
-
-//         setPage(null);
-//         setTechnologyPage(null);
-//         setBusinessPage(null);
-
-//         setError(
-//           err instanceof Error ? err.message : 'Unable to load winner pages. Please try again.',
-//         );
-//       } finally {
-//         if (isMounted) {
-//           setIsLoading(false);
-//         }
+//       if (!isMounted) {
+//         return;
 //       }
+
+//       /* =====================================================
+//          TECHNOLOGY API RESULT
+//       ===================================================== */
+
+//       const technologyResponse =
+//         technologyResult.status === 'fulfilled' ? technologyResult.value : null;
+
+//       const technologyLoaded = Boolean(technologyResponse?.success && technologyResponse.data);
+
+//       if (technologyLoaded && technologyResponse?.data) {
+//         setTechnologyPage(technologyResponse.data);
+//       } else {
+//         setTechnologyPage(null);
+//       }
+
+//       /* =====================================================
+//          BUSINESS API RESULT
+//       ===================================================== */
+
+//       const businessResponse = businessResult.status === 'fulfilled' ? businessResult.value : null;
+
+//       const businessLoaded = Boolean(businessResponse?.success && businessResponse.data);
+
+//       if (businessLoaded && businessResponse?.data) {
+//         setBusinessPage(businessResponse.data);
+//       } else {
+//         setBusinessPage(null);
+//       }
+
+//       /* =====================================================
+//          PRIMARY PAGE
+
+//          Prefer the Technology page.
+
+//          If Technology is unavailable, use the Business
+//          page for the main heading and description.
+//       ===================================================== */
+
+//       if (technologyLoaded && technologyResponse?.data) {
+//         setPage(technologyResponse.data);
+//       } else if (businessLoaded && businessResponse?.data) {
+//         setPage(businessResponse.data);
+//       } else {
+//         setPage(null);
+//       }
+
+//       /* =====================================================
+//          ERROR ONLY IF BOTH REQUESTS FAILED
+//       ===================================================== */
+
+//       if (!technologyLoaded && !businessLoaded) {
+//         const technologyError =
+//           technologyResult.status === 'rejected' ? technologyResult.reason : null;
+
+//         const businessError = businessResult.status === 'rejected' ? businessResult.reason : null;
+
+//         const rejectedError =
+//           technologyError instanceof Error
+//             ? technologyError.message
+//             : businessError instanceof Error
+//               ? businessError.message
+//               : null;
+
+//         const responseError = technologyResponse?.message || businessResponse?.message;
+
+//         setError(rejectedError || responseError || `Unable to load winner data for ${slug}.`);
+//       }
+
+//       setIsLoading(false);
 //     }
 
-//     loadWinnerPages();
+//     loadWinnerPages().catch((err: unknown) => {
+//       if (!isMounted) {
+//         return;
+//       }
+
+//       setPage(null);
+//       setTechnologyPage(null);
+//       setBusinessPage(null);
+
+//       setError(
+//         err instanceof Error ? err.message : 'Unable to load winner pages. Please try again.',
+//       );
+
+//       setIsLoading(false);
+//     });
 
 //     return () => {
 //       isMounted = false;
@@ -532,6 +520,8 @@
 
 //   /* =========================================================
 //      COMPLETE API FAILURE
+
+//      Show this only when neither page is available.
 //   ========================================================= */
 
 //   if (error && !technologyPage && !businessPage) {
@@ -587,11 +577,9 @@
 //   const businessTestimonials = businessSections.flatMap((section) => section.testimonials);
 
 //   const technologyCount = technologyTestimonials.length;
-
 //   const businessCount = businessTestimonials.length;
 
 //   const showTechnology = technologyCount > 0;
-
 //   const showBusiness = businessCount > 0;
 
 //   /* =========================================================
@@ -622,11 +610,8 @@
 //       {/* =====================================================
 //           TECHNOLOGY ICONS
 
-//           winner-2026
-//           winner-2025
-//           winner-2024
-//           ...
-//           winner-2015
+//           Display only when Technology winner records exist.
+//           Missing Business Icons data does not affect this.
 //       ===================================================== */}
 
 //       {showTechnology ? (
@@ -655,11 +640,10 @@
 //       {/* =====================================================
 //           BUSINESS ICONS
 
-//           business-icon-2026
-//           business-icon-2025
-//           business-icon-2024
-//           ...
-//           business-icon-2015
+//           This section is hidden if the Business API fails
+//           or returns no winner records.
+
+//           The main card and Technology Icons remain visible.
 //       ===================================================== */}
 
 //       {showBusiness ? (
@@ -688,14 +672,9 @@
 //       {/* =====================================================
 //           FALLBACK
 
-//           Only shown when both APIs returned no cards.
+//           Preserved from the original code.
+//           Shown when neither API contains winner cards.
 //       ===================================================== */}
-
-//       {/* {!showTechnology && !showBusiness ? (
-//         <section className="winner-section-block">
-//           <p>No winner cards were found for {slug}.</p>
-//         </section>
-//       ) : null} */}
 
 //       {!showTechnology && !showBusiness ? (
 //         <section className="winner-section-block">
@@ -793,8 +772,7 @@ function WinnerCard({ testimonial, sectionTitle, index }: WinnerCardProps) {
     getString(entry.company) ||
     getString(entry.organization) ||
     getString(entry.companyName) ||
-    getString(entry.affiliation) ||
-    'Winner';
+    getString(entry.affiliation);
 
   const quote =
     getString(entry.quote) ||
@@ -845,7 +823,7 @@ function WinnerCard({ testimonial, sectionTitle, index }: WinnerCardProps) {
       <div className="winner-profile-body">
         <h3>{author}</h3>
 
-        <p className="winner-profile-category">Category: {role}</p>
+        {role ? <p className="winner-profile-category">Category: {role}</p> : null}
 
         {quote ? <p className="winner-profile-company">Company: {quote}</p> : null}
       </div>
@@ -858,8 +836,8 @@ function WinnerCard({ testimonial, sectionTitle, index }: WinnerCardProps) {
 
    winner-2026        -> 2026
    winner-2025        -> 2025
-   winner-2024        -> 2024
    business-icon-2026 -> 2026
+   covid-2026         -> 2026
 ========================================================= */
 
 function getWinnerYear(slug: string): string {
@@ -890,6 +868,20 @@ function getBusinessSlug(slug: string): string {
 }
 
 /* =========================================================
+   GET COVID SLUG
+
+   covid-2026
+   covid-2025
+   covid-2024
+========================================================= */
+
+function getCovidSlug(slug: string): string {
+  const year = getWinnerYear(slug);
+
+  return `covid-${year}`;
+}
+
+/* =========================================================
    GET SECTION ITEMS
 
    Supports all existing API structures.
@@ -906,6 +898,7 @@ function getSectionItems(section: unknown): unknown[] {
   }
 
   const data = isRecord(section.data) ? section.data : null;
+
   const candidates: unknown[] = [];
 
   /* DATA OBJECT */
@@ -1059,22 +1052,27 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
 
   const [businessPage, setBusinessPage] = useState<WebsitePage | null>(null);
 
+  const [covidPage, setCovidPage] = useState<WebsitePage | null>(null);
+
   const [isLoading, setIsLoading] = useState(true);
 
   const [error, setError] = useState<string | null>(null);
 
   /* =========================================================
-     LOAD DATA ACCORDING TO CURRENT ROUTE SLUG
+     LOAD ALL THREE API PAGES
 
      winner-2026:
        Technology -> winner-2026
        Business   -> business-icon-2026
+       COVID      -> covid-2026
 
      winner-2025:
        Technology -> winner-2025
        Business   -> business-icon-2025
+       COVID      -> covid-2025
 
-     Continues automatically for other years.
+     Each request is independent. Failure of one API does
+     not prevent the other two sections from displaying.
   ========================================================= */
 
   useEffect(() => {
@@ -1087,20 +1085,18 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
       setPage(null);
       setTechnologyPage(null);
       setBusinessPage(null);
+      setCovidPage(null);
 
       const technologySlug = getTechnologySlug(slug);
       const businessSlug = getBusinessSlug(slug);
+      const covidSlug = getCovidSlug(slug);
 
-      /*
-       * Fetch each page independently.
-       *
-       * If either request fails, the other request can
-       * still succeed and its data will still be displayed.
-       */
+      /* FETCH ALL THREE PAGES INDEPENDENTLY */
 
-      const [technologyResult, businessResult] = await Promise.allSettled([
+      const [technologyResult, businessResult, covidResult] = await Promise.allSettled([
         fetchWebsitePageBySlug(technologySlug),
         fetchWebsitePageBySlug(businessSlug),
+        fetchWebsitePageBySlug(covidSlug),
       ]);
 
       if (!isMounted) {
@@ -1137,42 +1133,63 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
       }
 
       /* =====================================================
+         COVID API RESULT
+      ===================================================== */
+
+      const covidResponse = covidResult.status === 'fulfilled' ? covidResult.value : null;
+
+      const covidLoaded = Boolean(covidResponse?.success && covidResponse.data);
+
+      if (covidLoaded && covidResponse?.data) {
+        setCovidPage(covidResponse.data);
+      } else {
+        setCovidPage(null);
+      }
+
+      /* =====================================================
          PRIMARY PAGE
 
-         Prefer the Technology page.
+         Priority:
+         1. Technology page
+         2. Business page
+         3. COVID page
 
-         If Technology is unavailable, use the Business
-         page for the main heading and description.
+         The first available page supplies the main heading
+         and description.
       ===================================================== */
 
       if (technologyLoaded && technologyResponse?.data) {
         setPage(technologyResponse.data);
       } else if (businessLoaded && businessResponse?.data) {
         setPage(businessResponse.data);
+      } else if (covidLoaded && covidResponse?.data) {
+        setPage(covidResponse.data);
       } else {
         setPage(null);
       }
 
       /* =====================================================
-         ERROR ONLY IF BOTH REQUESTS FAILED
+         ERROR ONLY IF ALL THREE REQUESTS FAILED
       ===================================================== */
 
-      if (!technologyLoaded && !businessLoaded) {
+      if (!technologyLoaded && !businessLoaded && !covidLoaded) {
         const technologyError =
           technologyResult.status === 'rejected' ? technologyResult.reason : null;
 
         const businessError = businessResult.status === 'rejected' ? businessResult.reason : null;
 
-        const rejectedError =
-          technologyError instanceof Error
-            ? technologyError.message
-            : businessError instanceof Error
-              ? businessError.message
-              : null;
+        const covidError = covidResult.status === 'rejected' ? covidResult.reason : null;
 
-        const responseError = technologyResponse?.message || businessResponse?.message;
+        const rejectedErrors = [technologyError, businessError, covidError];
 
-        setError(rejectedError || responseError || `Unable to load winner data for ${slug}.`);
+        const rejectedError = rejectedErrors.find((item): item is Error => item instanceof Error);
+
+        const responseError =
+          technologyResponse?.message || businessResponse?.message || covidResponse?.message;
+
+        setError(
+          rejectedError?.message || responseError || `Unable to load winner data for ${slug}.`,
+        );
       }
 
       setIsLoading(false);
@@ -1186,6 +1203,7 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
       setPage(null);
       setTechnologyPage(null);
       setBusinessPage(null);
+      setCovidPage(null);
 
       setError(
         err instanceof Error ? err.message : 'Unable to load winner pages. Please try again.',
@@ -1209,7 +1227,7 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
         <section className="winners-detail-card">
           <p className="winners-kicker">Loading winner...</p>
 
-          <p>Loading Technology Icons and Business Icons data for {slug}.</p>
+          <p>Loading Technology Icons, Business Icons and COVID Icons data for {slug}.</p>
         </section>
       </main>
     );
@@ -1218,10 +1236,10 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
   /* =========================================================
      COMPLETE API FAILURE
 
-     Show this only when neither page is available.
+     Display the error only when all three API pages fail.
   ========================================================= */
 
-  if (error && !technologyPage && !businessPage) {
+  if (error && !technologyPage && !businessPage && !covidPage) {
     return (
       <main className="winners-detail-page">
         <section className="winners-detail-card">
@@ -1237,7 +1255,7 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
      NO PAGE
   ========================================================= */
 
-  if (!page && !technologyPage && !businessPage) {
+  if (!page && !technologyPage && !businessPage && !covidPage) {
     return (
       <main className="winners-detail-page">
         <section className="winners-detail-card">
@@ -1273,11 +1291,25 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
 
   const businessTestimonials = businessSections.flatMap((section) => section.testimonials);
 
+  /* =========================================================
+     COVID DATA
+  ========================================================= */
+
+  const covidSections = extractPageTestimonials(covidPage, 'COVID ICONS');
+
+  const covidTestimonials = covidSections.flatMap((section) => section.testimonials);
+
+  /* =========================================================
+     SECTION COUNTS AND VISIBILITY
+  ========================================================= */
+
   const technologyCount = technologyTestimonials.length;
   const businessCount = businessTestimonials.length;
+  const covidCount = covidTestimonials.length;
 
   const showTechnology = technologyCount > 0;
   const showBusiness = businessCount > 0;
+  const showCovid = covidCount > 0;
 
   /* =========================================================
      RENDER
@@ -1307,8 +1339,8 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
       {/* =====================================================
           TECHNOLOGY ICONS
 
-          Display only when Technology winner records exist.
-          Missing Business Icons data does not affect this.
+          Hidden only when Technology data is unavailable
+          or contains no winner records.
       ===================================================== */}
 
       {showTechnology ? (
@@ -1337,10 +1369,8 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
       {/* =====================================================
           BUSINESS ICONS
 
-          This section is hidden if the Business API fails
-          or returns no winner records.
-
-          The main card and Technology Icons remain visible.
+          Hidden only when Business data is unavailable
+          or contains no winner records.
       ===================================================== */}
 
       {showBusiness ? (
@@ -1367,13 +1397,45 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
       ) : null}
 
       {/* =====================================================
-          FALLBACK
+          COVID ICONS
 
-          Preserved from the original code.
-          Shown when neither API contains winner cards.
+          Hidden only when the COVID API fails or returns
+          no winner records.
+
+          Technology and Business sections remain independent.
       ===================================================== */}
 
-      {!showTechnology && !showBusiness ? (
+      {showCovid ? (
+        <section className="winner-section-block">
+          <div className="winner-section-header winner-section-header--centered">
+            <p className="winner-section-kicker">Winner Profiles</p>
+
+            <h2>COVID 19 ICONS</h2>
+
+            <span>{covidCount} Members</span>
+          </div>
+
+          <div className="winner-section-grid">
+            {covidTestimonials.map((testimonial, index) => (
+              <WinnerCard
+                key={`covid-${getWinnerYear(slug)}-${index}`}
+                testimonial={testimonial}
+                sectionTitle="COVID ICONS"
+                index={index}
+              />
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {/* =====================================================
+          FALLBACK
+
+          Display only when none of the three API pages
+          contains winner cards.
+      ===================================================== */}
+
+      {!showTechnology && !showBusiness && !showCovid ? (
         <section className="winner-section-block">
           <p>No winner cards were found for {slug}.</p>
         </section>
