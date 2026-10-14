@@ -1111,6 +1111,118 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.speaker-role-read-more {
+  display: inline-block;
+  margin-top: 6px;
+  color: #8e0101;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.speaker-role-read-more:hover {
+  color: #b30000;
+  text-decoration: underline;
+}
+
+.speaker-details-page {
+  min-height: 70vh;
+  padding: 50px 20px;
+  background: #f5eeee;
+}
+
+.speaker-details-card {
+  max-width: 1000px;
+  margin: 70px auto;
+  padding: 32px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 8px 30px rgba(80, 0, 0, 0.08);
+}
+
+.speaker-details-back {
+  display: inline-block;
+  margin-bottom: 28px;
+  color: #8e0101;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.speaker-details-profile {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.speaker-details-image {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 10px;
+  background: #f5eeee;
+}
+
+.speaker-details-kicker {
+  color: #8e0101;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.speaker-details-content h1 {
+  margin: 8px 0 12px;
+  color: #0c1e21;
+  font-size: 30px;
+}
+
+.speaker-details-company {
+  color: #666;
+  line-height: 1.7;
+}
+
+.speaker-details-content h2 {
+  margin-top: 28px;
+  color: #8e0101;
+  font-size: 19px;
+}
+
+.speaker-details-role {
+  color: #333;
+  font-size: 16px;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .speaker-details-page {
+    padding: 24px 14px;
+  }
+
+  .speaker-details-card {
+    padding: 20px;
+  }
+
+  .speaker-details-profile {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .speaker-details-image {
+    max-width: 280px;
+    height: 280px;
+  }
+
+  .speaker-details-content h1 {
+    font-size: 25px;
+  }
+}
+
 /* =========================================
    PARTNERS PAGE
 ========================================= */

@@ -1410,7 +1410,8 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
           <div className="winner-section-header winner-section-header--centered">
             <p className="winner-section-kicker">Winner Profiles</p>
 
-            <h2>COVID 19 ICONS</h2>
+            {/* <h2>COVID 19 ICONS</h2> */}
+            <h2>{getWinnerYear(slug) === '2021' ? 'SPECIAL CATEGORY ICONS' : 'COVID 19 ICONS'}</h2>
 
             <span>{covidCount} Members</span>
           </div>
