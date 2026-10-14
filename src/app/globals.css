@@ -996,6 +996,9 @@ body {
 }
 
 .winner-profile-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow: hidden;
   border-radius: 22px;
   background: rgba(255, 255, 255, 0.92);
@@ -1013,10 +1016,12 @@ body {
   box-shadow: 0 22px 44px rgba(0, 0, 0, 0.12);
 }
 
+/* Speaker image container */
 .winner-profile-media {
   position: relative;
   width: 100%;
   height: 300px;
+  flex-shrink: 0;
   background: #f5eeee;
   display: flex;
   align-items: center;
@@ -1032,22 +1037,31 @@ body {
   object-position: center;
 }
 
+/* Card content */
 .winner-profile-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   padding: 16px 16px 17px;
+  min-width: 0;
 }
 
 .winner-profile-body h3 {
   margin: 0 0 8px;
   font-size: 18px;
+  line-height: 1.45;
   color: #222;
+  overflow-wrap: anywhere;
 }
 
+/* Company information */
 .winner-profile-category,
 .winner-profile-company {
   margin: 0;
   font-size: 14px;
   line-height: 1.55;
   color: #555;
+  overflow-wrap: anywhere;
 }
 
 .winner-profile-category {
@@ -1056,10 +1070,56 @@ body {
   font-weight: 700;
 }
 
-.winner-profile-company {
-  color: #444;
+/* Role/designation anchored at the bottom */
+.winner-profile-role {
+  margin-top: auto;
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-top: 1px solid rgba(164, 0, 0, 0.12);
 }
 
+.winner-profile-company {
+  color: #444;
+  line-height: 1.65;
+}
+
+/* Read More button */
+.speaker-role-read-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 18px;
+  border: 1px solid #8e0101;
+  border-radius: 7px;
+  background: #f3f1f1;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.speaker-role-read-more:hover {
+  background: #fff;
+  color: #8e0101;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(142, 1, 1, 0.12);
+}
+
+.speaker-role-read-more:focus-visible {
+  outline: 3px solid rgba(142, 1, 1, 0.3);
+  outline-offset: 3px;
+}
+
+/* Winners detail list */
 .winners-detail-list {
   margin-top: 28px;
   display: grid;
@@ -1087,8 +1147,10 @@ body {
   margin: 0;
   color: #333;
   line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 
+/* Responsive layout */
 @media (max-width: 768px) {
   .winners-page,
   .winners-detail-page {
@@ -1109,6 +1171,29 @@ body {
 
   .winner-section-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .winner-profile-media {
+    height: 260px;
+  }
+
+  .winner-profile-body {
+    padding: 15px;
+  }
+
+  .winner-profile-body h3 {
+    font-size: 17px;
+  }
+
+  .winner-profile-category,
+  .winner-profile-company {
+    font-size: 13px;
+  }
+
+  .speaker-role-read-more {
+    padding: 8px 15px;
   }
 }
 
@@ -1136,18 +1221,57 @@ body {
 .speaker-details-card {
   max-width: 1000px;
   margin: 70px auto;
-  padding: 32px;
+  padding: 31px;
   border-radius: 14px;
   background: #fff;
   box-shadow: 0 8px 30px rgba(80, 0, 0, 0.08);
 }
 
 .speaker-details-back {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   margin-bottom: 28px;
-  color: #8e0101;
+  padding: 11px 22px;
+  border: 1px solid #8e0101;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #8e0101, #b30000);
+  color: #fff;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(142, 1, 1, 0.18);
+  transition: all 0.3s ease;
+}
+
+.speaker-details-back:hover {
+  background: #fff;
+  color: #8e0101;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(142, 1, 1, 0.2);
+}
+
+.speaker-details-back:active {
+  transform: translateY(0);
+}
+
+.speaker-details-back:focus-visible {
+  outline: 3px solid rgba(142, 1, 1, 0.3);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .speaker-details-card {
+    margin: 30px 16px;
+    padding: 22px;
+  }
+
+  .speaker-details-back {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
 }
 
 .speaker-details-profile {
