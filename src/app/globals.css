@@ -902,21 +902,25 @@ body {
   border: 1px solid rgba(164, 0, 0, 0.08);
   text-decoration: none;
   color: inherit;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .winner-card:hover {
-  transform: translateY(-4px);
-  border-color: #ff0000;
-  box-shadow:
-    0 22px 40px rgba(0, 0, 0, 0.1),
-    0 0 0 3px rgba(255, 0, 0, 0.4),
-    0 0 20px rgba(255, 0, 0, 0.8),
-    0 0 40px rgba(255, 0, 0, 0.6);
+  transform: translateY(-10px);
+  border-color: rgba(164, 0, 0, 0.16);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+}
+
+/* Disable hover movement on touch devices */
+@media (hover: none) {
+  .winner-card:hover {
+    transform: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  }
 }
 
 .winner-card-label {
@@ -1016,25 +1020,59 @@ body {
   box-shadow: 0 22px 44px rgba(0, 0, 0, 0.12);
 }
 
-/* Speaker image container */
+/* =========================================
+   WINNER / SPEAKER IMAGE CONTAINER
+   Prevent image cropping
+========================================= */
+
 .winner-profile-media {
   position: relative;
   width: 100%;
-  height: 300px;
+  height: 320px;
   flex-shrink: 0;
-  background: #f5eeee;
+  padding: 11px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background: #f5eeee;
 }
 
+/* Show the complete image without cropping */
 .winner-profile-image {
   display: block;
   width: 100%;
   height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+
   object-fit: contain;
-  object-position: center;
+  object-position: center center;
+
+  flex-shrink: 0;
+}
+
+/* =========================================
+   RESPONSIVE IMAGE HEIGHT
+========================================= */
+
+@media (max-width: 768px) {
+  .winner-profile-media {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .winner-profile-media {
+    height: 280px;
+    padding: 8px;
+  }
+
+  .winner-profile-image {
+    object-fit: contain;
+    object-position: center center;
+  }
 }
 
 /* Card content */
@@ -13469,10 +13507,95 @@ s .dialogues-badge-mark {
   text-align: center;
 }
 
+/* =========================================
+   RED WINNER PROFILE CARD
+========================================= */
+
 .winner-profile-card--red {
-  background: #ffffff;
-  border-radius: 14px;
-  border-color: rgba(164, 0, 0, 0.16);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 22px;
+}
+
+/* Image container */
+.winner-profile-card--red .winner-profile-media {
+  position: relative;
+  width: 100%;
+  height: 270px;
+  flex-shrink: 0;
+  padding: 10px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  background: #f5eeee;
+}
+.winner-profile-card--red1 .winner-profile-media {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  flex-shrink: 0;
+  padding: 10px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  background: #f5eeee;
+}
+
+/* Fit the complete image */
+.winner-profile-card--red .winner-profile-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+  object-position: center center;
+}
+
+/* Card content */
+.winner-profile-card--red .winner-profile-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  padding: 16px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.winner-profile-card--red:hover {
+  transform: translateY(-2px);
+  border-color: rgba(164, 0, 0, 0.18);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .winner-profile-card--red .winner-profile-media {
+    height: 300px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .winner-profile-card--red .winner-profile-media {
+    height: 280px;
+    padding: 8px;
+  }
 }
 
 /* .winner-profile-card--red:hover {
