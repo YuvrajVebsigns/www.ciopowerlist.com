@@ -9,6 +9,16 @@
 
 // const FALLBACK_EVENT_IMAGE = '/assets/blogs/blog-1.webp';
 
+// type EventImageProps = {
+//   src: string;
+//   alt: string;
+// };
+
+// type AnimatedEventCardProps = {
+//   event: WebsiteEvent;
+//   index: number;
+// };
+
 // function isRecord(value: unknown): value is Record<string, unknown> {
 //   return typeof value === 'object' && value !== null;
 // }
@@ -17,10 +27,9 @@
 //   return typeof value === 'string' ? value.trim() : '';
 // }
 
-// // function getEventField(event: WebsiteEvent, key: string): unknown {
-// //   return event[key];
-// // }
-
+// /**
+//  * API image string aur image object dono handle karta hai.
+//  */
 // function getImageUrl(value: unknown): string {
 //   if (typeof value === 'string') {
 //     return value.trim();
@@ -51,16 +60,16 @@
 // }
 
 // function getEventSlug(event: WebsiteEvent): string {
-//   const slug = getString(event.slug);
+//   const apiSlug = getString(event.slug);
 
-//   if (slug) {
-//     return slug;
+//   if (apiSlug) {
+//     return apiSlug;
 //   }
 
-//   const id = getString(event.id);
+//   const eventId = getString(event.id);
 
-//   if (id) {
-//     return id;
+//   if (eventId) {
+//     return eventId;
 //   }
 
 //   return getEventTitle(event)
@@ -84,11 +93,38 @@
 //   return getString(event.type) || getString(event.category) || 'Event';
 // }
 
+// // function getEventExcerpt(event: WebsiteEvent): string {
+// //   return getString(event.excerpt) || getString(event.summary);
+// // }
+
+// function formatEventDate(value: unknown): string {
+//   const rawDate = getString(value);
+
+//   if (!rawDate) {
+//     return '';
+//   }
+
+//   const date = new Date(rawDate);
+
+//   if (Number.isNaN(date.getTime())) {
+//     return '';
+//   }
+
+//   return new Intl.DateTimeFormat('en-IN', {
+//     day: '2-digit',
+//     month: 'short',
+//     year: 'numeric',
+//   }).format(date);
+// }
+
+// /**
+//  * API image missing ya broken hone par fallback image show karta hai.
+//  */
 // function EventImage({ src, alt }: EventImageProps) {
-//   const [imageSrc, setImageSrc] = useState(src || FALLBACK_EVENT_IMAGE);
+//   const [imageSrc, setImageSrc] = useState(src?.trim() || FALLBACK_EVENT_IMAGE);
 
 //   useEffect(() => {
-//     setImageSrc(src || FALLBACK_EVENT_IMAGE);
+//     setImageSrc(src?.trim() || FALLBACK_EVENT_IMAGE);
 //   }, [src]);
 
 //   function handleImageError() {
@@ -110,11 +146,6 @@
 //   );
 // }
 
-// type AnimatedEventCardProps = {
-//   event: WebsiteEvent;
-//   index: number;
-// };
-
 // function AnimatedEventCard({ event, index }: AnimatedEventCardProps) {
 //   const isEven = index % 2 === 0;
 
@@ -123,21 +154,21 @@
 
 //     initialTransform: isEven ? 'translateX(-40px)' : 'translateX(40px)',
 
-//     threshold: 0.12,
-//     once: false,
+//     threshold: 0.05,
+//     once: true,
 //   });
 
 //   const title = getEventTitle(event);
 //   const slug = getEventSlug(event);
 //   const image = getEventImage(event);
-//   const type = getEventType(event);
+//   const eventType = getEventType(event);
 //   // const excerpt = getEventExcerpt(event);
 
-//   // const date = formatEventDate(event.startDate ?? event.startsAt ?? getEventField(event, 'date'));
+//   const eventDate = formatEventDate(event.startDate ?? event.startsAt ?? event.date);
 
 //   return (
 //     <Link href={`/events/${encodeURIComponent(slug)}`} className="project-card-link">
-//       <article
+//       <div
 //         ref={cardRef}
 //         className="project-card"
 //         style={{
@@ -150,47 +181,39 @@
 
 //         <div className="project-overlay">
 //           <div className="project-meta">
-//             <span className="project-category">{type}</span>
+//             <span className="project-category">{eventType}</span>
 
-//             {/* {date ? (
-//               <span className="project-date">
-//                 {date}
-//               </span>
-//             ) : null} */}
+//             {eventDate ? <span className="project-date">{eventDate}</span> : null}
 //           </div>
 
 //           <div className="project-content">
 //             <h3>{title}</h3>
 
-//             {/* {excerpt ? (
-//               <p>{excerpt}</p>
-//             ) : null} */}
+//             {/* {excerpt ? <p>{excerpt}</p> : null} */}
 //           </div>
 //         </div>
-//       </article>
+//       </div>
 //     </Link>
 //   );
 // }
 
 // export default function EventsPage() {
 //   const [events, setEvents] = useState<WebsiteEvent[]>([]);
-
 //   const [isLoading, setIsLoading] = useState(true);
-
 //   const [error, setError] = useState<string | null>(null);
 
 //   const heroMediaRef = useScrollAnimation<HTMLDivElement>({
 //     animationClass: 'animate-fade-in-right',
 //     initialTransform: 'translateX(40px)',
 //     threshold: 0.12,
-//     once: false,
+//     once: true,
 //   });
 
 //   const heroContentRef = useScrollAnimation<HTMLDivElement>({
 //     animationClass: 'animate-fade-in-left',
 //     initialTransform: 'translateX(-40px)',
 //     threshold: 0.12,
-//     once: false,
+//     once: true,
 //   });
 
 //   useEffect(() => {
@@ -201,10 +224,6 @@
 //         setIsLoading(true);
 //         setError(null);
 
-//         /*
-//          * Service khud website token aur
-//          * websiteId handle karegi.
-//          */
 //         const eventItems = await fetchWebsiteEvents({
 //           page: 1,
 //           limit: 100,
@@ -214,8 +233,8 @@
 //           return;
 //         }
 
-//         setEvents(eventItems);
-//       } catch (fetchError) {
+//         setEvents(Array.isArray(eventItems) ? eventItems : []);
+//       } catch (fetchError: unknown) {
 //         if (!isMounted) {
 //           return;
 //         }
@@ -260,12 +279,19 @@
 
 //           <div className="blog-breadcrumb">
 //             <Link href="/" className="blog-breadcrumb-home">
-//               🏦 Home
+//               <Image
+//                 src="/assets/home/home.png" // Replace with your image path
+//                 alt="Home"
+//                 width={38}
+//                 height={48}
+//                 className="blog-home-icon"
+//               />
+//               <span>Home</span>
 //             </Link>
 
 //             <span>&gt;</span>
 
-//             <p>Events</p>
+//             <p>Event</p>
 //           </div>
 //         </div>
 //       </section>
@@ -273,42 +299,19 @@
 //       <section className="project-section">
 //         <div className="project-container">
 //           {isLoading ? (
-//             <div
-//               className="events-loading"
-//               style={{
-//                 padding: '60px 20px',
-//                 textAlign: 'center',
-//               }}
-//             >
-//               Loading events...
-//             </div>
+//             <div className="events-loading">Loading events...</div>
 //           ) : error ? (
-//             <div
-//               className="events-error"
-//               role="alert"
-//               style={{
-//                 padding: '60px 20px',
-//                 textAlign: 'center',
-//               }}
-//             >
+//             <div className="events-error" role="alert">
 //               <h3>Unable to load events</h3>
 //               <p>{error}</p>
 //             </div>
 //           ) : events.length === 0 ? (
-//             <div
-//               className="events-empty"
-//               style={{
-//                 padding: '60px 20px',
-//                 textAlign: 'center',
-//               }}
-//             >
-//               No events available at the moment.
-//             </div>
+//             <div className="events-empty">No events available at the moment.</div>
 //           ) : (
 //             <div className="project-grid">
 //               {events.map((event, index) => (
 //                 <AnimatedEventCard
-//                   key={event.id || getEventSlug(event)}
+//                   key={event.id || event.slug || `${getEventTitle(event)}-${index}`}
 //                   event={event}
 //                   index={index}
 //                 />
@@ -341,6 +344,8 @@ type AnimatedEventCardProps = {
   event: WebsiteEvent;
   index: number;
 };
+
+type EventFilter = 'all' | 'online' | 'offline';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
@@ -416,6 +421,45 @@ function getEventType(event: WebsiteEvent): string {
   return getString(event.type) || getString(event.category) || 'Event';
 }
 
+/**
+ * Identifies whether an event is online or offline.
+ * Supports values such as Online Event, Offline Event,
+ * virtual, in-person, and common delivery-mode fields.
+ */
+function getEventFilterType(event: WebsiteEvent): 'online' | 'offline' | '' {
+  const possibleValues = [
+    event.type,
+    event.category,
+    isRecord(event) ? event.mode : undefined,
+    isRecord(event) ? event.eventMode : undefined,
+    isRecord(event) ? event.deliveryMode : undefined,
+    isRecord(event) ? event.format : undefined,
+  ];
+
+  for (const value of possibleValues) {
+    const normalizedValue = getString(value).toLowerCase();
+
+    if (
+      /\bonline\b/.test(normalizedValue) ||
+      /\bvirtual\b/.test(normalizedValue) ||
+      /\bwebinar\b/.test(normalizedValue)
+    ) {
+      return 'online';
+    }
+
+    if (
+      /\boffline\b/.test(normalizedValue) ||
+      /\bin[\s-]?person\b/.test(normalizedValue) ||
+      /\bphysical\b/.test(normalizedValue) ||
+      /\bon[\s-]?site\b/.test(normalizedValue)
+    ) {
+      return 'offline';
+    }
+  }
+
+  return '';
+}
+
 // function getEventExcerpt(event: WebsiteEvent): string {
 //   return getString(event.excerpt) || getString(event.summary);
 // }
@@ -485,6 +529,7 @@ function AnimatedEventCard({ event, index }: AnimatedEventCardProps) {
   const slug = getEventSlug(event);
   const image = getEventImage(event);
   const eventType = getEventType(event);
+
   // const excerpt = getEventExcerpt(event);
 
   const eventDate = formatEventDate(event.startDate ?? event.startsAt ?? event.date);
@@ -524,6 +569,9 @@ export default function EventsPage() {
   const [events, setEvents] = useState<WebsiteEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Event filter state
+  const [eventFilter, setEventFilter] = useState<EventFilter>('all');
 
   const heroMediaRef = useScrollAnimation<HTMLDivElement>({
     animationClass: 'animate-fade-in-right',
@@ -581,6 +629,15 @@ export default function EventsPage() {
     };
   }, []);
 
+  // Filter events without modifying the original API response.
+  const filteredEvents = events.filter((event) => {
+    if (eventFilter === 'all') {
+      return true;
+    }
+
+    return getEventFilterType(event) === eventFilter;
+  });
+
   return (
     <>
       <section className="blog-hero">
@@ -603,12 +660,13 @@ export default function EventsPage() {
           <div className="blog-breadcrumb">
             <Link href="/" className="blog-breadcrumb-home">
               <Image
-                src="/assets/home/home.png" // Replace with your image path
+                src="/assets/home/home.png"
                 alt="Home"
                 width={38}
                 height={48}
                 className="blog-home-icon"
               />
+
               <span>Home</span>
             </Link>
 
@@ -631,15 +689,51 @@ export default function EventsPage() {
           ) : events.length === 0 ? (
             <div className="events-empty">No events available at the moment.</div>
           ) : (
-            <div className="project-grid">
-              {events.map((event, index) => (
-                <AnimatedEventCard
-                  key={event.id || event.slug || `${getEventTitle(event)}-${index}`}
-                  event={event}
-                  index={index}
-                />
-              ))}
-            </div>
+            <>
+              {/* Event category filters */}
+              <div className="project-filters" role="group" aria-label="Filter events by type">
+                {(
+                  [
+                    { label: 'All', value: 'all' },
+                    { label: 'Online', value: 'online' },
+                    { label: 'Offline', value: 'offline' },
+                  ] as const
+                ).map((filter) => (
+                  <button
+                    key={filter.value}
+                    type="button"
+                    className={`project-filter-btn ${eventFilter === filter.value ? 'active' : ''}`}
+                    onClick={() => setEventFilter(filter.value)}
+                    aria-pressed={eventFilter === filter.value}
+                  >
+                    {filter.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Filtered event cards */}
+              {filteredEvents.length === 0 ? (
+                <div className="events-empty">
+                  <Image
+                    src="/assets/no-events.png"
+                    alt="No events available"
+                    width={400}
+                    height={300}
+                    className="events-empty-image"
+                  />
+                </div>
+              ) : (
+                <div className="project-grid">
+                  {filteredEvents.map((event, index) => (
+                    <AnimatedEventCard
+                      key={event.id || event.slug || `${getEventTitle(event)}-${index}`}
+                      event={event}
+                      index={index}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>

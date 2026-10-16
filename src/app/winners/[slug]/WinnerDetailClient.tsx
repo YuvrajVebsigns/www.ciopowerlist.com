@@ -135,9 +135,9 @@ function WinnerCard({ testimonial, sectionTitle, index }: WinnerCardProps) {
       <div className="winner-profile-body">
         <h3>{author}</h3>
 
-        {role ? <p className="winner-profile-category">Category: {role}</p> : null}
+        {role ? <p className="winner-profile-category">{role}</p> : null}
 
-        {quote ? <p className="winner-profile-company">Company: {quote}</p> : null}
+        {quote ? <p className="winner-profile-company">{quote}</p> : null}
       </div>
     </article>
   );

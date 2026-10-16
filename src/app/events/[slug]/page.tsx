@@ -894,6 +894,13 @@ export default function EventDetailsPage() {
           ================================================= */}
 
           <div className="event-actions">
+            <Link href="/events" className="talk-btn">
+              <span>Back</span>
+
+              <span className="talk-btn-icon">
+                <ArrowUpRight size={18} />
+              </span>
+            </Link>
             <Link
               href={`/register?event=${encodeURIComponent(
                 getString(getEventField(event, 'id')) || slug,

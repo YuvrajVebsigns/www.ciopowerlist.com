@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Phone, Mail, Send } from 'lucide-react';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6';
 
@@ -60,6 +60,17 @@ export default function Footer() {
     }
   };
 
+  // Automatically close subscribe popup after 3 seconds
+  useEffect(() => {
+    if (!showSubscribePopup) return;
+
+    const timer = setTimeout(() => {
+      setShowSubscribePopup(false);
+      setSubscribePopupMessage('');
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [showSubscribePopup]);
   const closeSubscribePopup = () => {
     setShowSubscribePopup(false);
     setSubscribePopupMessage('');
@@ -70,7 +81,7 @@ export default function Footer() {
       {/* MAIN FOOTER */}
       <div className="footer-container">
         <div className="footer-grid">
-          {/* COLUMN 1 */}
+          {/* COLUMN 1 - LOGO */}
           <div className="footer-widget footer-brand">
             <Link href="/" className="footer-logo1">
               <Image
@@ -83,71 +94,75 @@ export default function Footer() {
             </Link>
           </div>
 
-          {/* COLUMN 2 */}
-          <div className="footer-widget">
+          {/* COLUMN 2 - SERVICES + SUBSCRIBE */}
+          <div className="footer-widget footer-services">
             <h4 className="footer-title">Services</h4>
 
             <ul className="footer-links">
               <li>
                 <Link href="/register">Registration</Link>
               </li>
-
               <li>
                 <Link href="/nominate">Nomination</Link>
               </li>
             </ul>
           </div>
 
-          {/* COLUMN 3 */}
-          <div className="footer-widget">
+          {/* COLUMN 3 - RESOURCES */}
+          <div className="footer-widget footer-resources">
             <h4 className="footer-title">Resources</h4>
 
             <ul className="footer-links">
               <li>
                 <Link href="/blog">Blogs</Link>
               </li>
-
               <li>
                 <Link href="/events">Event</Link>
               </li>
             </ul>
           </div>
 
-          {/* COLUMN 4 */}
-          <div className="footer-widget">
-            <h4 className="footer-title">Subscribe</h4>
+          {/* COLUMN 4 - OFFICE ADDRESS */}
+          <div className="footer-widget footer-office">
+            <h4 className="footer-description1">Office Address</h4>
 
-            <form className="footer-subscribe" onSubmit={handleSubscribe} noValidate>
-              <input
-                type="email"
-                value={subscribeEmail}
-                onChange={(e) => {
-                  setSubscribeEmail(e.target.value);
-                }}
-                placeholder="Enter your email"
-                className="footer-input"
-                disabled={isSubscribing}
-                aria-label="Email address"
-                autoComplete="email"
-              />
+            <p className="footer-description">
+              Units Nos. 3037 – A1 Wing, 3rd Floor, Oberoi Garden Estate, Near Chandivali Studio,
+              Andheri (East), Mumbai – 400072, INDIA
+            </p>
+          </div>
 
-              <button
-                type="submit"
-                className="footer-submit"
-                aria-label="Subscribe"
-                disabled={isSubscribing}
-              >
-                <Send size={18} />
-              </button>
-            </form>
+          <div className="footer-subscribe-section">
+            <div className="footer-subscribe-row">
+              <h4 className="footer-title">Subscribe</h4>
 
-            {/* SUBSCRIBE POPUP */}
+              <form className="footer-subscribe" onSubmit={handleSubscribe} noValidate>
+                <input
+                  type="email"
+                  value={subscribeEmail}
+                  onChange={(e) => setSubscribeEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="footer-input"
+                  disabled={isSubscribing}
+                  aria-label="Email address"
+                  autoComplete="email"
+                />
+
+                <button
+                  type="submit"
+                  className="footer-submit"
+                  aria-label="Subscribe"
+                  disabled={isSubscribing}
+                >
+                  <Send size={18} />
+                </button>
+              </form>
+            </div>
+
             {showSubscribePopup && (
               <div className="subscribe-toast" role="alert" aria-live="polite">
                 <span className="subscribe-toast-dot" />
-
                 <p className="subscribe-toast-message">{subscribePopupMessage}</p>
-
                 <button
                   type="button"
                   className="subscribe-toast-close"
@@ -158,15 +173,6 @@ export default function Footer() {
                 </button>
               </div>
             )}
-
-            <br />
-
-            <h4 className="footer-description1">Office Address</h4>
-
-            <p className="footer-description">
-              Units Nos. 3037 – A1 Wing, 3rd Floor, Oberoi Garden Estate, Near Chandivali Studio,
-              Andheri (East), Mumbai – 400072, INDIA
-            </p>
           </div>
         </div>
       </div>
