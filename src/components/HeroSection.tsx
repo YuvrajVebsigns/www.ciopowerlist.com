@@ -1,61 +1,3 @@
-// 'use client';
-
-// import Image from 'next/image';
-// import { ArrowDown } from 'lucide-react';
-
-// export default function HeroSection() {
-//   const handleScroll = () => {
-//     window.scrollBy({
-//       top: window.innerHeight,
-//       behavior: 'smooth',
-//     });
-//   };
-
-//   return (
-//     <section className="hero-section">
-//       <div className="hero-wrapper">
-//         <div className="hero-content">
-//           <div className="hero-badge">
-//             <span className="hero-badge-icon">❋</span>
-//             <span className="hero-badge-text">ARCHITECTING THE FUTURE</span>
-//           </div>
-
-//           <h1 className="hero-title">Innovating measurable ways to connect with prospects.</h1>
-
-//           <div className="hero-bottom">
-//             <div className="hero-arrow">
-//               <img src="/assets/home/arrow.png" alt="Arrow" className="hero-arrow-img" />
-//             </div>
-
-//             <p className="hero-description">
-//               Represents growth, expansion, and modern business solution present growth, present
-//               growth, expansion.
-//             </p>
-//           </div>
-
-//           <button onClick={handleScroll} className="hero-scroll" aria-label="Scroll down">
-//             <span className="font-semibold">Scroll Down</span>
-//             <div className="hero-scroll-icon">
-//               <ArrowDown size={18} />
-//             </div>
-//           </button>
-//         </div>
-
-//         <div className="hero-image-area">
-//           <Image
-//             src="/assets/hero.png"
-//             alt="Business Man"
-//             width={800}
-//             height={1500}
-//             priority
-//             className="hero-image"
-//           />
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -74,7 +16,7 @@ export default function HeroSection() {
       {show && (
         <div className="hero-image-only animate__animated animate__jackInTheBox">
           <Image
-            src="/assets/header4.png"
+            src="/assets/Heading (44).png"
             alt="Hero Banner"
             width={1920}
             height={800}

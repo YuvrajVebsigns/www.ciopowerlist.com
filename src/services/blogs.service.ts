@@ -19,7 +19,7 @@ export interface WebsiteBlogItem {
   slug: string;
   title: string;
   excerpt?: string;
-  featureImage?: string;
+  featureImage?: unknown;
   featureImageId?: string | null;
   websites?: WebsiteBlogWebsite[];
   author?: WebsiteBlogAuthor;
@@ -31,7 +31,7 @@ export interface WebsiteBlogItem {
     metaTitle?: string;
     metaDescription?: string;
     keywords?: string[];
-    ogImage?: string;
+    ogImage?: unknown;
     ogImageId?: string | null;
   };
   engagement?: {
@@ -65,7 +65,7 @@ export interface WebsiteBlogContentBlock {
     level?: number;
     style?: string;
     items?: string[];
-    file?: { url?: string };
+    file?: { url?: unknown };
     caption?: string;
     [key: string]: unknown;
   };

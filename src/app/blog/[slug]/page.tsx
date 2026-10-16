@@ -7,6 +7,7 @@ import { ArrowUpLeft, ArrowUpRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import useScrollAnimation from '../../../hooks/useScrollAnimation';
 import BlogCommentsPanel from '@/components/BlogCommentsPanel';
+import { resolveBlogImageUrl } from '@/lib/blog-images';
 import {
   fetchWebsiteBlogBySlug,
   type WebsiteBlogContentBlock,
@@ -47,7 +48,11 @@ function formatPublishedDate(value?: string) {
 }
 
 function getBlogImage(blog?: WebsiteBlogDetailItem | null) {
-  return blog?.featureImage || blog?.seo?.ogImage || '/assets/blogs/blog-1.webp';
+  return (
+    resolveBlogImageUrl(blog?.featureImage, '') ||
+    resolveBlogImageUrl(blog?.seo?.ogImage, '') ||
+    '/assets/blogs/blog-1.webp'
+  );
 }
 
 // function getBlogCategory(blog?: WebsiteBlogDetailItem | null) {
@@ -118,7 +123,7 @@ function renderBlock(block: WebsiteBlogContentBlock | null | undefined, index: n
 
   if (type === 'image') {
     const file = isObject(data?.file) ? data.file : undefined;
-    const url = typeof file?.url === 'string' ? file.url : '';
+    const url = resolveBlogImageUrl(file?.url, '');
     if (!url) return null;
 
     return (

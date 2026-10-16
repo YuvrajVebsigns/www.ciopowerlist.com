@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowUpRight, ChevronRight, ChevronLeft, Heart, MessageCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { resolveBlogImageUrl } from '@/lib/blog-images';
 import {
   fetchWebsiteBlogs,
   submitWebsiteBlogLike,
@@ -20,7 +21,11 @@ function getBlogAuthor(blog: WebsiteBlogItem) {
 }
 
 function getBlogImage(blog: WebsiteBlogItem) {
-  return blog.featureImage || blog.seo?.ogImage || '/assets/blogs/blog-1.png';
+  return (
+    resolveBlogImageUrl(blog.featureImage, '') ||
+    resolveBlogImageUrl(blog.seo?.ogImage, '') ||
+    '/assets/blogs/blog-1.png'
+  );
 }
 
 function getBlogDescription(blog: WebsiteBlogItem) {

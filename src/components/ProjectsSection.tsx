@@ -3,130 +3,306 @@
 // import Image from 'next/image';
 // import Link from 'next/link';
 // import { ArrowUpRight } from 'lucide-react';
-// import { useState, useEffect } from 'react';
+// import { useEffect, useState } from 'react';
+
 // import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-// import { fetchWebsiteEvents, WebsiteEvent } from '@/services/events.service';
+// import { fetchWebsiteEvents, type WebsiteEvent } from '@/services/events.service';
 
-// function getStoredWebsiteId(): string | undefined {
-//   if (typeof window === 'undefined') return undefined;
+// const FALLBACK_EVENT_IMAGE = '/assets/blogs/blog-1.webp';
 
-//   try {
-//     const raw = window.localStorage.getItem('websiteAuth');
-//     if (!raw) return undefined;
+// function isRecord(value: unknown): value is Record<string, unknown> {
+//   return typeof value === 'object' && value !== null;
+// }
 
-//     const parsed: unknown = JSON.parse(raw);
-//     if (typeof parsed === 'object' && parsed !== null && 'websiteId' in parsed) {
-//       const websiteId = (parsed as { websiteId?: unknown }).websiteId;
-//       return typeof websiteId === 'string' ? websiteId : undefined;
-//     }
-//   } catch {
-//     return undefined;
+// function getString(value: unknown): string {
+//   return typeof value === 'string' ? value.trim() : '';
+// }
+
+// /**
+//  * String URL aur API media object dono handle karega.
+//  */
+// function getImageUrl(value: unknown): string {
+//   if (typeof value === 'string') {
+//     return value.trim();
 //   }
 
-//   return undefined;
+//   if (!isRecord(value)) {
+//     return '';
+//   }
+
+//   const urlVariants = isRecord(value.urlVariants) ? value.urlVariants : null;
+
+//   return (
+//     getString(value.large) ||
+//     getString(value.medium) ||
+//     getString(value.small) ||
+//     getString(value.thumbnail) ||
+//     getString(value.original) ||
+//     getString(value.url) ||
+//     getString(urlVariants?.large) ||
+//     getString(urlVariants?.medium) ||
+//     getString(urlVariants?.small) ||
+//     getString(urlVariants?.thumbnail)
+//   );
+// }
+
+// function getEventTitle(event: WebsiteEvent): string {
+//   return getString(event.title) || getString(event.name) || getString(event.eventName) || 'Event';
+// }
+
+// function getEventSlug(event: WebsiteEvent): string {
+//   const apiSlug = getString(event.slug);
+
+//   if (apiSlug) {
+//     return apiSlug;
+//   }
+
+//   const id = getString(event.id);
+
+//   if (id) {
+//     return id;
+//   }
+
+//   return getEventTitle(event)
+//     .toLowerCase()
+//     .replace(/\s+/g, '-')
+//     .replace(/[^a-z0-9-]/g, '');
+// }
+
+// function getEventImage(event: WebsiteEvent): string {
+//   return (
+//     getImageUrl(event.bannerImage) ||
+//     getImageUrl(event.bannerImageId) ||
+//     getImageUrl(event.image) ||
+//     getImageUrl(event.heroImage) ||
+//     getImageUrl(event.banner) ||
+//     FALLBACK_EVENT_IMAGE
+//   );
+// }
+
+// function getEventType(event: WebsiteEvent): string {
+//   return getString(event.type) || getString(event.category) || 'Event';
+// }
+
+// // function getEventExcerpt(event: WebsiteEvent): string {
+// //   return getString(event.excerpt) || getString(event.summary);
+// // }
+
+// // function formatEventDate(value: unknown): string {
+// //   const rawDate = getString(value);
+
+// //   if (!rawDate) {
+// //     return '';
+// //   }
+
+// //   const parsedDate = new Date(rawDate);
+
+// //   if (Number.isNaN(parsedDate.getTime())) {
+// //     return '';
+// //   }
+
+// //   return new Intl.DateTimeFormat('en-IN', {
+// //     day: '2-digit',
+// //     month: 'short',
+// //     year: 'numeric',
+// //   }).format(parsedDate);
+// // }
+
+// type SafeEventImageProps = {
+//   src: string;
+//   alt: string;
+// };
+
+// function SafeEventImage({ src, alt }: SafeEventImageProps) {
+//   const [imageSrc, setImageSrc] = useState(src || FALLBACK_EVENT_IMAGE);
+
+//   useEffect(() => {
+//     setImageSrc(src || FALLBACK_EVENT_IMAGE);
+//   }, [src]);
+
+//   function handleImageError() {
+//     if (imageSrc !== FALLBACK_EVENT_IMAGE) {
+//       setImageSrc(FALLBACK_EVENT_IMAGE);
+//     }
+//   }
+
+//   return (
+//     <Image
+//       src={imageSrc}
+//       alt={alt}
+//       fill
+//       sizes="(max-width: 768px) 100vw, 50vw"
+//       className="project-image"
+//       unoptimized
+//       onError={handleImageError}
+//     />
+//   );
+// }
+
+// type EventCardProps = {
+//   event: WebsiteEvent;
+//   index: number;
+// };
+
+// function EventCard({ event, index }: EventCardProps) {
+//   const isEven = index % 2 === 0;
+
+//   /*
+//    * Har event card ka separate animation ref hoga.
+//    */
+//   const cardRef = useScrollAnimation<HTMLElement>({
+//     animationClass: isEven ? 'animate-fade-in-left' : 'animate-fade-in-right',
+
+//     initialTransform: isEven ? 'translateX(-40px)' : 'translateX(40px)',
+
+//     threshold: 0.05,
+//     once: true,
+//   });
+
+//   const title = getEventTitle(event);
+//   const slug = getEventSlug(event);
+//   const imageSrc = getEventImage(event);
+//   const category = getEventType(event);
+
+//   return (
+//     <Link href={`/events/${encodeURIComponent(slug)}`} className="project-card-link">
+//       <article
+//         ref={cardRef}
+//         className="project-card"
+//         style={{
+//           transitionDelay: `${index * 70}ms`,
+//         }}
+//       >
+//         <div className="project-image-wrap">
+//           <SafeEventImage src={imageSrc} alt={title} />
+//         </div>
+
+//         <div className="project-overlay">
+//           <div className="project-meta">
+//             <span className="project-category">{category}</span>
+
+//             {/* {date ? (
+//               <span className="project-date">
+//                 {date}
+//               </span>
+//             ) : null} */}
+//           </div>
+
+//           <div className="project-content">
+//             <h3>{title}</h3>
+
+//             {/* {excerpt ? (
+//               <p>{excerpt}</p>
+//             ) : null} */}
+//           </div>
+//         </div>
+//       </article>
+//     </Link>
+//   );
 // }
 
 // export default function ProjectsSection() {
-
-//   const [events, setEvents] = useState<WebsiteEvent[] | null>(null);
+//   const [events, setEvents] = useState<WebsiteEvent[]>([]);
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [errorMessage, setErrorMessage] = useState('');
 
 //   useEffect(() => {
-//     fetchWebsiteEvents(getStoredWebsiteId())
-//       .then((data) => {
-//         if (Array.isArray(data) && data.length) setEvents(data);
-//         else setEvents([]);
-//       })
-//       .catch(() => setEvents([]));
+//     let isMounted = true;
+
+//     async function loadEvents() {
+//       try {
+//         setIsLoading(true);
+//         setErrorMessage('');
+
+//         /*
+//          * websiteId manually pass mat karo.
+//          * Updated service token aur websiteId khud handle karegi.
+//          */
+//         const eventItems = await fetchWebsiteEvents({
+//           page: 1,
+//           limit: 2,
+//         });
+
+//         if (!isMounted) {
+//           return;
+//         }
+
+//         setEvents(Array.isArray(eventItems) ? eventItems.slice(0, 2) : []);
+//       } catch (error) {
+//         // console.error('Failed to load homepage events:', error);
+
+//         if (!isMounted) {
+//           return;
+//         }
+
+//         setEvents([]);
+
+//         setErrorMessage(error instanceof Error ? error.message : 'Failed to load events.');
+//       } finally {
+//         if (isMounted) {
+//           setIsLoading(false);
+//         }
+//       }
+//     }
+
+//     loadEvents();
+
+//     return () => {
+//       isMounted = false;
+//     };
 //   }, []);
-
-//   const customLeftRef = useScrollAnimation<HTMLDivElement>({
-//     animationClass: 'animate-fade-in-left',
-//     initialTransform: 'translateX(-40px)',
-//     threshold: 0.12,
-//   });
-
-//   const customRightRef = useScrollAnimation<HTMLDivElement>({
-//     animationClass: 'animate-fade-in-right',
-//     initialTransform: 'translateX(40px)',
-//     threshold: 0.12,
-//   });
 
 //   return (
 //     <section className="project-section">
 //       <div className="project-container">
 //         <div className="project-heading">
-//           <h2 className="project-title">
+//           {/* <h2 className="project-title">
 //             Our Work <span>Highlights.</span>
-//           </h2>
+//           </h2> */}
 //         </div>
 
 //         <div className="project-top-bar">
 //           <h6 className="project-subtitle">
 //             <Image
 //               src="/assets/icon.png"
-//               alt="Custom Events"
+//               alt=""
 //               width={20}
 //               height={20}
 //               className="expertise-label-icon"
 //             />
-//             <span>CUSTOM EVENTS</span>
+
+//             <span>OUR EVENTS</span>
 //           </h6>
 
 //           <Link href="/events" className="talk-btn">
 //             <span>More Events</span>
-//             <div className="talk-btn-icon">
+
+//             <span className="talk-btn-icon">
 //               <ArrowUpRight size={18} />
-//             </div>
+//             </span>
 //           </Link>
 //         </div>
 
-//         <div className="project-grid">
-//           {events === null ? (
-//             <div className="events-loading">Loading events…</div>
-//           ) : events.length === 0 ? (
-//             <div className="events-empty">No events available.</div>
-//           ) : (
-//             // show only the first two events
-//             events.slice(0, 2).map((item: WebsiteEvent, index: number) => {
-//               const title = String(
-//                 item.title ??
-//                   (item['name'] as unknown) ??
-//                   (item['eventName'] as unknown) ??
-//                   'Event',
-//               );
-//               const slug =
-//                 item.id && typeof item.id === 'string'
-//                   ? String(item.id)
-//                   : title
-//                       .toLowerCase()
-//                       .replace(/\s+/g, '-')
-//                       .replace(/[^a-z0-9-]/g, '');
-
-//               const imageSrc = String(
-//                 item.image ?? item.heroImage ?? item.banner ?? '/assets/blogs/blog-1.webp',
-//               );
-//               const category = String(item.category ?? 'Events');
-
-//               return (
-//                 <Link key={slug} href={`/events/${slug}`}>
-//                   <div className="project-card" ref={index === 0 ? customLeftRef : customRightRef}>
-//                     <div className="project-image-wrap">
-//                       <Image src={imageSrc} alt={title} fill className="project-image" />
-//                     </div>
-
-//                     <div className="project-overlay">
-//                       <span className="project-category">{category}</span>
-
-//                       <div className="project-content">
-//                         <h3>{title}</h3>
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </Link>
-//               );
-//             })
-//           )}
-//         </div>
+//         {isLoading ? (
+//           <div className="events-loading">Loading events...</div>
+//         ) : errorMessage ? (
+//           <div className="events-error" role="alert">
+//             <h3>Unable to load events</h3>
+//             <p>{errorMessage}</p>
+//           </div>
+//         ) : events.length === 0 ? (
+//           <div className="events-empty">No events available.</div>
+//         ) : (
+//           <div className="project-grid">
+//             {events.map((event, index) => (
+//               <EventCard
+//                 key={event.id || event.slug || `${getEventTitle(event)}-${index}`}
+//                 event={event}
+//                 index={index}
+//               />
+//             ))}
+//           </div>
+//         )}
 //       </div>
 //     </section>
 //   );
@@ -144,40 +320,138 @@ import { fetchWebsiteEvents, type WebsiteEvent } from '@/services/events.service
 
 const FALLBACK_EVENT_IMAGE = '/assets/blogs/blog-1.webp';
 
+const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL || 'https://api.core-mediagroup.com').replace(
+  /\/+$/,
+  '',
+);
+
 function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null;
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 function getString(value: unknown): string {
   return typeof value === 'string' ? value.trim() : '';
 }
 
+function normalizeImageUrl(value: string): string {
+  const raw = value.trim();
+
+  if (!raw) {
+    return '';
+  }
+
+  if (/^(https?:\/\/|data:image\/|blob:)/i.test(raw)) {
+    return raw;
+  }
+
+  if (raw.startsWith('//')) {
+    return `https:${raw}`;
+  }
+
+  if (raw.startsWith('/assets/')) {
+    return raw;
+  }
+
+  if (raw.startsWith('/')) {
+    return `${API_BASE_URL}${raw}`;
+  }
+
+  return `${API_BASE_URL}/${raw.replace(/^\.?\//, '')}`;
+}
+
 /**
- * String URL aur API media object dono handle karega.
+ * Extracts an image URL from strings and nested backend media objects.
  */
-function getImageUrl(value: unknown): string {
+function getImageUrl(value: unknown, depth = 0): string {
+  // if (value == null || depth > 5) {
+  //   return '';
+  // }
+  if (value === null || value === undefined || depth > 5) {
+    return '';
+  }
+
   if (typeof value === 'string') {
-    return value.trim();
+    return normalizeImageUrl(value);
+  }
+
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const result = getImageUrl(item, depth + 1);
+
+      if (result) {
+        return result;
+      }
+    }
+
+    return '';
   }
 
   if (!isRecord(value)) {
     return '';
   }
 
-  const urlVariants = isRecord(value.urlVariants) ? value.urlVariants : null;
+  const directKeys: string[] = [
+    'url',
+    'src',
+    'imageUrl',
+    'imageURL',
+    'fileUrl',
+    'secure_url',
+    'location',
+    'path',
+    'original',
+    'large',
+    'medium',
+    'small',
+    'thumbnail',
+  ];
 
-  return (
-    getString(value.large) ||
-    getString(value.medium) ||
-    getString(value.small) ||
-    getString(value.thumbnail) ||
-    getString(value.original) ||
-    getString(value.url) ||
-    getString(urlVariants?.large) ||
-    getString(urlVariants?.medium) ||
-    getString(urlVariants?.small) ||
-    getString(urlVariants?.thumbnail)
-  );
+  for (const key of directKeys) {
+    const candidate: unknown = value[key];
+
+    if (typeof candidate === 'string' && candidate.trim()) {
+      return normalizeImageUrl(candidate);
+    }
+  }
+
+  const urlVariants: unknown = value['urlVariants'];
+
+  if (isRecord(urlVariants)) {
+    const variantKeys: string[] = ['large', 'medium', 'small', 'thumbnail', 'original', 'url'];
+
+    for (const key of variantKeys) {
+      const candidate: unknown = urlVariants[key];
+
+      if (typeof candidate === 'string' && candidate.trim()) {
+        return normalizeImageUrl(candidate);
+      }
+    }
+  }
+
+  const nestedKeys: string[] = [
+    'data',
+    'attributes',
+    'media',
+    'image',
+    'file',
+    'bannerImage',
+    'heroImage',
+  ];
+
+  for (const key of nestedKeys) {
+    // Safe indexed access: value has already been narrowed to a Record.
+    const nested: unknown = value[key];
+
+    if (nested !== null && nested !== undefined && nested !== value) {
+      const result = getImageUrl(nested, depth + 1);
+
+      if (result) {
+        return result;
+      }
+    }
+  }
+
+  return '';
 }
 
 function getEventTitle(event: WebsiteEvent): string {
@@ -204,43 +478,28 @@ function getEventSlug(event: WebsiteEvent): string {
 }
 
 function getEventImage(event: WebsiteEvent): string {
-  return (
-    getImageUrl(event.bannerImage) ||
-    getImageUrl(event.bannerImageId) ||
-    getImageUrl(event.image) ||
-    getImageUrl(event.heroImage) ||
-    getImageUrl(event.banner) ||
-    FALLBACK_EVENT_IMAGE
-  );
+  const candidates: unknown[] = [
+    event.bannerImage,
+    event.bannerImageId,
+    event.image,
+    event.heroImage,
+    event.banner,
+  ];
+
+  for (const candidate of candidates) {
+    const imageUrl = getImageUrl(candidate);
+
+    if (imageUrl) {
+      return imageUrl;
+    }
+  }
+
+  return FALLBACK_EVENT_IMAGE;
 }
 
 function getEventType(event: WebsiteEvent): string {
   return getString(event.type) || getString(event.category) || 'Event';
 }
-
-// function getEventExcerpt(event: WebsiteEvent): string {
-//   return getString(event.excerpt) || getString(event.summary);
-// }
-
-// function formatEventDate(value: unknown): string {
-//   const rawDate = getString(value);
-
-//   if (!rawDate) {
-//     return '';
-//   }
-
-//   const parsedDate = new Date(rawDate);
-
-//   if (Number.isNaN(parsedDate.getTime())) {
-//     return '';
-//   }
-
-//   return new Intl.DateTimeFormat('en-IN', {
-//     day: '2-digit',
-//     month: 'short',
-//     year: 'numeric',
-//   }).format(parsedDate);
-// }
 
 type SafeEventImageProps = {
   src: string;
@@ -250,24 +509,27 @@ type SafeEventImageProps = {
 function SafeEventImage({ src, alt }: SafeEventImageProps) {
   const [imageSrc, setImageSrc] = useState(src || FALLBACK_EVENT_IMAGE);
 
+  const [fallbackAttempted, setFallbackAttempted] = useState(false);
+
   useEffect(() => {
     setImageSrc(src || FALLBACK_EVENT_IMAGE);
+    setFallbackAttempted(false);
   }, [src]);
 
   function handleImageError() {
-    if (imageSrc !== FALLBACK_EVENT_IMAGE) {
+    if (!fallbackAttempted && imageSrc !== FALLBACK_EVENT_IMAGE) {
+      setFallbackAttempted(true);
       setImageSrc(FALLBACK_EVENT_IMAGE);
     }
   }
 
   return (
-    <Image
+    <img
       src={imageSrc}
       alt={alt}
-      fill
-      sizes="(max-width: 768px) 100vw, 50vw"
       className="project-image"
-      unoptimized
+      loading="lazy"
+      decoding="async"
       onError={handleImageError}
     />
   );
@@ -281,14 +543,9 @@ type EventCardProps = {
 function EventCard({ event, index }: EventCardProps) {
   const isEven = index % 2 === 0;
 
-  /*
-   * Har event card ka separate animation ref hoga.
-   */
   const cardRef = useScrollAnimation<HTMLElement>({
     animationClass: isEven ? 'animate-fade-in-left' : 'animate-fade-in-right',
-
     initialTransform: isEven ? 'translateX(-40px)' : 'translateX(40px)',
-
     threshold: 0.05,
     once: true,
   });
@@ -314,20 +571,10 @@ function EventCard({ event, index }: EventCardProps) {
         <div className="project-overlay">
           <div className="project-meta">
             <span className="project-category">{category}</span>
-
-            {/* {date ? (
-              <span className="project-date">
-                {date}
-              </span>
-            ) : null} */}
           </div>
 
           <div className="project-content">
             <h3>{title}</h3>
-
-            {/* {excerpt ? (
-              <p>{excerpt}</p>
-            ) : null} */}
           </div>
         </div>
       </article>
@@ -348,10 +595,6 @@ export default function ProjectsSection() {
         setIsLoading(true);
         setErrorMessage('');
 
-        /*
-         * websiteId manually pass mat karo.
-         * Updated service token aur websiteId khud handle karegi.
-         */
         const eventItems = await fetchWebsiteEvents({
           page: 1,
           limit: 2,
@@ -362,9 +605,7 @@ export default function ProjectsSection() {
         }
 
         setEvents(Array.isArray(eventItems) ? eventItems.slice(0, 2) : []);
-      } catch (error) {
-        // console.error('Failed to load homepage events:', error);
-
+      } catch (error: unknown) {
         if (!isMounted) {
           return;
         }
@@ -379,7 +620,7 @@ export default function ProjectsSection() {
       }
     }
 
-    loadEvents();
+    void loadEvents();
 
     return () => {
       isMounted = false;
@@ -389,11 +630,7 @@ export default function ProjectsSection() {
   return (
     <section className="project-section">
       <div className="project-container">
-        <div className="project-heading">
-          {/* <h2 className="project-title">
-            Our Work <span>Highlights.</span>
-          </h2> */}
-        </div>
+        <div className="project-heading" />
 
         <div className="project-top-bar">
           <h6 className="project-subtitle">
