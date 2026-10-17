@@ -392,7 +392,7 @@ export default function Partner2026Page() {
 
                 <div className="partner-grid-static">
                   {group.logos.map((partner, index) => (
-                    <div key={partner.id ?? `${partner.image}-${index}`} className="partner-card">
+                    <div key={partner.id ?? `${partner.image}-${index}`} className="partner-card1">
                       {partner.image ? (
                         <img
                           src={partner.image}

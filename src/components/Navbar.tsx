@@ -678,6 +678,15 @@ export default function Navbar() {
             About Us
           </Link>
 
+          {/* <Link
+  href="/cio-nomination"
+  className={`nav-link ${
+    pathname.startsWith('/cio-nomination') ? 'active' : ''
+  }`}
+  onClick={closeAllMenus}
+>
+  CIO Nomination
+</Link> */}
           {/* PARTNERS */}
           <div
             className={`nav-dropdown ${partnersOpen ? 'open' : ''}`}

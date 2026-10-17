@@ -4313,7 +4313,7 @@ main {
 ========================================================= */
 
 .project-section {
-  padding: 100px 20px;
+  padding: 0px 20px;
   background:
     radial-gradient(circle at 10% 12%, rgba(142, 1, 1, 0.08), transparent 26%),
     linear-gradient(180deg, #ffffff 0%, #f3ebeb 100%);
@@ -6402,9 +6402,68 @@ main {
   max-height: 100%;
   object-fit: contain;
   object-position: center;
+  transform: scale(2.8);
 }
 
 .partner-card-name {
+  max-width: 100%;
+  color: #2a2a2a;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+/* Partner cards */
+
+.partner-card1 {
+  width: 100%;
+  min-width: 0;
+  height: 145px;
+  flex-shrink: 0;
+  background: #fff;
+  border: 1px solid #eee2e2;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.045);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* Grid cards fill their columns */
+
+.partner-grid-static .partner-card1 {
+  width: 100%;
+}
+
+/* Marquee cards retain a consistent width */
+
+.partner-grid-marquee .partner-card1 {
+  width: 220px;
+}
+
+.partner-card1:hover {
+  border-color: #8e0101;
+  box-shadow: 0 12px 28px rgba(142, 1, 1, 0.1);
+}
+
+.partner-card1 img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transform: scale(1.8);
+}
+
+.partner-card1-name {
   max-width: 100%;
   color: #2a2a2a;
   font-size: 15px;
@@ -6474,6 +6533,7 @@ main {
   max-height: 100%;
   object-fit: contain;
   object-position: center;
+  transform: scale(1.8);
 }
 
 /* =========================================================
@@ -6596,14 +6656,14 @@ main {
   }
 
   .partner-card {
-    height: 112px;
-    padding: 10px;
+    height: 128px;
+    padding: 6px;
     border-radius: 15px;
   }
 
   .past-partner-card {
-    height: 112px;
-    padding: 12px;
+    height: 128px;
+    padding: 6px;
     border-radius: 15px;
   }
 
@@ -6671,14 +6731,14 @@ main {
   }
 
   .partner-card {
-    height: 95px;
-    padding: 8px;
+    height: 116px;
+    padding: 4px;
     border-radius: 13px;
   }
 
   .past-partner-card {
-    height: 95px;
-    padding: 8px;
+    height: 116px;
+    padding: 4px;
     border-radius: 13px;
   }
 
@@ -11884,8 +11944,9 @@ s .dialogues-badge-mark {
   display: flex;
   align-items: center;
   flex: 1 1 220px;
-  width: 100%;
+  width: 90%;
   max-width: 100%;
+  height: 50px;
   min-width: 0;
   margin-bottom: 18px;
   overflow: hidden;
@@ -16093,5 +16154,1030 @@ s .dialogues-badge-mark {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+}
+
+/* =========================================================
+   CIO NOMINATION FORM — CORE MEDIA
+   Premium Red & White Responsive Design
+========================================================= */
+
+.cio-nomination-page {
+  --cio-primary: #8e0101;
+  --cio-primary-dark: #680000;
+  --cio-primary-light: #b30000;
+  --cio-text: #0c1e21;
+  --cio-muted: #687477;
+  --cio-border: #e7dada;
+  --cio-background: #f5eeee;
+  --cio-white: #ffffff;
+  --cio-success: #176b43;
+  --cio-error: #b42318;
+
+  width: 100%;
+  min-height: 100vh;
+  padding: 125px 24px 80px;
+  background:
+    radial-gradient(circle at 5% 5%, rgba(142, 1, 1, 0.08), transparent 28%),
+    radial-gradient(circle at 95% 35%, rgba(142, 1, 1, 0.05), transparent 25%),
+    var(--cio-background);
+  color: var(--cio-text);
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+.cio-nomination-page *,
+.cio-nomination-page *::before,
+.cio-nomination-page *::after {
+  box-sizing: border-box;
+}
+
+.cio-nomination-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   FORM HEADER
+========================================================= */
+
+.cio-form-header {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 30px;
+  padding: 48px 44px 42px;
+  border-radius: 18px;
+  background: linear-gradient(125deg, #780000 0%, #8e0101 52%, #b51a1a 100%);
+  color: var(--cio-white);
+  box-shadow: 0 16px 40px rgba(93, 0, 0, 0.16);
+}
+
+.cio-form-header::after {
+  position: absolute;
+  top: -95px;
+  right: -55px;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+}
+
+.cio-form-header::before {
+  position: absolute;
+  top: -45px;
+  right: 10px;
+  width: 180px;
+  height: 180px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+}
+
+.cio-form-eyebrow {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 7px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.cio-form-header h1 {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 14px;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -1px;
+}
+
+.cio-form-header > p {
+  position: relative;
+  z-index: 1;
+  max-width: 650px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.cio-form-notice {
+  position: relative;
+  z-index: 1;
+  margin-top: 25px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   FORM LAYOUT
+========================================================= */
+
+.cio-nomination-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.cio-form-section {
+  min-width: 0;
+  padding: 32px;
+  border: 1px solid rgba(142, 1, 1, 0.09);
+  border-radius: 16px;
+  background: var(--cio-white);
+  box-shadow: 0 7px 24px rgba(54, 0, 0, 0.045);
+  scroll-margin-top: 100px;
+}
+
+.cio-section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #f0e6e6;
+}
+
+.cio-section-number {
+  display: flex;
+  flex: 0 0 46px;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: #f8eeee;
+  color: var(--cio-primary);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.cio-section-heading > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.cio-section-heading h2 {
+  margin: 2px 0 8px;
+  color: var(--cio-text);
+  font-size: 22px;
+  font-weight: 750;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.cio-section-heading p {
+  margin: 0;
+  color: var(--cio-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   FORM GRID — TWO FIELDS PER ROW
+========================================================= */
+
+.cio-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 28px;
+  width: 100%;
+  align-items: start;
+}
+
+/* Each field: label on the left, input on the right */
+
+.cio-field {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 8px;
+  min-width: 0;
+  width: 100%;
+}
+
+.cio-field-full {
+  grid-column: 1 / -1;
+}
+
+/* Labels */
+
+.cio-field > label {
+  display: block;
+  min-width: 0;
+  margin: 0;
+  color: #28383a;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.cio-required {
+  color: var(--cio-primary);
+  font-weight: 800;
+}
+
+/* Inputs */
+
+.cio-field input:not([type='radio']),
+.cio-field select,
+.cio-field textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding: 12px;
+  border: 1px solid #d8d8d8;
+  border-radius: 5px;
+  outline: none;
+  background: #ffffff;
+  color: var(--cio-text);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.cio-field input:not([type='radio']),
+.cio-field select {
+  min-height: 46px;
+}
+
+.cio-field input::placeholder,
+.cio-field textarea::placeholder {
+  color: #999999;
+  opacity: 1;
+}
+
+.cio-field input:not([type='radio']):hover,
+.cio-field select:hover,
+.cio-field textarea:hover {
+  border-color: #c8aaaa;
+}
+
+.cio-field input:not([type='radio']):focus,
+.cio-field select:focus,
+.cio-field textarea:focus {
+  border-color: var(--cio-primary);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(142, 1, 1, 0.08);
+}
+
+.cio-field input:not([type='radio']):focus-visible,
+.cio-field select:focus-visible,
+.cio-field textarea:focus-visible {
+  outline: none;
+}
+
+.cio-field input[type='date'] {
+  min-height: 46px;
+}
+
+.cio-field input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.cio-field input[type='number']::-webkit-inner-spin-button,
+.cio-field input[type='number']::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+/* Textareas always display label above textarea */
+
+.cio-field:has(textarea) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 9px;
+}
+
+.cio-field textarea {
+  min-height: 55px;
+  resize: vertical;
+}
+
+.cio-field-description {
+  grid-column: 1 / -1;
+  margin: 0 0 2px;
+  color: var(--cio-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.cio-field-hint {
+  grid-column: 1 / -1;
+  display: block;
+  margin-top: 1px;
+  color: #747e80;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.cio-word-limit-error {
+  color: var(--cio-error);
+  font-weight: 700;
+}
+
+/* =========================================================
+   SUBHEADINGS
+========================================================= */
+
+.cio-subheading {
+  margin: 30px 0 18px;
+  padding-left: 13px;
+  border-left: 3px solid var(--cio-primary);
+  color: var(--cio-text);
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.cio-form-grid + .cio-subheading {
+  margin-top: 34px;
+}
+
+.cio-direct-report {
+  margin-top: 26px;
+  padding: 4px 0 25px;
+  border-bottom: 1px solid #f0e6e6;
+}
+
+.cio-direct-report:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.cio-direct-report .cio-subheading {
+  margin-top: 12px;
+}
+
+/* =========================================================
+   COMPANY CATEGORY RADIO OPTIONS
+========================================================= */
+
+.cio-company-category {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.cio-company-category > label {
+  color: #28383a;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.cio-radio-group {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 5px;
+}
+
+.cio-radio-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  min-height: 58px;
+  padding: 14px 16px;
+  border: 1px solid var(--cio-border);
+  border-radius: 8px;
+  background: #ffffff;
+  color: #354446;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.cio-radio-option:hover {
+  border-color: rgba(142, 1, 1, 0.45);
+  background: #fff8f8;
+}
+
+.cio-radio-option input[type='radio'] {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--cio-primary);
+  cursor: pointer;
+}
+
+.cio-radio-option:has(input:checked) {
+  border-color: var(--cio-primary);
+  background: #fff6f6;
+  color: var(--cio-primary);
+}
+
+/* =========================================================
+   INFORMATION NOTE
+========================================================= */
+
+.cio-info-note {
+  margin: 22px 0;
+  padding: 17px 19px;
+  border: 1px solid #efdada;
+  border-left: 4px solid var(--cio-primary);
+  border-radius: 5px;
+  background: #fff8f8;
+  color: #594747;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+/* =========================================================
+   ONLINE LINK CATEGORIES
+========================================================= */
+
+.cio-link-categories {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 28px;
+  row-gap: 24px;
+}
+
+.cio-link-category {
+  min-width: 0;
+}
+
+.cio-link-category .cio-form-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.cio-link-category .cio-field {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.cio-link-category .cio-field > input[type='url'] {
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: none;
+}
+
+.cio-link-category .cio-subheading {
+  margin-top: 0;
+}
+
+/* =========================================================
+   INSTRUCTIONS
+========================================================= */
+
+.cio-instructions {
+  background: linear-gradient(145deg, #ffffff, #fffafa);
+}
+
+.cio-instructions > h2 {
+  margin: 0 0 22px;
+  color: var(--cio-text);
+  font-size: 21px;
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.cio-instructions ol {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding-left: 23px;
+  color: #536163;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.cio-instructions li {
+  padding-left: 5px;
+}
+
+.cio-instructions a {
+  color: var(--cio-primary);
+  font-weight: 700;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.cio-instructions a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   SUCCESS AND ERROR MESSAGES
+========================================================= */
+
+.cio-form-success,
+.cio-form-error {
+  padding: 16px 19px;
+  border: 1px solid;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.cio-form-success {
+  border-color: #b8dfca;
+  background: #effaf3;
+  color: var(--cio-success);
+}
+
+.cio-form-error {
+  border-color: #f0c3bf;
+  background: #fff2f1;
+  color: var(--cio-error);
+}
+
+/* =========================================================
+   FORM ACTIONS
+========================================================= */
+
+.cio-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  padding: 26px 30px;
+  border: 1px solid rgba(142, 1, 1, 0.08);
+  border-radius: 10px;
+  background: var(--cio-white);
+  box-shadow: 0 7px 24px rgba(54, 0, 0, 0.045);
+}
+
+.cio-reset-button,
+.cio-submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 13px 24px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 750;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cio-reset-button {
+  border-color: #d9caca;
+  background: #ffffff;
+  color: #4c5556;
+}
+
+.cio-reset-button:hover:not(:disabled) {
+  border-color: #bca7a7;
+  background: #faf6f6;
+}
+
+.cio-submit-button {
+  border-color: var(--cio-primary);
+  background: var(--cio-primary);
+  color: #ffffff;
+  box-shadow: 0 5px 14px rgba(142, 1, 1, 0.16);
+}
+
+.cio-submit-button:hover:not(:disabled) {
+  border-color: var(--cio-primary-dark);
+  background: var(--cio-primary-dark);
+  box-shadow: 0 5px 12px rgba(142, 1, 1, 0.16);
+}
+
+.cio-reset-button:focus-visible,
+.cio-submit-button:focus-visible {
+  outline: 3px solid rgba(142, 1, 1, 0.22);
+  outline-offset: 3px;
+}
+
+.cio-reset-button:disabled,
+.cio-submit-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  box-shadow: none;
+}
+
+/* =========================================================
+   TABLET RESPONSIVENESS
+========================================================= */
+
+@media (max-width: 900px) {
+  .cio-nomination-page {
+    padding: 105px 18px 55px;
+  }
+
+  .cio-form-header {
+    padding: 36px 28px;
+    border-radius: 12px;
+  }
+
+  .cio-form-header h1 {
+    font-size: 34px;
+  }
+
+  .cio-form-header > p {
+    font-size: 14px;
+  }
+
+  .cio-form-section {
+    padding: 25px;
+    border-radius: 10px;
+  }
+
+  .cio-section-heading {
+    gap: 13px;
+    margin-bottom: 24px;
+  }
+
+  .cio-section-number {
+    flex-basis: 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+
+  .cio-section-heading h2 {
+    font-size: 19px;
+  }
+
+  .cio-form-grid {
+    gap: 20px;
+  }
+
+  .cio-field {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    column-gap: 10px;
+  }
+
+  .cio-field > label {
+    font-size: 12px;
+  }
+
+  .cio-field input:not([type='radio']),
+  .cio-field select {
+    padding: 10px 9px;
+    font-size: 12px;
+  }
+
+  .cio-radio-group {
+    gap: 10px;
+  }
+
+  .cio-radio-option {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .cio-form-actions {
+    padding: 22px;
+  }
+}
+
+/* =========================================================
+   MOBILE RESPONSIVENESS
+========================================================= */
+
+@media (max-width: 600px) {
+  .cio-nomination-page {
+    padding: 88px 12px 35px;
+  }
+
+  .cio-nomination-container {
+    width: 100%;
+  }
+
+  .cio-nomination-form {
+    gap: 16px;
+  }
+
+  .cio-form-header {
+    margin-bottom: 18px;
+    padding: 29px 21px 26px;
+    border-radius: 9px;
+  }
+
+  .cio-form-header::after {
+    top: -105px;
+    right: -120px;
+  }
+
+  .cio-form-header::before {
+    right: -65px;
+  }
+
+  .cio-form-eyebrow {
+    margin-bottom: 12px;
+    padding: 6px 10px;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+
+  .cio-form-header h1 {
+    margin-bottom: 12px;
+    font-size: clamp(25px, 7vw, 32px);
+    letter-spacing: -0.5px;
+  }
+
+  .cio-form-header > p {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  .cio-form-notice {
+    margin-top: 19px;
+    padding-top: 15px;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .cio-form-section {
+    padding: 20px 16px;
+    border-radius: 9px;
+  }
+
+  .cio-section-heading {
+    gap: 11px;
+    margin-bottom: 23px;
+    padding-bottom: 18px;
+  }
+
+  .cio-section-number {
+    flex-basis: 35px;
+    width: 35px;
+    height: 35px;
+    border-radius: 7px;
+    font-size: 11px;
+  }
+
+  .cio-section-heading h2 {
+    margin-top: 0;
+    margin-bottom: 6px;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .cio-section-heading p {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  /* One field per row on mobile.
+     Keep each label beside its input. */
+
+  .cio-form-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 17px;
+  }
+
+  .cio-field {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    column-gap: 10px;
+    row-gap: 7px;
+  }
+
+  .cio-field-full {
+    grid-column: 1 / -1;
+  }
+
+  .cio-field > label {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .cio-field input:not([type='radio']),
+  .cio-field select,
+  .cio-field textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 11px 9px;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+
+  .cio-field input:not([type='radio']),
+  .cio-field select {
+    min-height: 43px;
+  }
+
+  .cio-field:has(textarea) {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cio-field textarea {
+    min-height: 125px;
+  }
+
+  .cio-field-description {
+    font-size: 12px;
+    line-height: 1.75;
+  }
+
+  .cio-field-hint {
+    font-size: 11px;
+  }
+
+  .cio-subheading {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .cio-form-grid + .cio-subheading {
+    margin-top: 28px;
+  }
+
+  .cio-direct-report {
+    margin-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .cio-direct-report .cio-subheading {
+    margin-top: 8px;
+  }
+
+  .cio-company-category {
+    margin-top: 24px;
+  }
+
+  .cio-radio-group {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .cio-radio-option {
+    min-height: 52px;
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .cio-info-note {
+    margin: 18px 0;
+    padding: 13px 14px;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .cio-link-category {
+    margin-top: 0;
+  }
+
+  .cio-link-category + .cio-link-category {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .cio-instructions > h2 {
+    margin-bottom: 17px;
+    font-size: 17px;
+  }
+
+  .cio-instructions ol {
+    gap: 12px;
+    padding-left: 20px;
+    font-size: 12px;
+    line-height: 1.85;
+  }
+
+  .cio-instructions li {
+    padding-left: 2px;
+  }
+
+  .cio-form-success,
+  .cio-form-error {
+    padding: 13px;
+    font-size: 12px;
+  }
+
+  .cio-form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 11px;
+    padding: 17px;
+    border-radius: 9px;
+  }
+
+  .cio-reset-button,
+  .cio-submit-button {
+    width: 100%;
+    min-height: 47px;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE DEVICES
+========================================================= */
+
+@media (max-width: 380px) {
+  .cio-nomination-page {
+    padding-right: 9px;
+    padding-left: 9px;
+  }
+
+  .cio-form-header {
+    padding: 24px 16px;
+  }
+
+  .cio-form-header h1 {
+    font-size: 25px;
+  }
+
+  .cio-form-section {
+    padding: 17px 12px;
+  }
+
+  .cio-section-heading {
+    gap: 9px;
+  }
+
+  .cio-section-number {
+    flex-basis: 31px;
+    width: 31px;
+    height: 31px;
+    font-size: 10px;
+  }
+
+  .cio-section-heading h2 {
+    font-size: 16px;
+  }
+
+  .cio-form-grid {
+    gap: 15px;
+  }
+
+  .cio-field {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    column-gap: 8px;
+  }
+
+  .cio-field > label {
+    font-size: 11px;
+  }
+
+  .cio-field input:not([type='radio']),
+  .cio-field select {
+    padding: 9px 7px;
+    font-size: 11px;
+  }
+
+  .cio-form-actions {
+    padding: 14px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .cio-nomination-page *,
+  .cio-nomination-page *::before,
+  .cio-nomination-page *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
