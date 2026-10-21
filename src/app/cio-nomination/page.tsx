@@ -1274,9 +1274,21 @@ export default function CIONominationForm() {
                 The original submission deadline was 25 May 2026. Please confirm the current
                 nomination cycle before submitting.
               </li>
-              <li>
+              {/* <li>
                 For questions about the entry form, contact{' '}
                 <a href="mailto:contact@core-mediagroup.com">contact@core-mediagroup.com</a>.
+              </li> */}
+
+              <li>
+                For questions about the entry form, contact{' '}
+                <a
+                  href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=contact@core-mediagroup.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  contact@core-mediagroup.com
+                </a>
+                .
               </li>
             </ol>
           </section>

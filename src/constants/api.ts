@@ -14,6 +14,10 @@ export const API_ENDPOINTS = {
     NOMINATION_CATEGORIES: '/api/v1/website/nominations/categories',
 
     NOMINATION_SUB_CATEGORIES: '/api/v1/website/nominations/sub-categories',
+    FORMS: {
+      BY_SLUG: (slug: string) => `/api/v1/website/forms/${encodeURIComponent(slug)}`,
+      SUBMIT: (slug: string) => `/api/v1/website/forms/${encodeURIComponent(slug)}/submit`,
+    },
 
     PAGES: {
       BASE: '/api/v1/website/pages',

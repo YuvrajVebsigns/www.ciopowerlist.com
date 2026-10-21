@@ -679,14 +679,25 @@ export default function Navbar() {
           </Link>
 
           {/* <Link
-  href="/cio-nomination"
-  className={`nav-link ${
-    pathname.startsWith('/cio-nomination') ? 'active' : ''
-  }`}
-  onClick={closeAllMenus}
->
-  CIO Nomination
-</Link> */}
+            href="/cio-nomination"
+            className={`nav-link ${pathname.startsWith('/cio-nomination') ? 'active' : ''}`}
+            onClick={closeAllMenus}
+          >
+            CIO Google form
+          </Link> */}
+          {/* <Link
+            href="/forms/nomination-google-form"
+            className={`nav-link ${
+              pathname.startsWith('/forms/nomination-google-form') ||
+              pathname.startsWith('/forms/cio-nomination')
+                ? 'active'
+                : ''
+            }`}
+            onClick={closeAllMenus}
+          >
+            CIO Google form
+          </Link> */}
+
           {/* PARTNERS */}
           <div
             className={`nav-dropdown ${partnersOpen ? 'open' : ''}`}

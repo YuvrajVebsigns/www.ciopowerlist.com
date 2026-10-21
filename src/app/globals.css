@@ -16455,6 +16455,27 @@ s .dialogues-badge-mark {
   min-height: 46px;
 }
 
+.cio-field > div > [role='button'] {
+  min-height: 46px;
+  padding: 12px;
+  border-color: #d8d8d8;
+  border-radius: 5px;
+  background: #ffffff;
+  color: var(--cio-text);
+}
+
+.cio-field > div > [role='button'] .text-white {
+  color: var(--cio-text);
+}
+
+.cio-field > div > [role='button'] .text-gray-500 {
+  color: #999999;
+}
+
+.cio-field > div > [role='button'] .text-amber-400 {
+  color: var(--cio-primary);
+}
+
 .cio-field input[type='number'] {
   appearance: textfield;
   -moz-appearance: textfield;
@@ -16495,6 +16516,25 @@ s .dialogues-badge-mark {
   color: #747e80;
   font-size: 12px;
   line-height: 1.5;
+}
+
+.cio-dynamic-field-error {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: var(--cio-error);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.cio-field:has(.cio-dynamic-field-error) input:not([type='radio']),
+.cio-field:has(.cio-dynamic-field-error) select,
+.cio-field:has(.cio-dynamic-field-error) textarea,
+.cio-field:has(.cio-dynamic-field-error) > div > [role='button'] {
+  border-color: var(--cio-error);
 }
 
 .cio-word-limit-error {
