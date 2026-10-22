@@ -29,7 +29,7 @@ const SECTION_GROUPS = [
     end: 1,
     number: '01',
     title: 'EMAIL',
-    description: 'Complete the questions in this section.',
+    // description: 'Complete the questions in this section.',
   },
   {
     start: 1,
@@ -98,8 +98,13 @@ const REQUIRED_QUESTION_NUMBERS = new Set([
   ...Array.from({ length: 5 }, (_, index) => index + 49),
 ]);
 
+const DIGITS_ONLY_QUESTION_NUMBERS = new Set([7, 8, 9, 11, 12, 13, 31]);
+
 const isQuestionRequired = (question: FormQuestionPublic, index: number): boolean =>
   question.validation?.required === true || REQUIRED_QUESTION_NUMBERS.has(index + 1);
+
+const isDigitsOnlyQuestion = (question: FormQuestionPublic, index: number): boolean =>
+  DIGITS_ONLY_QUESTION_NUMBERS.has(index + 1) || question.type === FormFieldType.PHONE;
 
 const MAX_SECTION_WORDS = 200;
 
@@ -315,6 +320,7 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({ slug }) => {
       const val = answers[q.key];
       const isNameField = isNameQuestion(q);
       const isRequired = isQuestionRequired(q, index);
+      const isDigitsOnly = isDigitsOnlyQuestion(q, index);
       const hasWordLimit = isWordLimitedQuestion(q, index);
       const isMissing =
         val === undefined ||
@@ -331,6 +337,10 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({ slug }) => {
       if (isMissing) continue;
 
       // 2. Type-specific checks
+      if (isDigitsOnly && !/^\d+$/.test(String(val))) {
+        errors[q.key] = `${q.label} must contain digits only.`;
+      }
+
       if (q.type === FormFieldType.EMAIL) {
         const str = String(val).trim();
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str)) {
@@ -611,6 +621,7 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({ slug }) => {
                   const isNameField = isNameQuestion(q);
                   const hasWordLimit = isWordLimitedQuestion(q, idx);
                   const isRequired = isQuestionRequired(q, idx);
+                  const isDigitsOnly = isDigitsOnlyQuestion(q, idx);
                   const error = fieldErrors[q.key];
                   const isChoice =
                     q.type === FormFieldType.RADIO || q.type === FormFieldType.MULTIPLE_CHOICE;
@@ -671,6 +682,7 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({ slug }) => {
                           <input
                             id={inputId}
                             type="text"
+                            inputMode={isDigitsOnly ? 'numeric' : undefined}
                             maxLength={
                               q.validation?.maxLength === undefined
                                 ? isNameField
@@ -683,11 +695,13 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({ slug }) => {
                             }
                             value={String(answers[q.key] || '')}
                             onChange={(e) => {
-                              const value = isNameField
-                                ? e.target.value.replace(/\d/g, '').slice(0, 200)
-                                : hasWordLimit
-                                  ? limitWords(e.target.value, MAX_SECTION_WORDS)
-                                  : e.target.value;
+                              const value = isDigitsOnly
+                                ? e.target.value.replace(/\D/g, '')
+                                : isNameField
+                                  ? e.target.value.replace(/\d/g, '').slice(0, 200)
+                                  : hasWordLimit
+                                    ? limitWords(e.target.value, MAX_SECTION_WORDS)
+                                    : e.target.value;
                               handleAnswerChange(q.key, value);
                             }}
                             placeholder={q.placeholder || 'Your answer'}
@@ -754,10 +768,16 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({ slug }) => {
                           <input
                             id={inputId}
                             type="number"
+                            inputMode={isDigitsOnly ? 'numeric' : undefined}
                             min={q.validation?.min}
                             max={q.validation?.max}
                             value={String(answers[q.key] ?? '')}
-                            onChange={(e) => handleAnswerChange(q.key, e.target.value)}
+                            onChange={(e) =>
+                              handleAnswerChange(
+                                q.key,
+                                isDigitsOnly ? e.target.value.replace(/\D/g, '') : e.target.value,
+                              )
+                            }
                             placeholder={q.placeholder || '0'}
                           />
                         )}
