@@ -33,6 +33,105 @@ function getString(value: unknown): string {
   return typeof value === 'string' ? value.trim() : '';
 }
 
+function applyPageSeo(page: WebsitePage): () => void {
+  const seo = page.seo ?? {};
+  const originalTitle = document.title;
+  const originalMeta = new Map<HTMLMetaElement, string | null>();
+
+  const canonicalUrl = getString(seo.canonicalUrl);
+  const originalCanonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  const canonicalHref = originalCanonical?.getAttribute('href') ?? null;
+  const canonical = canonicalUrl
+    ? (originalCanonical ?? document.head.appendChild(document.createElement('link')))
+    : null;
+
+  if (canonical) {
+    canonical.rel = 'canonical';
+    canonical.href = canonicalUrl;
+  }
+
+  const schemaMarkup = getString(seo.schemaMarkup);
+  const originalSchema = document.head.querySelector<HTMLScriptElement>(
+    'script[data-page-seo-schema="true"]',
+  );
+  const schemaText = originalSchema?.textContent ?? null;
+  const schema = schemaMarkup
+    ? (originalSchema ?? document.head.appendChild(document.createElement('script')))
+    : null;
+
+  if (schema) {
+    schema.type = 'application/ld+json';
+    schema.dataset.pageSeoSchema = 'true';
+    schema.textContent = schemaMarkup;
+  }
+
+  const setMeta = (attribute: 'name' | 'property', key: string, content: string) => {
+    let element = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
+
+    if (!element) {
+      element = document.createElement('meta');
+      element.setAttribute(attribute, key);
+      document.head.appendChild(element);
+    }
+
+    if (!originalMeta.has(element)) {
+      originalMeta.set(element, element.getAttribute('content'));
+    }
+
+    element.content = content;
+  };
+
+  const metaTitle = getString(seo.metaTitle) || page.title;
+  const metaDescription = getString(seo.metaDescription) || page.shortDescription || '';
+  const metaKeywords = Array.isArray(seo.metaKeywords)
+    ? seo.metaKeywords
+        .filter((keyword): keyword is string => typeof keyword === 'string')
+        .join(', ')
+    : getString(seo.metaKeywords);
+  const robots =
+    seo.noIndex === true || seo.noFollow === true
+      ? `${seo.noIndex === true ? 'noindex' : 'index'}, ${
+          seo.noFollow === true ? 'nofollow' : 'follow'
+        }`
+      : getString(seo.robots) || 'index, follow';
+
+  document.title = metaTitle;
+  setMeta('name', 'description', metaDescription);
+  if (metaKeywords) setMeta('name', 'keywords', metaKeywords);
+  setMeta('name', 'robots', robots);
+  setMeta('property', 'og:title', getString(seo.ogTitle) || metaTitle);
+  setMeta('property', 'og:description', getString(seo.ogDescription) || metaDescription);
+  setMeta('property', 'og:type', 'website');
+  setMeta('name', 'twitter:card', 'summary');
+  setMeta('name', 'twitter:title', getString(seo.twitterTitle) || metaTitle);
+  setMeta('name', 'twitter:description', getString(seo.twitterDescription) || metaDescription);
+
+  return () => {
+    document.title = originalTitle;
+
+    for (const [element, content] of originalMeta) {
+      if (content === null) {
+        element.remove();
+      } else {
+        element.content = content;
+      }
+    }
+
+    if (originalCanonical) {
+      if (canonicalHref === null) originalCanonical.removeAttribute('href');
+      else originalCanonical.setAttribute('href', canonicalHref);
+    } else {
+      canonical?.remove();
+    }
+
+    if (originalSchema) {
+      originalSchema.textContent = schemaText;
+    } else {
+      schema?.remove();
+    }
+  };
+}
+
 /* =========================================================
    IMAGE HELPER
 ========================================================= */
@@ -389,6 +488,7 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
 
   useEffect(() => {
     let isMounted = true;
+    let restoreSeo: (() => void) | undefined;
 
     async function loadWinnerPages() {
       setIsLoading(true);
@@ -472,10 +572,13 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
 
       if (technologyLoaded && technologyResponse?.data) {
         setPage(technologyResponse.data);
+        restoreSeo = applyPageSeo(technologyResponse.data);
       } else if (businessLoaded && businessResponse?.data) {
         setPage(businessResponse.data);
+        restoreSeo = applyPageSeo(businessResponse.data);
       } else if (covidLoaded && covidResponse?.data) {
         setPage(covidResponse.data);
+        restoreSeo = applyPageSeo(covidResponse.data);
       } else {
         setPage(null);
       }
@@ -526,6 +629,7 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
 
     return () => {
       isMounted = false;
+      restoreSeo?.();
     };
   }, [slug]);
 

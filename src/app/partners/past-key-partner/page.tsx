@@ -121,6 +121,102 @@ function getString(value: unknown): string {
   return typeof value === 'string' ? value.trim() : '';
 }
 
+function applyPageSeo(page: WebsitePage): () => void {
+  const seo = page.seo ?? {};
+  const originalTitle = document.title;
+  const originalMeta = new Map<HTMLMetaElement, string | null>();
+  const canonicalUrl = getString(seo.canonicalUrl);
+  const originalCanonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  const canonicalHref = originalCanonical?.getAttribute('href') ?? null;
+  const canonical = canonicalUrl
+    ? (originalCanonical ?? document.head.appendChild(document.createElement('link')))
+    : originalCanonical;
+  if (canonical && canonicalUrl) {
+    canonical.rel = 'canonical';
+    canonical.href = canonicalUrl;
+  }
+
+  const originalSchema = document.head.querySelector<HTMLScriptElement>(
+    'script[data-page-seo-schema="true"]',
+  );
+  const schemaText = originalSchema?.textContent ?? null;
+  const schemaMarkup = getString(seo.schemaMarkup);
+  const schema = schemaMarkup
+    ? (originalSchema ?? document.head.appendChild(document.createElement('script')))
+    : originalSchema;
+  if (schema) {
+    schema.type = 'application/ld+json';
+    schema.dataset.pageSeoSchema = 'true';
+    schema.textContent = schemaMarkup;
+  }
+
+  const setMeta = (attribute: 'name' | 'property', key: string, content: string) => {
+    let element = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
+
+    if (!element) {
+      element = document.createElement('meta');
+      element.setAttribute(attribute, key);
+      document.head.appendChild(element);
+    }
+
+    if (!originalMeta.has(element)) {
+      originalMeta.set(element, element.getAttribute('content'));
+    }
+    element.content = content;
+  };
+
+  const metaTitle = getString(seo.metaTitle) || page.title;
+  const metaDescription = getString(seo.metaDescription) || page.shortDescription || '';
+  const metaKeywords = Array.isArray(seo.metaKeywords)
+    ? seo.metaKeywords
+        .filter((keyword): keyword is string => typeof keyword === 'string')
+        .join(', ')
+    : getString(seo.metaKeywords);
+  const ogTitle = getString(seo.ogTitle) || metaTitle;
+  const ogDescription = getString(seo.ogDescription) || metaDescription;
+  const twitterTitle = getString(seo.twitterTitle) || metaTitle;
+  const twitterDescription = getString(seo.twitterDescription) || metaDescription;
+  const robots =
+    seo.noIndex === true || seo.noFollow === true
+      ? `${seo.noIndex === true ? 'noindex' : 'index'}, ${seo.noFollow === true ? 'nofollow' : 'follow'}`
+      : getString(seo.robots) || 'index, follow';
+
+  document.title = metaTitle;
+  setMeta('name', 'description', metaDescription);
+  if (metaKeywords) setMeta('name', 'keywords', metaKeywords);
+  setMeta('name', 'robots', robots);
+  setMeta('property', 'og:title', ogTitle);
+  setMeta('property', 'og:description', ogDescription);
+  setMeta('property', 'og:type', 'website');
+  setMeta('name', 'twitter:card', 'summary');
+  setMeta('name', 'twitter:title', twitterTitle);
+  setMeta('name', 'twitter:description', twitterDescription);
+
+  return () => {
+    document.title = originalTitle;
+    for (const [element, content] of originalMeta) {
+      if (content === null) {
+        element.remove();
+      } else {
+        element.content = content;
+      }
+    }
+
+    if (originalCanonical) {
+      if (canonicalHref === null) originalCanonical.removeAttribute('href');
+      else originalCanonical.setAttribute('href', canonicalHref);
+    } else if (canonical) {
+      canonical.remove();
+    }
+
+    if (originalSchema) {
+      originalSchema.textContent = schemaText;
+    } else if (schema) {
+      schema.remove();
+    }
+  };
+}
+
 function getImageUrl(value: unknown): string {
   if (typeof value === 'string') {
     return value.trim();
@@ -337,6 +433,7 @@ export default function PastKeyPartnerPage() {
 
   useEffect(() => {
     let active = true;
+    let restoreSeo: (() => void) | undefined;
 
     async function loadPartners() {
       try {
@@ -354,6 +451,7 @@ export default function PastKeyPartnerPage() {
         const dynamicPartners = extractPartners(response.data);
 
         if (active) {
+          restoreSeo = applyPageSeo(response.data);
           setPartners(dynamicPartners);
 
           if (dynamicPartners.length === 0) {
@@ -378,6 +476,7 @@ export default function PastKeyPartnerPage() {
 
     return () => {
       active = false;
+      restoreSeo?.();
     };
   }, []);
 
