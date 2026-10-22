@@ -1,6 +1,7 @@
 'use client';
 
 import { Award, Briefcase, Newspaper, Trophy, Vote } from 'lucide-react';
+import { useEffect } from 'react';
 import Image from 'next/image';
 
 const dataSources = [
@@ -27,6 +28,62 @@ const dataSources = [
 ];
 
 export default function CIOPowerListProcess() {
+  useEffect(() => {
+    const seoTitle = 'CIO Power List Selection Process';
+
+    const seoDescription =
+      "Learn how CIO Power List selects India's leading CIOs through media reputation, awards, peer votes and industry nominations.";
+
+    const seoKeywords = [
+      'CIO Power List selection process',
+      'CIO Power List methodology',
+      'CIO awards India',
+      'how CIOs are selected',
+      'top CIOs in India',
+      'CIO recognition',
+      'technology leadership awards India',
+      'influential CIOs in India',
+      'CIO evaluation process',
+      '360 degree CIO selection',
+      'CIO awards criteria',
+      'technology leaders India',
+      'business technology leaders',
+      'CIO peer survey',
+      'CIO nominations',
+    ].join(', ');
+
+    document.title = seoTitle;
+
+    const setMeta = (attribute: 'name' | 'property', key: string, content: string) => {
+      let element = document.head.querySelector(
+        `meta[${attribute}="${key}"]`,
+      ) as HTMLMetaElement | null;
+
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+
+      element.setAttribute('content', content);
+    };
+
+    // Standard SEO metadata
+    setMeta('name', 'title', seoTitle);
+    setMeta('name', 'description', seoDescription);
+    setMeta('name', 'keywords', seoKeywords);
+
+    // Open Graph metadata
+    setMeta('property', 'og:title', "How CIO Power List Selects India's Top CIOs");
+    setMeta('property', 'og:description', seoDescription);
+    setMeta('property', 'og:type', 'website');
+    setMeta('property', 'og:site_name', 'CIO Power List India');
+
+    // Twitter metadata
+    setMeta('name', 'twitter:card', 'summary_large_image');
+    setMeta('name', 'twitter:title', "How CIO Power List Selects India's Top CIOs");
+    setMeta('name', 'twitter:description', seoDescription);
+  }, []);
   return (
     <section className="cio-process-section">
       <div className="cio-process-container">

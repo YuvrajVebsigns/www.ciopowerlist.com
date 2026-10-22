@@ -1,9 +1,88 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 export default function AboutUsPage() {
-  // heroContentRef removed (not used)
+  useEffect(() => {
+    // SEO META TITLE
+    document.title = 'About CIO Power List | CIO Awards India';
+
+    // Helper function to add or update SEO meta tags
+    const setMeta = (attribute: string, key: string, content: string) => {
+      let element = document.head.querySelector(
+        `meta[${attribute}="${key}"]`,
+      ) as HTMLMetaElement | null;
+
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+
+      element.setAttribute('content', content);
+    };
+
+    // META DESCRIPTION
+    setMeta(
+      'name',
+      'description',
+      'Learn about CIO Power List and how it recognises CIOs and digital leaders for their work in technology and business.',
+    );
+
+    // SEO KEYWORDS
+    setMeta(
+      'name',
+      'keywords',
+      [
+        'CIO Power List',
+        'About CIO Power List',
+        'What is CIO Power List',
+        'Top CIOs in India',
+        'CIO awards in India',
+        'CIO Power List selection process',
+        'CIO leadership recognition',
+        'About CIO Power List awards',
+        'CIO Power List India 2026',
+        'CIO Power List mission',
+      ].join(', '),
+    );
+
+    // OPEN GRAPH DETAILS
+    setMeta('property', 'og:title', "About CIO Power List | Recognising India's CIOs");
+
+    setMeta(
+      'property',
+      'og:description',
+      'Learn about CIO Power List and how it recognises CIOs and digital leaders for their work in technology and business.',
+    );
+
+    setMeta('property', 'og:type', 'website');
+    setMeta('property', 'og:site_name', 'CIO Power List India');
+    setMeta('property', 'og:url', 'https://ciopowerlist.com/aboutus');
+    setMeta('property', 'og:image', 'https://ciopowerlist.com/assets/aboutus/about-core.png');
+
+    // TWITTER DETAILS
+    setMeta('name', 'twitter:card', 'summary_large_image');
+    setMeta('name', 'twitter:title', "About CIO Power List | Recognising India's CIOs");
+    setMeta(
+      'name',
+      'twitter:description',
+      'Learn about CIO Power List and how it recognises CIOs and digital leaders for their work in technology and business.',
+    );
+    setMeta('name', 'twitter:image', 'https://ciopowerlist.com/assets/aboutus/about-core.png');
+
+    // CANONICAL URL
+    let canonical = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+
+    canonical.setAttribute('href', 'https://ciopowerlist.com/aboutus');
+  }, []);
 
   return (
     <>

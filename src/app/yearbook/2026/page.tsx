@@ -73,6 +73,89 @@ const INDUSTRIES = [
 ];
 
 export default function YearBook2026Page() {
+  useEffect(() => {
+    // SEO META TITLE
+    document.title = 'CIO PowerList 2026 Yearbook | Top CIOs';
+
+    const setMeta = (attribute: string, key: string, content: string) => {
+      let element = document.head.querySelector(
+        `meta[${attribute}="${key}"]`,
+      ) as HTMLMetaElement | null;
+
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+
+      element.setAttribute('content', content);
+    };
+
+    // META DESCRIPTION
+    setMeta(
+      'name',
+      'description',
+      'Read the CIO PowerList 2026 Yearbook and discover leading CIOs and technology professionals across 38 categories.',
+    );
+
+    // SEO KEYWORDS
+    setMeta(
+      'name',
+      'keywords',
+      [
+        'CIO PowerList 2026',
+        'CIO PowerList yearbook',
+        'CIO PowerList 12th edition',
+        'top CIOs in India',
+        'CIO PowerList winners',
+        'CIO awards India',
+        'technology leaders India',
+        'CIO list 2026',
+        'CORE Media CIO PowerList',
+        'CIO yearbook',
+      ].join(', '),
+    );
+
+    // OPEN GRAPH
+    setMeta('property', 'og:title', "CIO PowerList 2026 Yearbook | India's Top CIOs");
+
+    setMeta(
+      'property',
+      'og:description',
+      'Read the CIO PowerList 2026 Yearbook and discover leading CIOs and technology professionals across 38 categories.',
+    );
+
+    setMeta('property', 'og:type', 'website');
+    setMeta('property', 'og:site_name', 'CIO Power List India');
+    setMeta('property', 'og:url', 'https://ciopowerlist.com/yearbook/2026');
+
+    setMeta('property', 'og:image', 'https://ciopowerlist.com/assets/2026/page-001.jpg');
+
+    // TWITTER
+    setMeta('name', 'twitter:card', 'summary_large_image');
+
+    setMeta('name', 'twitter:title', "CIO PowerList 2026 Yearbook | India's Top CIOs");
+
+    setMeta(
+      'name',
+      'twitter:description',
+      'Read the CIO PowerList 2026 Yearbook and discover leading CIOs and technology professionals across 38 categories.',
+    );
+
+    setMeta('name', 'twitter:image', 'https://ciopowerlist.com/assets/2026/page-001.jpg');
+
+    // CANONICAL URL
+    let canonical = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+
+    canonical.setAttribute('href', 'https://ciopowerlist.com/yearbook/2026');
+  }, []);
+
   const [spreadStart, setSpreadStart] = useState(0);
   const [direction, setDirection] = useState<'next' | 'previous'>('next');
   const [isTurning, setIsTurning] = useState(false);

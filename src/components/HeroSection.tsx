@@ -9,6 +9,89 @@ export default function HeroSection() {
 
   useEffect(() => {
     setShow(true);
+    // SEO META TITLE
+    document.title = 'CIO Power List India | CIO & ICT Leaders';
+
+    // Helper function to add or update meta tags
+    const setMeta = (attribute: string, key: string, content: string) => {
+      let element = document.head.querySelector(
+        `meta[${attribute}="${key}"]`,
+      ) as HTMLMetaElement | null;
+
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+
+      element.setAttribute('content', content);
+    };
+
+    // SEO META DESCRIPTION
+    setMeta(
+      'name',
+      'description',
+      'Discover CIO Power List India and the CIOs driving technology, innovation and business growth across industries.',
+    );
+
+    // SEO KEYWORDS
+    setMeta(
+      'name',
+      'keywords',
+      [
+        'CIO Power List India',
+        'CIO Power List',
+        'CIO awards in India',
+        'CIO Power List 2026',
+        'CIO events in India',
+        'Best CIOs in India',
+        'IT leaders in India',
+        'Technology leaders in India',
+        'CIO conference India',
+        'Top technology leaders in India',
+        'CIO networking events',
+        'Technology leadership awards',
+        'CIO Power List winners',
+        'CIO leadership event India',
+      ].join(', '),
+    );
+
+    // OPEN GRAPH DETAILS
+    setMeta('property', 'og:title', 'CIO Power List India | Celebrating Technology Leaders');
+
+    setMeta(
+      'property',
+      'og:description',
+      'Discover CIO Power List India and the CIOs driving technology, innovation and business growth across industries.',
+    );
+
+    setMeta('property', 'og:type', 'website');
+    setMeta('property', 'og:site_name', 'CIO Power List India');
+    setMeta('property', 'og:url', 'https://ciopowerlist.com/');
+    setMeta('property', 'og:image', 'https://ciopowerlist.com/assets/download.png');
+
+    // TWITTER DETAILS
+    setMeta('name', 'twitter:card', 'summary_large_image');
+    setMeta('name', 'twitter:title', 'CIO Power List India | Celebrating Technology Leaders');
+
+    setMeta(
+      'name',
+      'twitter:description',
+      'Discover CIO Power List India and the CIOs driving technology, innovation and business growth across industries.',
+    );
+
+    setMeta('name', 'twitter:image', 'https://ciopowerlist.com/assets/download.png');
+
+    // CANONICAL URL
+    let canonical = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+
+    canonical.setAttribute('href', 'https://ciopowerlist.com/');
   }, []);
 
   return (

@@ -50,7 +50,8 @@ const SECTION_GROUPS = [
     end: 44,
     number: '04',
     title: 'CIOs TEAMS DETAILS',
-    description: 'Complete the questions in this section.',
+    description:
+      'In the section below for name, email id and mobile no. of direct report, you can list upto 4 but if you have more than 4 then please do send the details separately on an email',
   },
   {
     start: 44,
@@ -542,7 +543,8 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({ slug }) => {
           </div>
           <h1 className="mb-3 text-2xl font-bold text-[#0c1e21]">Form Unavailable</h1>
           <p className="cio-form-error">
-            {fetchError || 'This form has either expired or is not currently open for submissions.'}
+            This form is currently inactive. Please check back later or contact us for further
+            information.
           </p>
         </section>
       </div>
@@ -578,12 +580,54 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({ slug }) => {
   // Active Interactive Form
   return (
     <div className="cio-nomination-container">
-      <header className="cio-form-header">
-        <span className="cio-form-eyebrow">CORE Media</span>
-        <h1>{form.name}</h1>
-        {form.description && <p className="whitespace-pre-line">{form.description}</p>}
-        <div className="cio-form-notice">
-          Fields marked with <span className="cio-required">*</span> are required.
+      <header
+        className="cio-form-header"
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: '20px',
+        }}
+      >
+        <div style={{ flex: 1 }}>
+          <span className="cio-form-eyebrow">CORE Media</span>
+
+          <h1>{form.name}</h1>
+
+          {form.description && <p className="whitespace-pre-line">{form.description}</p>}
+
+          <div className="cio-form-notice">
+            Fields marked with{' '}
+            <span className="cio-required" style={{ color: '#ffffff' }}>
+              *
+            </span>{' '}
+            are required.
+          </div>
+        </div>
+
+        <div
+          style={{
+            width: '120px',
+            height: '200px',
+            minWidth: '200px',
+            borderRadius: '50%',
+            backgroundColor: '#ffffff',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflow: 'hidden',
+            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.12)',
+          }}
+        >
+          <img
+            src="/assets/logo/logo2.png"
+            alt="CORE Media Logo"
+            style={{
+              width: '85%',
+              height: '85%',
+              objectFit: 'contain',
+            }}
+          />
         </div>
       </header>
 
@@ -877,21 +921,18 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({ slug }) => {
 
           <ol>
             <li>
-              While it is not compulsory, please try to complete all fields and answer all questions
-              to provide the information required for the evaluation.
+              1] While it is not compulsory, please try and fill in all the information and answer
+              all questions so that we have all the required information while making decisions.
             </li>
-            <li>All forms must be completed in English.</li>
-            <li>
-              The original submission deadline was 25 May 2026. Please confirm the current
-              nomination cycle before submitting.
-            </li>
+            <li>2] Forms should be filled in English only.</li>
+            <li>3] All forms must be submitted to CORE Media no later than 25th May 2026.</li>
             {/* <li>
                 For questions about the entry form, contact{' '}
                 <a href="mailto:contact@core-mediagroup.com">contact@core-mediagroup.com</a>.
               </li> */}
 
             <li>
-              For questions about the entry form, contact{' '}
+              If you have any questions about the entry form, please feel free to write to us at{' '}
               <a
                 href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=contact@core-mediagroup.com"
                 target="_blank"
