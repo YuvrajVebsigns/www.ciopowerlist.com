@@ -55,7 +55,7 @@ export default function FoundersMessage() {
             CIO,no longer just enabling the business but navigating it.
           </p>
           <p className="founder-description">
-            I am thrilled to unveil the forthcoming 12th edition of THE CIO Power List 2026, the one
+            I am thrilled to unveil the forthcoming 12th edition of THE CIO PowerList 2026, the one
             of a kind prestigious platform dedicated to recognizing the most influential CIOs and
             Digital Leaders in our nation. Scheduled for June 18th and 19th in Mumbai, the theme for
             the event is “CIOs: The Enterprise Navigators — Setting Direction. Managing Risk.
@@ -68,9 +68,9 @@ export default function FoundersMessage() {
             trust, sustainability, runs through technology leadership.
           </p>
           <p className="founder-description">
-            This year, CIOs and Digital Leaders will come together at CIO Power List 2026 to
-            exchange real-world insights, hard-earned lessons, and forward-looking strategies on how
-            to lead when maps are outdated and the terrain keeps changing. This is where technology
+            This year, CIOs and Digital Leaders will come together at CIO PowerList 2026 to exchange
+            real-world insights, hard-earned lessons, and forward-looking strategies on how to lead
+            when maps are outdated and the terrain keeps changing. This is where technology
             leadership meets business stewardship.
           </p>
           <p className="founder-description">

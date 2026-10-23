@@ -225,6 +225,81 @@ export default function NominatePage() {
 
   const [nominationActive, setNominationActive] = useState<boolean | null>(null);
 
+  useEffect(() => {
+    // SEO TITLE
+    document.title = 'CIO POWERLIST 2026 Nominations | Nominate a CIO';
+
+    // Helper function to add or update meta tags
+    const setMeta = (attribute: string, key: string, content: string) => {
+      let element = document.head.querySelector(
+        `meta[${attribute}="${key}"]`,
+      ) as HTMLMetaElement | null;
+
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+
+      element.setAttribute('content', content);
+    };
+
+    // SEO META TITLE
+    setMeta('name', 'title', 'Nominate a CIO | CIO POWERLIST 2026');
+
+    // SEO META DESCRIPTION
+    const description =
+      'Nominate a CIO for CIO PowerList 2026 and recognise a technology leader making a difference. Self-nominations are welcome.';
+
+    setMeta('name', 'description', description);
+
+    // SEO KEYWORDS
+    setMeta(
+      'name',
+      'keywords',
+      [
+        'CIO PowerList 2026 nominations',
+        'nominate a CIO',
+        'CIO nomination form',
+        'CIO awards India 2026',
+        'best CIOs in India',
+        'influential technology leaders',
+        'technology leaders in India',
+        'business technology leaders',
+        'Business Icon CIO',
+        'Technology Icon CIO',
+        'CIO recognition awards',
+        'nominate IT leader',
+        'CIO PowerList India',
+      ].join(', '),
+    );
+
+    // OPEN GRAPH DETAILS
+    setMeta('property', 'og:title', 'Nominate a CIO | CIO POWERLIST 2026');
+    setMeta('property', 'og:description', description);
+    setMeta('property', 'og:type', 'website');
+    setMeta('property', 'og:site_name', 'CIO PowerList India');
+    setMeta('property', 'og:url', 'https://ciopowerlist.com/nominate');
+    setMeta('property', 'og:image', 'https://ciopowerlist.com/assets/download.png');
+
+    // TWITTER DETAILS
+    setMeta('name', 'twitter:card', 'summary_large_image');
+    setMeta('name', 'twitter:title', 'Nominate a CIO | CIO POWERLIST 2026');
+    setMeta('name', 'twitter:description', description);
+    setMeta('name', 'twitter:image', 'https://ciopowerlist.com/assets/download.png');
+
+    // CANONICAL URL
+    let canonical = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+
+    canonical.setAttribute('href', 'https://ciopowerlist.com/nominate');
+  }, []);
+
   /* =========================================================
      CHECK NOMINATION STATUS
      ========================================================= */
@@ -834,7 +909,7 @@ export default function NominatePage() {
         <section className="nominate-success-section nomination-closed-section">
           <h1>Nomination Closed</h1>
 
-          <p>Thank you for your interest in CIO Power List. Nominations are currently closed.</p>
+          <p>Thank you for your interest in CIO PowerList. Nominations are currently closed.</p>
 
           <p>Please check back later for the next nomination cycle.</p>
 
@@ -854,7 +929,7 @@ export default function NominatePage() {
     return (
       <main className="nominate-page-container">
         <section className="nominate-success-section">
-          <h1>CIO Power List 2026 — Nomination Received</h1>
+          <h1>CIO PowerList 2026 — Nomination Received</h1>
 
           <p>
             Thank you. Your nomination has been recorded. You will receive a confirmation email
@@ -876,11 +951,11 @@ export default function NominatePage() {
   return (
     <main className="nominate-page-container">
       <section className="nominate-page-content">
-        <h1>CIO Power List 2026: Nominate the Nation&apos;s Most Influential Technology Leaders</h1>
+        <h1>CIO PowerList 2026: Nominate the Nation&apos;s Most Influential Technology Leaders</h1>
 
         <p>
           Your nomination plays a vital role in recognizing CIOs for the exemplary impact they have
-          created and in helping them qualify for the CIO Power List 2026, placing their work firmly
+          created and in helping them qualify for the CIO PowerList 2026, placing their work firmly
           in the spotlight.
         </p>
 
@@ -899,7 +974,7 @@ export default function NominatePage() {
         </p>
 
         <ol>
-          <li>To the CIO Power List (CORE Media) team, sharing the nomination details.</li>
+          <li>To the CIO PowerList (CORE Media) team, sharing the nomination details.</li>
 
           <li>To you, acknowledging and summarizing all your nominations.</li>
 

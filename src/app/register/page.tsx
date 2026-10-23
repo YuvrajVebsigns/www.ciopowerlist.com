@@ -30,6 +30,80 @@ export default function RegisterPage() {
   }>({});
 
   useEffect(() => {
+    // SEO TITLE
+    document.title = 'Event Registration | CIO POWERLIST';
+
+    // Helper to add or update meta tags
+    const setMeta = (attribute: string, key: string, content: string) => {
+      let element = document.head.querySelector(
+        `meta[${attribute}="${key}"]`,
+      ) as HTMLMetaElement | null;
+
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+
+      element.setAttribute('content', content);
+    };
+
+    // SEO META TITLE
+    setMeta('name', 'title', 'Register for CIO POWERLIST & Tech Events');
+
+    // SEO META DESCRIPTION
+    const description =
+      'Register for CIO PowerList, CIO Crown, CIO Choice and other technology events by submitting your details online.';
+
+    setMeta('name', 'description', description);
+
+    // SEO KEYWORDS
+    setMeta(
+      'name',
+      'keywords',
+      [
+        'CIO PowerList registration',
+        'event registration',
+        'CIO events India',
+        'CIO PowerList 2027',
+        'CIO Crown 2027 registration',
+        'CIO Choice 2027',
+        'Data Center Cloud and AI World 2026',
+        'BFSI TechWorld 2026',
+        'technology leadership events',
+        'IT leadership events India',
+        'business technology events',
+        'register for CIO events',
+      ].join(', '),
+    );
+
+    // OPEN GRAPH DETAILS
+    setMeta('property', 'og:title', 'Register for CIO PowerList | Events & Networking');
+    setMeta('property', 'og:description', description);
+    setMeta('property', 'og:type', 'website');
+    setMeta('property', 'og:site_name', 'CIO PowerList India');
+    setMeta('property', 'og:url', 'https://ciopowerlist.com/register');
+    setMeta('property', 'og:image', 'https://ciopowerlist.com/assets/download.png');
+
+    // TWITTER DETAILS
+    setMeta('name', 'twitter:card', 'summary_large_image');
+    setMeta('name', 'twitter:title', 'Register for CIO PowerList | Events & Networking');
+    setMeta('name', 'twitter:description', description);
+    setMeta('name', 'twitter:image', 'https://ciopowerlist.com/assets/download.png');
+
+    // CANONICAL URL
+    let canonical = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+
+    canonical.setAttribute('href', 'https://ciopowerlist.com/register');
+  }, []);
+
+  useEffect(() => {
     fetchWebsiteEvents()
       .then((data: WebsiteEvent[]) => setEvents(data))
       .catch(() => setEvents([]));

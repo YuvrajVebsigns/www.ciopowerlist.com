@@ -69,7 +69,7 @@ export default function CIOPowerListWhyPartner() {
             </p>
 
             <p>
-              CIO Power List is one of the most sought after events in the industry and is a unique
+              CIO PowerList is one of the most sought after events in the industry and is a unique
               opportunity that will help you make the right connections with key industry
               stakeholders in an immersive environment.
             </p>
@@ -81,7 +81,7 @@ export default function CIOPowerListWhyPartner() {
             </p>
 
             <p>
-              CIO Power List features thoughtfully curated sessions designed to drive deep
+              CIO PowerList features thoughtfully curated sessions designed to drive deep
               engagement, open doors to strong business leads, create a positive brand impact, boost
               lead conversion, and make connections for life.
             </p>

@@ -197,6 +197,75 @@ export default function BlogPage() {
   const CLIENT_PAGINATION_THRESHOLD = 200;
   const [totalPages, setTotalPages] = useState<number>(1);
 
+  useEffect(() => {
+    // SEO TITLE
+    document.title = 'CIO POWERLIST Blog | Technology Insights';
+
+    const setMeta = (attribute: string, key: string, content: string) => {
+      let element = document.head.querySelector(
+        `meta[${attribute}="${key}"]`,
+      ) as HTMLMetaElement | null;
+
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+
+      element.setAttribute('content', content);
+    };
+
+    const description =
+      'Read the CIO PowerList blog for insights on cloud computing, design thinking, business continuity and enterprise technology.';
+
+    const metaTitle = 'CIO POWERLIST Blog | Technology Insights';
+
+    const ogTitle = 'Explore Technology Insights | CIO POWERLIST';
+
+    const keywords = [
+      'CIO PowerList blog',
+      'technology insights',
+      'cloud computing',
+      'business continuity',
+      'design thinking',
+      'multi-cloud strategy',
+      'enterprise technology',
+      'IT trends',
+      'digital transformation',
+      'technology leadership',
+    ].join(', ');
+
+    // Standard SEO metadata
+    setMeta('name', 'title', metaTitle);
+    setMeta('name', 'description', description);
+    setMeta('name', 'keywords', keywords);
+
+    // Open Graph metadata
+    setMeta('property', 'og:title', ogTitle);
+    setMeta('property', 'og:description', description);
+    setMeta('property', 'og:type', 'website');
+    setMeta('property', 'og:site_name', 'CIO PowerList India');
+    setMeta('property', 'og:url', 'https://ciopowerlist.com/blog');
+    setMeta('property', 'og:image', 'https://ciopowerlist.com/assets/download.png');
+
+    // Twitter metadata
+    setMeta('name', 'twitter:card', 'summary_large_image');
+    setMeta('name', 'twitter:title', ogTitle);
+    setMeta('name', 'twitter:description', description);
+    setMeta('name', 'twitter:image', 'https://ciopowerlist.com/assets/download.png');
+
+    // Canonical URL
+    let canonical = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+
+    canonical.setAttribute('href', 'https://ciopowerlist.com/blog');
+  }, []);
+
   const heroMediaRef = useScrollAnimation<HTMLDivElement>({
     animationClass: 'animate-fade-in-right',
     initialTransform: 'translateX(40px)',

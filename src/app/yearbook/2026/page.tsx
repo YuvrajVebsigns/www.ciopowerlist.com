@@ -126,7 +126,7 @@ export default function YearBook2026Page() {
     );
 
     setMeta('property', 'og:type', 'website');
-    setMeta('property', 'og:site_name', 'CIO Power List India');
+    setMeta('property', 'og:site_name', 'CIO PowerList India');
     setMeta('property', 'og:url', 'https://ciopowerlist.com/yearbook/2026');
 
     setMeta('property', 'og:image', 'https://ciopowerlist.com/assets/2026/page-001.jpg');

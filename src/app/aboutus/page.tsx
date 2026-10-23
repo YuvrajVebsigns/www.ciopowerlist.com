@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 export default function AboutUsPage() {
   useEffect(() => {
     // SEO META TITLE
-    document.title = 'About CIO Power List | CIO Awards India';
+    document.title = 'About CIO POWERLIST | CIO Awards India';
 
     // Helper function to add or update SEO meta tags
     const setMeta = (attribute: string, key: string, content: string) => {
@@ -27,7 +27,7 @@ export default function AboutUsPage() {
     setMeta(
       'name',
       'description',
-      'Learn about CIO Power List and how it recognises CIOs and digital leaders for their work in technology and business.',
+      'Learn about CIO PowerList and how it recognises CIOs and digital leaders for their work in technology and business.',
     );
 
     // SEO KEYWORDS
@@ -35,40 +35,40 @@ export default function AboutUsPage() {
       'name',
       'keywords',
       [
-        'CIO Power List',
-        'About CIO Power List',
-        'What is CIO Power List',
+        'CIO PowerList',
+        'About CIO PowerList',
+        'What is CIO PowerList',
         'Top CIOs in India',
         'CIO awards in India',
-        'CIO Power List selection process',
+        'CIO PowerList selection process',
         'CIO leadership recognition',
-        'About CIO Power List awards',
-        'CIO Power List India 2026',
-        'CIO Power List mission',
+        'About CIO PowerList awards',
+        'CIO PowerList India 2026',
+        'CIO PowerList mission',
       ].join(', '),
     );
 
     // OPEN GRAPH DETAILS
-    setMeta('property', 'og:title', "About CIO Power List | Recognising India's CIOs");
+    setMeta('property', 'og:title', "About CIO POWERLIST | Recognising India's CIOs");
 
     setMeta(
       'property',
       'og:description',
-      'Learn about CIO Power List and how it recognises CIOs and digital leaders for their work in technology and business.',
+      'Learn about CIO POWERLIST and how it recognises CIOs and digital leaders for their work in technology and business.',
     );
 
     setMeta('property', 'og:type', 'website');
-    setMeta('property', 'og:site_name', 'CIO Power List India');
+    setMeta('property', 'og:site_name', 'CIO PowerList India');
     setMeta('property', 'og:url', 'https://ciopowerlist.com/aboutus');
     setMeta('property', 'og:image', 'https://ciopowerlist.com/assets/aboutus/about-core.png');
 
     // TWITTER DETAILS
     setMeta('name', 'twitter:card', 'summary_large_image');
-    setMeta('name', 'twitter:title', "About CIO Power List | Recognising India's CIOs");
+    setMeta('name', 'twitter:title', "About CIO PowerList | Recognising India's CIOs");
     setMeta(
       'name',
       'twitter:description',
-      'Learn about CIO Power List and how it recognises CIOs and digital leaders for their work in technology and business.',
+      'Learn about CIO PowerList and how it recognises CIOs and digital leaders for their work in technology and business.',
     );
     setMeta('name', 'twitter:image', 'https://ciopowerlist.com/assets/aboutus/about-core.png');
 
@@ -93,13 +93,13 @@ export default function AboutUsPage() {
               <h2>About CIO POWERLIST</h2>
 
               <p className="social-media-highlight">
-                <strong>CIO Power List 2026</strong> brings together India’s most influential CIOs
+                <strong>CIO PowerList 2026</strong> brings together India’s most influential CIOs
                 and Digital Leaders to recognize their leadership, innovation, and impact on
                 business and technology transformation.
               </p>
 
               <p>
-                The 12th edition of <strong>CIO Power List</strong> is scheduled for
+                The 12th edition of <strong>CIO PowerList</strong> is scheduled for
                 <strong> June 18 & 19, 2026</strong> in Mumbai, with the theme
                 <strong>
                   {' '}
@@ -112,7 +112,7 @@ export default function AboutUsPage() {
               <p>
                 CIOs and Digital Leaders today play a critical role in navigating business growth,
                 managing risk, driving innovation, and transforming technology into a strategic
-                advantage. CIO Power List provides a prestigious platform to recognize these leaders
+                advantage. CIO PowerList provides a prestigious platform to recognize these leaders
                 and celebrate their contribution to the technology and business ecosystem.
               </p>
 
@@ -125,8 +125,8 @@ export default function AboutUsPage() {
               </p>
 
               <p>
-                With <strong>130+ CIOs being recognised</strong>, CIO Power List combines a
-                symposium and recognition program, creating an engaging environment to{' '}
+                With <strong>130+ CIOs being recognised</strong>, CIO PowerList combines a symposium
+                and recognition program, creating an engaging environment to{' '}
                 <strong>Learn, Engage, and Celebrate</strong> with India’s leading technology
                 decision-makers.
               </p>
@@ -139,7 +139,7 @@ export default function AboutUsPage() {
               </p>
 
               <p>
-                CIO Power List is a celebration of the technology leaders who are shaping the future
+                CIO PowerList is a celebration of the technology leaders who are shaping the future
                 of business through innovation, strategic thinking, and transformative leadership.
               </p>
 

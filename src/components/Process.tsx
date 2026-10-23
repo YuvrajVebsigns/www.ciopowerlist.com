@@ -63,7 +63,7 @@ export default function CIOPowerListProcess() {
             </h2>
 
             <p>
-              The CIO Power List is a prestigious platform recognising India’s most influential and
+              The CIO PowerList is a prestigious platform recognising India’s most influential and
               forward-thinking Chief Information Officers.
               <br />
               It honours technology leaders for their vision, innovation, leadership, and impact in
@@ -88,7 +88,7 @@ export default function CIOPowerListProcess() {
             <div className="cio-process-sources-header">
               <h3>Data Sources</h3>
 
-              <p>Multiple verified channels contribute to the CIO Power List evaluation process.</p>
+              <p>Multiple verified channels contribute to the CIO PowerList evaluation process.</p>
             </div>
 
             <div className="cio-process-sources-grid">

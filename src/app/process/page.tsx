@@ -29,14 +29,14 @@ const dataSources = [
 
 export default function CIOPowerListProcess() {
   useEffect(() => {
-    const seoTitle = 'CIO Power List Selection Process';
+    const seoTitle = 'CIO POWERLIST Selection Process';
 
     const seoDescription =
-      "Learn how CIO Power List selects India's leading CIOs through media reputation, awards, peer votes and industry nominations.";
+      "Learn how CIO PowerList selects India's leading CIOs through media reputation, awards, peer votes and industry nominations.";
 
     const seoKeywords = [
-      'CIO Power List selection process',
-      'CIO Power List methodology',
+      'CIO PowerList selection process',
+      'CIO PowerList methodology',
       'CIO awards India',
       'how CIOs are selected',
       'top CIOs in India',
@@ -74,14 +74,14 @@ export default function CIOPowerListProcess() {
     setMeta('name', 'keywords', seoKeywords);
 
     // Open Graph metadata
-    setMeta('property', 'og:title', "How CIO Power List Selects India's Top CIOs");
+    setMeta('property', 'og:title', "How CIO PowerList Selects India's Top CIOs");
     setMeta('property', 'og:description', seoDescription);
     setMeta('property', 'og:type', 'website');
-    setMeta('property', 'og:site_name', 'CIO Power List India');
+    setMeta('property', 'og:site_name', 'CIO PowerList India');
 
     // Twitter metadata
     setMeta('name', 'twitter:card', 'summary_large_image');
-    setMeta('name', 'twitter:title', "How CIO Power List Selects India's Top CIOs");
+    setMeta('name', 'twitter:title', "How CIO PowerList Selects India's Top CIOs");
     setMeta('name', 'twitter:description', seoDescription);
   }, []);
   return (
@@ -120,7 +120,7 @@ export default function CIOPowerListProcess() {
             </h2>
 
             <p>
-              The CIO Power List is a prestigious platform recognising India’s most influential and
+              The CIO PowerList is a prestigious platform recognising India’s most influential and
               forward-thinking Chief Information Officers.
               <br />
               It honours technology leaders for their vision, innovation, leadership, and impact in
@@ -145,7 +145,7 @@ export default function CIOPowerListProcess() {
             <div className="cio-process-sources-header">
               <h3>Data Sources</h3>
 
-              <p>Multiple verified channels contribute to the CIO Power List evaluation process.</p>
+              <p>Multiple verified channels contribute to the CIO PowerList evaluation process.</p>
             </div>
 
             <div className="cio-process-sources-grid">

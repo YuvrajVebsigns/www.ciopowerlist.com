@@ -55,6 +55,145 @@ function getBlogImage(blog?: WebsiteBlogDetailItem | null) {
   );
 }
 
+function getSeoString(value: unknown): string {
+  return typeof value === 'string' ? value.trim() : '';
+}
+
+function applyBlogSeo(blog: WebsiteBlogDetailItem): () => void {
+  const blogData = blog as unknown as Record<string, unknown>;
+  const seo = isObject(blogData.seo) ? blogData.seo : {};
+
+  const originalTitle = document.title;
+  const originalMeta = new Map<HTMLMetaElement, string | null>();
+
+  const canonicalUrl = getSeoString(seo.canonicalUrl);
+  const originalCanonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  const originalCanonicalHref = originalCanonical?.getAttribute('href') ?? null;
+
+  const canonical = canonicalUrl
+    ? (originalCanonical ?? document.head.appendChild(document.createElement('link')))
+    : originalCanonical;
+
+  if (canonical && canonicalUrl) {
+    canonical.rel = 'canonical';
+    canonical.href = canonicalUrl;
+  }
+
+  const originalSchema = document.head.querySelector<HTMLScriptElement>(
+    'script[data-page-seo-schema="true"]',
+  );
+  const originalSchemaText = originalSchema?.textContent ?? null;
+  const schemaMarkup = getSeoString(seo.schemaMarkup);
+
+  const schema = schemaMarkup
+    ? (originalSchema ?? document.head.appendChild(document.createElement('script')))
+    : originalSchema;
+
+  if (schema) {
+    schema.type = 'application/ld+json';
+    schema.dataset.pageSeoSchema = 'true';
+    schema.textContent = schemaMarkup;
+  }
+
+  const setMeta = (attribute: 'name' | 'property', key: string, content: string) => {
+    let element = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
+
+    if (!element) {
+      element = document.createElement('meta');
+      element.setAttribute(attribute, key);
+      document.head.appendChild(element);
+    }
+
+    if (!originalMeta.has(element)) {
+      originalMeta.set(element, element.getAttribute('content'));
+    }
+
+    element.content = content;
+  };
+
+  const metaTitle = getSeoString(seo.metaTitle) || blog.title || 'Blog';
+
+  const metaDescription =
+    getSeoString(seo.metaDescription) ||
+    getSeoString(blogData.shortDescription) ||
+    getSeoString(blogData.excerpt) ||
+    getSeoString(blogData.description);
+
+  const keywords = seo.metaKeywords;
+  const metaKeywords = Array.isArray(keywords)
+    ? keywords.filter((item): item is string => typeof item === 'string').join(', ')
+    : getSeoString(keywords);
+
+  const ogTitle = getSeoString(seo.ogTitle) || metaTitle;
+  const ogDescription = getSeoString(seo.ogDescription) || metaDescription;
+
+  const twitterTitle = getSeoString(seo.twitterTitle) || metaTitle;
+  const twitterDescription = getSeoString(seo.twitterDescription) || metaDescription;
+
+  const ogImage = resolveBlogImageUrl(seo.ogImage, '') || getBlogImage(blog);
+
+  const robots =
+    seo.noIndex === true || seo.noFollow === true
+      ? `${seo.noIndex === true ? 'noindex' : 'index'}, ${
+          seo.noFollow === true ? 'nofollow' : 'follow'
+        }`
+      : getSeoString(seo.robots) || 'index, follow';
+
+  document.title = metaTitle;
+
+  setMeta('name', 'description', metaDescription);
+  if (metaKeywords) {
+    setMeta('name', 'keywords', metaKeywords);
+  }
+
+  setMeta('name', 'robots', robots);
+
+  setMeta('property', 'og:title', ogTitle);
+  setMeta('property', 'og:description', ogDescription);
+  setMeta('property', 'og:type', 'article');
+
+  if (canonicalUrl) {
+    setMeta('property', 'og:url', canonicalUrl);
+  }
+
+  if (ogImage) {
+    setMeta('property', 'og:image', ogImage);
+    setMeta('name', 'twitter:image', ogImage);
+  }
+
+  setMeta('name', 'twitter:card', 'summary_large_image');
+  setMeta('name', 'twitter:title', twitterTitle);
+  setMeta('name', 'twitter:description', twitterDescription);
+
+  return () => {
+    document.title = originalTitle;
+
+    for (const [element, content] of originalMeta) {
+      if (content === null) {
+        element.remove();
+      } else {
+        element.content = content;
+      }
+    }
+
+    if (originalCanonical) {
+      if (originalCanonicalHref === null) {
+        originalCanonical.removeAttribute('href');
+      } else {
+        originalCanonical.setAttribute('href', originalCanonicalHref);
+      }
+    } else if (canonical) {
+      canonical.remove();
+    }
+
+    if (originalSchema) {
+      originalSchema.textContent = originalSchemaText;
+    } else if (schema) {
+      schema.remove();
+    }
+  };
+}
+
 // function getBlogCategory(blog?: WebsiteBlogDetailItem | null) {
 //   return blog?.websites?.[0]?.name || blog?.tags?.[0] || 'Blog';
 // }
@@ -167,8 +306,50 @@ export default function BlogDetailsPage() {
   const [error, setError] = useState<string | null>(null);
   const [showShareOptions, setShowShareOptions] = useState(false);
 
+  // useEffect(() => {
+  //   let isMounted = true;
+
+  //   async function loadBlog() {
+  //     if (!slug) {
+  //       if (isMounted) {
+  //         setError('Blog slug is missing.');
+  //         setIsLoading(false);
+  //       }
+  //       return;
+  //     }
+
+  //     setIsLoading(true);
+  //     setError(null);
+
+  //     try {
+  //       const response = await fetchWebsiteBlogBySlug(slug);
+
+  //       if (isMounted) {
+  //         setBlog(response);
+  //         setError(response ? null : 'Blog not found.');
+  //       }
+  //     } catch (fetchError) {
+  //       if (isMounted) {
+  //         setBlog(null);
+  //         setError(fetchError instanceof Error ? fetchError.message : 'Failed to load blog');
+  //       }
+  //     } finally {
+  //       if (isMounted) {
+  //         setIsLoading(false);
+  //       }
+  //     }
+  //   }
+
+  //   loadBlog();
+
+  //   return () => {
+  //     isMounted = false;
+  //   };
+  // }, [slug]);
+
   useEffect(() => {
     let isMounted = true;
+    let restoreSeo: (() => void) | undefined;
 
     async function loadBlog() {
       if (!slug) {
@@ -186,8 +367,14 @@ export default function BlogDetailsPage() {
         const response = await fetchWebsiteBlogBySlug(slug);
 
         if (isMounted) {
-          setBlog(response);
-          setError(response ? null : 'Blog not found.');
+          if (response) {
+            restoreSeo = applyBlogSeo(response);
+            setBlog(response);
+            setError(null);
+          } else {
+            setBlog(null);
+            setError('Blog not found.');
+          }
         }
       } catch (fetchError) {
         if (isMounted) {
@@ -205,6 +392,7 @@ export default function BlogDetailsPage() {
 
     return () => {
       isMounted = false;
+      restoreSeo?.();
     };
   }, [slug]);
 
