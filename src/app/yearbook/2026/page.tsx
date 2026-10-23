@@ -75,7 +75,7 @@ const INDUSTRIES = [
 export default function YearBook2026Page() {
   useEffect(() => {
     // SEO META TITLE
-    document.title = 'CIO PowerList 2026 Yearbook | Top CIOs';
+    document.title = 'CIO POWERLIST 2026 WinnerBook | Top CIOs';
 
     const setMeta = (attribute: string, key: string, content: string) => {
       let element = document.head.querySelector(
@@ -104,7 +104,7 @@ export default function YearBook2026Page() {
       'keywords',
       [
         'CIO PowerList 2026',
-        'CIO PowerList yearbook',
+        'CIO PowerList WinnerBook',
         'CIO PowerList 12th edition',
         'top CIOs in India',
         'CIO PowerList winners',
@@ -112,17 +112,17 @@ export default function YearBook2026Page() {
         'technology leaders India',
         'CIO list 2026',
         'CORE Media CIO PowerList',
-        'CIO yearbook',
+        'CIO WinnerBook',
       ].join(', '),
     );
 
     // OPEN GRAPH
-    setMeta('property', 'og:title', "CIO PowerList 2026 Yearbook | India's Top CIOs");
+    setMeta('property', 'og:title', "CIO PowerList 2026 WinnerBook | India's Top CIOs");
 
     setMeta(
       'property',
       'og:description',
-      'Read the CIO PowerList 2026 Yearbook and discover leading CIOs and technology professionals across 38 categories.',
+      'Read the CIO PowerList 2026 WinnerBook and discover leading CIOs and technology professionals across 38 categories.',
     );
 
     setMeta('property', 'og:type', 'website');
@@ -134,12 +134,12 @@ export default function YearBook2026Page() {
     // TWITTER
     setMeta('name', 'twitter:card', 'summary_large_image');
 
-    setMeta('name', 'twitter:title', "CIO PowerList 2026 Yearbook | India's Top CIOs");
+    setMeta('name', 'twitter:title', "CIO PowerList 2026 WinnerBook | India's Top CIOs");
 
     setMeta(
       'name',
       'twitter:description',
-      'Read the CIO PowerList 2026 Yearbook and discover leading CIOs and technology professionals across 38 categories.',
+      'Read the CIO PowerList 2026 WinnerBook and discover leading CIOs and technology professionals across 38 categories.',
     );
 
     setMeta('name', 'twitter:image', 'https://ciopowerlist.com/assets/2026/page-001.jpg');

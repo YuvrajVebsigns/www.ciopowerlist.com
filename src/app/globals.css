@@ -2625,7 +2625,7 @@ main {
 .contact-section {
   background: #a40000;
   padding: 90px 40px;
-  margin-top: 100px;
+  /* margin-top: 100px; */
 }
 
 .contact-container {
@@ -7570,7 +7570,7 @@ main {
 
 .blogs-section {
   width: 100%;
-  padding: 110px 20px;
+  padding: 110px 20px 20px;
   background: #f5f1f1;
 }
 
