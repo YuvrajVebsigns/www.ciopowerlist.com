@@ -142,6 +142,172 @@ function normalizeExternalUrl(value: unknown): string {
 }
 
 /* =========================================================
+   EVENT SEO
+========================================================= */
+
+function applyEventSeo(event: WebsiteEvent): () => void {
+  const seoValue = getEventField(event, 'seo');
+  const seo = isRecord(seoValue) ? seoValue : {};
+
+  const originalTitle = document.title;
+  const originalMeta = new Map<HTMLMetaElement, string | null>();
+
+  // Canonical URL
+  const canonicalUrl = getString(seo.canonicalUrl);
+
+  const originalCanonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+
+  const originalCanonicalHref = originalCanonical?.getAttribute('href') ?? null;
+
+  const canonical = canonicalUrl
+    ? (originalCanonical ?? document.head.appendChild(document.createElement('link')))
+    : originalCanonical;
+
+  if (canonical && canonicalUrl) {
+    canonical.rel = 'canonical';
+    canonical.href = canonicalUrl;
+  }
+
+  // JSON-LD schema
+  const originalSchema = document.head.querySelector<HTMLScriptElement>(
+    'script[data-page-seo-schema="true"]',
+  );
+
+  const originalSchemaText = originalSchema?.textContent ?? null;
+  const schemaMarkup = getString(seo.schemaMarkup);
+
+  const schema = schemaMarkup
+    ? (originalSchema ?? document.head.appendChild(document.createElement('script')))
+    : originalSchema;
+
+  if (schema) {
+    schema.type = 'application/ld+json';
+    schema.dataset.pageSeoSchema = 'true';
+    schema.textContent = schemaMarkup;
+  }
+
+  // Create or update meta tags
+  const setMeta = (attribute: 'name' | 'property', key: string, content: string) => {
+    let element = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
+
+    if (!element) {
+      element = document.createElement('meta');
+      element.setAttribute(attribute, key);
+      document.head.appendChild(element);
+    }
+
+    if (!originalMeta.has(element)) {
+      originalMeta.set(element, element.getAttribute('content'));
+    }
+
+    element.content = content;
+  };
+
+  // Event title and description fallbacks
+  const eventTitle =
+    getString(getEventField(event, 'title')) ||
+    getString(getEventField(event, 'name')) ||
+    getString(getEventField(event, 'eventName')) ||
+    'Event';
+
+  const metaTitle = getString(seo.metaTitle) || eventTitle;
+
+  const metaDescription =
+    getString(seo.metaDescription) ||
+    getString(getEventField(event, 'excerpt')) ||
+    extractTextFromContent(
+      getEventField(event, 'description') ??
+        getEventField(event, 'content') ??
+        getEventField(event, 'summary'),
+    );
+
+  const keywords = seo.metaKeywords;
+
+  const metaKeywords = Array.isArray(keywords)
+    ? keywords.filter((item): item is string => typeof item === 'string').join(', ')
+    : getString(keywords);
+
+  const ogTitle = getString(seo.ogTitle) || metaTitle;
+
+  const ogDescription = getString(seo.ogDescription) || metaDescription;
+
+  const twitterTitle = getString(seo.twitterTitle) || metaTitle;
+
+  const twitterDescription = getString(seo.twitterDescription) || metaDescription;
+
+  const ogImage =
+    getImageUrl(seo.ogImage) ||
+    getImageUrl(getEventField(event, 'bannerImage')) ||
+    getImageUrl(getEventField(event, 'bannerImageId')) ||
+    getImageUrl(getEventField(event, 'image')) ||
+    getImageUrl(getEventField(event, 'heroImage')) ||
+    getImageUrl(getEventField(event, 'banner'));
+
+  const robots =
+    seo.noIndex === true || seo.noFollow === true
+      ? `${seo.noIndex === true ? 'noindex' : 'index'}, ${
+          seo.noFollow === true ? 'nofollow' : 'follow'
+        }`
+      : getString(seo.robots) || 'index, follow';
+
+  // Apply metadata
+  document.title = metaTitle;
+
+  setMeta('name', 'description', metaDescription);
+  setMeta('name', 'robots', robots);
+
+  if (metaKeywords) {
+    setMeta('name', 'keywords', metaKeywords);
+  }
+
+  setMeta('property', 'og:title', ogTitle);
+  setMeta('property', 'og:description', ogDescription);
+  setMeta('property', 'og:type', 'event');
+
+  if (canonicalUrl) {
+    setMeta('property', 'og:url', canonicalUrl);
+  }
+
+  if (ogImage) {
+    setMeta('property', 'og:image', ogImage);
+    setMeta('name', 'twitter:image', ogImage);
+  }
+
+  setMeta('name', 'twitter:card', 'summary_large_image');
+  setMeta('name', 'twitter:title', twitterTitle);
+  setMeta('name', 'twitter:description', twitterDescription);
+
+  // Restore original metadata on unmount or navigation
+  return () => {
+    document.title = originalTitle;
+
+    for (const [element, content] of originalMeta) {
+      if (content === null) {
+        element.remove();
+      } else {
+        element.content = content;
+      }
+    }
+
+    if (originalCanonical) {
+      if (originalCanonicalHref === null) {
+        originalCanonical.removeAttribute('href');
+      } else {
+        originalCanonical.setAttribute('href', originalCanonicalHref);
+      }
+    } else if (canonical) {
+      canonical.remove();
+    }
+
+    if (originalSchema) {
+      originalSchema.textContent = originalSchemaText;
+    } else if (schema) {
+      schema.remove();
+    }
+  };
+}
+
+/* =========================================================
    CONTENT HELPERS
 ========================================================= */
 
@@ -427,8 +593,81 @@ export default function EventDetailsPage() {
      LOAD EVENT
   ========================================================= */
 
+  // useEffect(() => {
+  //   let isMounted = true;
+
+  //   async function loadEvent() {
+  //     if (!slug) {
+  //       if (isMounted) {
+  //         setError('Event slug is missing.');
+  //         setIsLoading(false);
+  //       }
+
+  //       return;
+  //     }
+
+  //     try {
+  //       setIsLoading(true);
+  //       setError(null);
+
+  //       let loadedEvent = await fetchWebsiteEventByIdOrSlug(slug);
+
+  //       /*
+  //        * Direct details request fail ho to list se
+  //        * matching event ID/slug find karega.
+  //        */
+  //       if (!loadedEvent) {
+  //         const eventList = await fetchWebsiteEvents();
+
+  //         const matchedEvent = eventList.find((item) => {
+  //           const itemId = getString(getEventField(item, 'id'));
+
+  //           const itemSlug = getString(getEventField(item, 'slug'));
+
+  //           return itemId === slug || itemSlug === slug;
+  //         });
+
+  //         if (matchedEvent) {
+  //           const matchedId = getString(getEventField(matchedEvent, 'id'));
+
+  //           const matchedSlug = getString(getEventField(matchedEvent, 'slug'));
+
+  //           loadedEvent = await fetchWebsiteEventByIdOrSlug(matchedId || matchedSlug);
+  //         }
+  //       }
+
+  //       if (!isMounted) {
+  //         return;
+  //       }
+
+  //       setEvent(loadedEvent);
+
+  //       setError(loadedEvent ? null : 'Event not found.');
+  //     } catch (loadError) {
+  //       if (!isMounted) {
+  //         return;
+  //       }
+
+  //       setEvent(null);
+
+  //       setError(loadError instanceof Error ? loadError.message : 'Failed to load event.');
+  //     } finally {
+  //       if (isMounted) {
+  //         setIsLoading(false);
+  //       }
+  //     }
+  //   }
+
+  //   loadEvent();
+
+  //   return () => {
+  //     isMounted = false;
+  //   };
+  // }, [slug]);
+
   useEffect(() => {
     let isMounted = true;
+    let restoreSeo: (() => void) | undefined;
 
     async function loadEvent() {
       if (!slug) {
@@ -446,16 +685,12 @@ export default function EventDetailsPage() {
 
         let loadedEvent = await fetchWebsiteEventByIdOrSlug(slug);
 
-        /*
-         * Direct details request fail ho to list se
-         * matching event ID/slug find karega.
-         */
+        // Fall back to the event list if the direct request fails.
         if (!loadedEvent) {
           const eventList = await fetchWebsiteEvents();
 
           const matchedEvent = eventList.find((item) => {
             const itemId = getString(getEventField(item, 'id'));
-
             const itemSlug = getString(getEventField(item, 'slug'));
 
             return itemId === slug || itemSlug === slug;
@@ -463,10 +698,13 @@ export default function EventDetailsPage() {
 
           if (matchedEvent) {
             const matchedId = getString(getEventField(matchedEvent, 'id'));
-
             const matchedSlug = getString(getEventField(matchedEvent, 'slug'));
 
-            loadedEvent = await fetchWebsiteEventByIdOrSlug(matchedId || matchedSlug);
+            const identifier = matchedId || matchedSlug;
+
+            if (identifier) {
+              loadedEvent = await fetchWebsiteEventByIdOrSlug(identifier);
+            }
           }
         }
 
@@ -474,9 +712,14 @@ export default function EventDetailsPage() {
           return;
         }
 
-        setEvent(loadedEvent);
-
-        setError(loadedEvent ? null : 'Event not found.');
+        if (loadedEvent) {
+          restoreSeo = applyEventSeo(loadedEvent);
+          setEvent(loadedEvent);
+          setError(null);
+        } else {
+          setEvent(null);
+          setError('Event not found.');
+        }
       } catch (loadError) {
         if (!isMounted) {
           return;
@@ -496,6 +739,7 @@ export default function EventDetailsPage() {
 
     return () => {
       isMounted = false;
+      restoreSeo?.();
     };
   }, [slug]);
 

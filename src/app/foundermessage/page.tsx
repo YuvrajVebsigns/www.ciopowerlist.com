@@ -4,10 +4,79 @@ import Image from 'next/image';
 import Link from 'next/link';
 // import { useRef } from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { useEffect } from 'react';
 import { FaLinkedinIn } from 'react-icons/fa';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function FoundersMessage() {
+  useEffect(() => {
+    // SEO TITLE
+    document.title = "Founder's Message | Anoop Mathur | CIO Power List";
+
+    const setMeta = (attribute: string, key: string, content: string) => {
+      let element = document.head.querySelector(
+        `meta[${attribute}="${key}"]`,
+      ) as HTMLMetaElement | null;
+
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+
+      element.setAttribute('content', content);
+    };
+
+    const description =
+      "Read Anoop Mathur's message on CIO leadership, enterprise strategy, AI, cybersecurity, risk management and business growth.";
+
+    const metaTitle = "Founder's Message | Anoop Mathur";
+    const ogTitle = "Anoop Mathur's Founder's Message | CIO Power List";
+
+    const keywords = [
+      'Anoop Mathur',
+      'CIO Power List founder',
+      "Founder's Message",
+      'CIO leadership',
+      'digital leaders',
+      'enterprise technology strategy',
+      'technology leadership',
+      'AI in business',
+      'cybersecurity risks',
+      'CORE Media',
+    ].join(', ');
+
+    // Standard SEO metadata
+    setMeta('name', 'title', metaTitle);
+    setMeta('name', 'description', description);
+    setMeta('name', 'keywords', keywords);
+
+    // Open Graph metadata
+    setMeta('property', 'og:title', ogTitle);
+    setMeta('property', 'og:description', description);
+    setMeta('property', 'og:type', 'website');
+    setMeta('property', 'og:site_name', 'CIO Power List India');
+    setMeta('property', 'og:url', 'https://ciopowerlist.com/founders-message');
+    setMeta('property', 'og:image', 'https://ciopowerlist.com/assets/team/Anoop-Mathur.png');
+
+    // Twitter metadata
+    setMeta('name', 'twitter:card', 'summary_large_image');
+    setMeta('name', 'twitter:title', ogTitle);
+    setMeta('name', 'twitter:description', description);
+    setMeta('name', 'twitter:image', 'https://ciopowerlist.com/assets/team/Anoop-Mathur.png');
+
+    // Canonical URL
+    let canonical = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+
+    canonical.setAttribute('href', 'https://ciopowerlist.com/founders-message');
+  }, []);
+
   const sectionRef = useScrollAnimation<HTMLDivElement>({
     animationClass: 'animate-fade-in-up',
     initialTransform: 'translateY(40px)',
