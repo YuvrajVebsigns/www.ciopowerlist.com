@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: 'CIO POWERLIST',
   // description: 'Core Media Administration Dashboard — Manage users, media, and system settings.',
   keywords: ['admin', 'dashboard', 'core media', 'management'],
-  robots: 'noindex, nofollow',
+  robots: 'index, follow',
 };
 
 export default function RootLayout({
