@@ -30,17 +30,43 @@ type NominationCategory = {
    SUBCATEGORY TYPE
    ========================================================= */
 
+// type NominationSubCategory = {
+//   _id?: string;
+//   id?: string;
+//   name?: string;
+//   title?: string;
+//   label?: string;
+//   categoryId?: string;
+//   parentCategoryId?: string;
+//   nominationCategoryId?: string;
+// };
 type NominationSubCategory = {
   _id?: string;
   id?: string;
   name?: string;
   title?: string;
   label?: string;
-  categoryId?: string;
-  parentCategoryId?: string;
-  nominationCategoryId?: string;
+  categoryId?:
+    | string
+    | {
+        id?: string;
+        _id?: string;
+        name?: string;
+        slug?: string;
+      };
+  parentCategoryId?:
+    | string
+    | {
+        id?: string;
+        _id?: string;
+      };
+  nominationCategoryId?:
+    | string
+    | {
+        id?: string;
+        _id?: string;
+      };
 };
-
 /* =========================================================
    CIO ENTRY
    ========================================================= */
@@ -110,8 +136,22 @@ function getLabel(item: NominationCategory | NominationSubCategory): string {
    GET SUBCATEGORY PARENT CATEGORY ID
    ========================================================= */
 
+// function getCategoryId(item: NominationSubCategory): string {
+//   return String(item.categoryId ?? item.parentCategoryId ?? item.nominationCategoryId ?? '');
+// }
+
 function getCategoryId(item: NominationSubCategory): string {
-  return String(item.categoryId ?? item.parentCategoryId ?? item.nominationCategoryId ?? '');
+  const category = item.categoryId ?? item.parentCategoryId ?? item.nominationCategoryId;
+
+  if (typeof category === 'string') {
+    return category;
+  }
+
+  if (category && typeof category === 'object') {
+    return String(category.id ?? category._id ?? '');
+  }
+
+  return '';
 }
 
 /* =========================================================
@@ -482,10 +522,17 @@ export default function NominatePage() {
      GET SUBCATEGORIES FOR SELECTED CATEGORY
      ========================================================= */
 
+  // const getSubCategoriesForCategory = (categoryId: string) => {
+  //   if (!categoryId) {
+  //     return [];
+  //   }
+
   const getSubCategoriesForCategory = (categoryId: string) => {
     if (!categoryId) {
       return [];
     }
+
+    return subCategories.filter((subCategory) => getCategoryId(subCategory) === categoryId);
 
     /*
      * Match subcategory against:
@@ -1108,7 +1155,7 @@ export default function NominatePage() {
                         }
                       }}
                       maxLength={10}
-                      placeholder="9876543210"
+                      placeholder="9XXXXXXXXX"
                       className="nominate-input-field"
                     />
                     {errors.nominatorContact && (
@@ -1497,7 +1544,7 @@ export default function NominatePage() {
                               updateCio(idx, 'mobile', e.target.value.replace(/[^0-9]/g, ''))
                             }
                             maxLength={10}
-                            placeholder="9876543210"
+                            placeholder="9XXXXXXXXX"
                             className="nominate-input-field"
                           />
                           {errors.cios?.[idx]?.mobile && (
