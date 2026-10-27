@@ -752,15 +752,17 @@ function getSpeakerYear(slug: string): string {
 ========================================================= */
 
 function getSpeakerSlug(slug: string): string {
-  return `speaker-${getSpeakerYear(slug)}`;
+  const year = getSpeakerYear(slug);
+
+  return year === '2017' ? 'keynote-speakers-2017' : `speakers-${year}`;
 }
 
 function getPartnerSpeakerSlug(slug: string): string {
-  return `partner-speaker-${getSpeakerYear(slug)}`;
+  return `partner-speakers-${getSpeakerYear(slug)}`;
 }
 
 function getCioIndustrySpeakerSlug(slug: string): string {
-  return `cio-industry-speaker-${getSpeakerYear(slug)}`;
+  return `cio-industry-speakers-${getSpeakerYear(slug)}`;
 }
 
 /* =========================================================

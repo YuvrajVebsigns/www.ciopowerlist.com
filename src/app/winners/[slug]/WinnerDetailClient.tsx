@@ -247,7 +247,7 @@ function WinnerCard({ testimonial, sectionTitle, index }: WinnerCardProps) {
 
    winner-2026        -> 2026
    winner-2025        -> 2025
-   business-icon-2026 -> 2026
+   business-icons-2026 -> 2026
    covid-2026         -> 2026
 ========================================================= */
 
@@ -275,7 +275,7 @@ function getTechnologySlug(slug: string): string {
 function getBusinessSlug(slug: string): string {
   const year = getWinnerYear(slug);
 
-  return `business-icon-${year}`;
+  return `business-icons-${year}`;
 }
 
 /* =========================================================
@@ -474,12 +474,12 @@ export default function WinnerDetailClient({ slug, kicker }: WinnerDetailClientP
 
      winner-2026:
        Technology -> winner-2026
-       Business   -> business-icon-2026
+       Business   -> business-icons-2026
        COVID      -> covid-2026
 
      winner-2025:
        Technology -> winner-2025
-       Business   -> business-icon-2025
+       Business   -> business-icons-2025
        COVID      -> covid-2025
 
      Each request is independent. Failure of one API does
