@@ -492,10 +492,14 @@ export default function Navbar() {
             });
           }
 
-          const speakerMatch = slug.match(/^speaker-(20\d{2})$/);
+          const speakerMatch = slug.match(/^speakers?-(20\d{2})$/);
           if (speakerMatch) {
             const year = Number(speakerMatch[1]);
-            speakers.push({ label: `Speaker ${year}`, href: `/speakers/${slug}`, year });
+            speakers.push({
+              label: `Speaker ${year}`,
+              href: `/speakers/${slug}`,
+              year,
+            });
           }
         }
 

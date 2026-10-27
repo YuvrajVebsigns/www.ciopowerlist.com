@@ -10,7 +10,7 @@ type SpeakerPageProps = {
 export default async function SpeakerDetailPage({ params }: SpeakerPageProps) {
   const { slug } = await params;
 
-  if (!/^speaker-20\d{2}$/.test(slug)) {
+  if (!/^speakers?-20\d{2}$/.test(slug)) {
     notFound();
   }
 
