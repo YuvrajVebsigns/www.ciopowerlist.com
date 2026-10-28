@@ -7,7 +7,7 @@ interface FormPageProps {
 
 export default function PublicFormPage({ params }: FormPageProps) {
   const { slug } = use(params);
-  const formSlug = slug === 'cio-nomination' ? 'nomination-google-form' : slug;
+  const formSlug = slug === 'nomination-google-form' ? 'cio-nomination' : slug;
 
   return (
     <main className="cio-nomination-page">
